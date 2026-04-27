@@ -550,10 +550,13 @@
     });
     function scrollToLLC(e) {
       if (e) e.preventDefault();
-      const dropdown = document.getElementById('llc-states');
       document.querySelectorAll('.state-dropdown').forEach(d => d.classList.remove('open'));
-      dropdown.classList.add('open');
-      dropdown.closest('.state-dropdown-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const wrap = document.querySelector('.state-dropdown-wrap');
+      const dropdown = document.getElementById('llc-states');
+      wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(function() {
+        dropdown.classList.add('open');
+      }, 600);
     }
       e.stopPropagation();
       const dropdown = document.getElementById(id);
