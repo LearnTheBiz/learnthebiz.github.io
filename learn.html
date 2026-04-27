@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Find My Business Type — Learn The Biz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
+
+    /* NAV */
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px; border-bottom: 0.5px solid #2a2a2a;
+      background: #0a0a0a; position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; text-decoration: none; }
+    .nav-back { font-size: 13px; color: #aaa; text-decoration: none; letter-spacing: 1px; }
+    .nav-back:hover { color: #c9a84c; }
+
+    /* HERO */
+    .hero {
+      text-align: center; padding: 72px 40px 52px;
+      border-bottom: 0.5px solid #1e1a08;
+    }
+    .hero-tag { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 16px; }
+    .hero h1 { font-size: 44px; font-weight: 900; line-height: 1.1; margin-bottom: 18px; }
+    .hero h1 span { color: #c9a84c; }
+    .gold-line { width: 60px; height: 2px; background: #c9a84c; margin: 0 auto 24px; border-radius: 1px; }
+    .hero p { font-size: 18px; color: #999; max-width: 580px; margin: 0 auto; line-height: 1.65; }
+
+    /* TAB STRIP */
+    .tab-strip {
+      display: flex; gap: 0; overflow-x: auto; border-bottom: 0.5px solid #2a2a2a;
+      background: #0d0d0d; position: sticky; top: 61px; z-index: 90;
+      scrollbar-width: none;
+    }
+    .tab-strip::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex-shrink: 0; padding: 16px 28px; font-size: 14px; font-weight: 500;
+      color: #666; background: none; border: none; border-bottom: 2px solid transparent;
+      cursor: pointer; font-family: inherit; letter-spacing: 0.5px; white-space: nowrap;
+      transition: color 0.15s;
+    }
+    .tab-btn:hover { color: #c9a84c; }
+    .tab-btn.active { color: #c9a84c; border-bottom-color: #c9a84c; }
+
+    /* MAIN LAYOUT */
+    .main { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+
+    /* BUSINESS TYPE PANELS */
+    .biz-panel { display: none; }
+    .biz-panel.active { display: block; }
+
+    .panel-header { display: flex; align-items: center; gap: 20px; margin-bottom: 36px; }
+    .panel-icon {
+      width: 64px; height: 64px; border-radius: 16px; background: #1a1400;
+      border: 0.5px solid #c9a84c; display: flex; align-items: center;
+      justify-content: center; font-size: 28px; flex-shrink: 0;
+    }
+    .panel-title h2 { font-size: 32px; font-weight: 900; margin-bottom: 4px; }
+    .panel-title p { font-size: 14px; color: #666; letter-spacing: 1px; text-transform: uppercase; }
+
+    .panel-intro { font-size: 18px; color: #bbb; line-height: 1.75; margin-bottom: 40px; padding-bottom: 40px; border-bottom: 0.5px solid #1a1a1a; }
+
+    /* DETAIL GRID */
+    .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
+    .detail-card { background: #111; border: 0.5px solid #222; border-radius: 12px; padding: 24px; }
+    .detail-card h4 { font-size: 12px; letter-spacing: 2px; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; }
+    .detail-card p { font-size: 15px; color: #999; line-height: 1.7; }
+    .detail-card ul { list-style: none; }
+    .detail-card ul li { font-size: 15px; color: #999; padding: 7px 0; border-bottom: 0.5px solid #1a1a1a; display: flex; gap: 10px; line-height: 1.5; }
+    .detail-card ul li:last-child { border-bottom: none; }
+    .detail-card ul li.pro::before { content: "✓"; color: #4caf50; font-weight: 700; flex-shrink: 0; }
+    .detail-card ul li.con::before { content: "✗"; color: #e57373; font-weight: 700; flex-shrink: 0; }
+
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 40px; }
+    .stat-pill { background: #0f0f0f; border: 0.5px solid #2a2a2a; border-radius: 10px; padding: 20px; text-align: center; }
+    .stat-pill .val { font-size: 22px; font-weight: 700; color: #c9a84c; }
+    .stat-pill .key { font-size: 11px; color: #666; letter-spacing: 1px; text-transform: uppercase; margin-top: 6px; }
+
+    .best-for { background: #0f0c03; border: 0.5px solid #3a2e10; border-radius: 12px; padding: 28px; margin-bottom: 40px; }
+    .best-for h4 { font-size: 12px; letter-spacing: 2px; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; }
+    .best-for ul { list-style: none; }
+    .best-for ul li { font-size: 16px; color: #bbb; padding: 8px 0; border-bottom: 0.5px solid #1e1a08; display: flex; gap: 12px; line-height: 1.5; }
+    .best-for ul li:last-child { border-bottom: none; }
+    .best-for ul li::before { content: "→"; color: #c9a84c; font-weight: 700; flex-shrink: 0; }
+
+    .examples { margin-bottom: 40px; }
+    .examples h4 { font-size: 12px; letter-spacing: 2px; color: #c9a84c; text-transform: uppercase; margin-bottom: 16px; }
+    .example-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip { background: #111; border: 0.5px solid #2a2a2a; border-radius: 20px; padding: 8px 16px; font-size: 14px; color: #999; }
+
+    .start-btn {
+      display: inline-block; background: #c9a84c; color: #0a0a0a; font-size: 15px;
+      font-weight: 700; padding: 16px 36px; border-radius: 6px; border: none;
+      cursor: pointer; letter-spacing: 1px; text-transform: uppercase;
+      font-family: inherit; text-decoration: none; margin-bottom: 80px;
+    }
+    .start-btn:hover { background: #e2bf6a; }
+
+    /* QUIZ SECTION */
+    .quiz-section {
+      border-top: 0.5px solid #1a1a1a; padding-top: 60px; margin-top: 20px;
+    }
+    .quiz-tag { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; text-align: center; }
+    .quiz-section h2 { font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 12px; }
+    .quiz-section > p { font-size: 17px; color: #999; text-align: center; margin-bottom: 48px; line-height: 1.65; }
+
+    .quiz-wrap { max-width: 680px; margin: 0 auto; }
+    .q-step { display: none; }
+    .q-step.active { display: block; }
+    .q-num { font-size: 11px; letter-spacing: 2px; color: #666; text-transform: uppercase; margin-bottom: 10px; }
+    .q-text { font-size: 22px; font-weight: 700; margin-bottom: 28px; line-height: 1.3; }
+    .q-options { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+    .q-opt {
+      background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px;
+      padding: 18px 20px; font-size: 16px; color: #ccc; cursor: pointer;
+      font-family: inherit; text-align: left; transition: all 0.15s;
+    }
+    .q-opt:hover { border-color: #c9a84c; color: #c9a84c; background: #0f0c03; }
+    .q-opt.selected { border-color: #c9a84c; color: #c9a84c; background: #0f0c03; }
+
+    .q-nav { display: flex; gap: 12px; }
+    .q-back {
+      background: none; border: 0.5px solid #2a2a2a; color: #aaa; font-size: 14px;
+      padding: 12px 24px; border-radius: 6px; cursor: pointer; font-family: inherit;
+    }
+    .q-back:hover { border-color: #aaa; }
+    .q-next {
+      background: #c9a84c; color: #0a0a0a; font-size: 14px; font-weight: 700;
+      padding: 12px 28px; border-radius: 6px; border: none; cursor: pointer;
+      font-family: inherit; letter-spacing: 1px; text-transform: uppercase;
+    }
+    .q-next:hover { background: #e2bf6a; }
+    .q-next:disabled { background: #333; color: #666; cursor: default; }
+
+    .q-progress { display: flex; gap: 6px; margin-bottom: 36px; }
+    .q-dot { height: 4px; flex: 1; background: #2a2a2a; border-radius: 2px; }
+    .q-dot.done { background: #c9a84c; }
+
+    /* RESULT */
+    .quiz-result { display: none; text-align: center; padding: 40px 0; }
+    .quiz-result.show { display: block; }
+    .result-tag { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 16px; }
+    .result-box { background: #0f0c03; border: 0.5px solid #c9a84c; border-radius: 16px; padding: 40px; margin: 24px 0 32px; text-align: left; }
+    .result-box h3 { font-size: 28px; font-weight: 900; color: #c9a84c; margin-bottom: 16px; }
+    .result-box p { font-size: 17px; color: #bbb; line-height: 1.75; }
+    .result-actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    .result-primary {
+      background: #c9a84c; color: #0a0a0a; font-size: 15px; font-weight: 700;
+      padding: 16px 36px; border-radius: 6px; border: none; cursor: pointer;
+      letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block;
+    }
+    .result-primary:hover { background: #e2bf6a; }
+    .result-secondary {
+      background: none; color: #c9a84c; font-size: 15px; font-weight: 700;
+      padding: 16px 36px; border-radius: 6px; border: 0.5px solid #c9a84c;
+      cursor: pointer; font-family: inherit; text-decoration: none; display: inline-block;
+    }
+    .result-secondary:hover { background: #1a1400; }
+
+    footer { padding: 28px 40px; text-align: center; border-top: 0.5px solid #1a1a1a; }
+    footer p { font-size: 12px; color: #333; letter-spacing: 1px; }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 52px 24px 36px; }
+      .hero h1 { font-size: 30px; }
+      .main { padding: 40px 24px; }
+      .detail-grid { grid-template-columns: 1fr; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .tab-btn { padding: 14px 18px; font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">LEARN THE BIZ</a>
+    <a class="nav-back" href="index.html">← Back to Home</a>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-tag">Step One</div>
+    <h1>Find Your <span>Business Type</span></h1>
+    <div class="gold-line"></div>
+    <p>Before you file anything, you need to understand what each business structure actually means — and which one fits your situation. Read through each option below, then take the quiz at the bottom to get a personalized recommendation.</p>
+  </div>
+
+  <!-- TAB STRIP -->
+  <div class="tab-strip">
+    <button class="tab-btn active" onclick="showPanel('llc', this)">LLC</button>
+    <button class="tab-btn" onclick="showPanel('scorp', this)">S-Corp</button>
+    <button class="tab-btn" onclick="showPanel('ccorp', this)">C-Corp</button>
+    <button class="tab-btn" onclick="showPanel('sole', this)">Sole Proprietorship</button>
+    <button class="tab-btn" onclick="showPanel('partnership', this)">Partnership</button>
+    <button class="tab-btn" onclick="showPanel('nonprofit', this)">Nonprofit</button>
+  </div>
+
+  <div class="main">
+
+    <!-- LLC PANEL -->
+    <div class="biz-panel active" id="panel-llc">
+      <div class="panel-header">
+        <div class="panel-icon">🏢</div>
+        <div class="panel-title">
+          <p>Business Structure</p>
+          <h2>LLC</h2>
+        </div>
+      </div>
+      <p class="panel-intro">A Limited Liability Company (LLC) is the most popular business structure in America for good reason. It gives you the personal liability protection of a corporation with the simplicity and tax flexibility of a sole proprietorship. If you're starting any kind of business and you're not sure what to choose — an LLC is almost always the right starting point.</p>
+      <div class="stat-row">
+        <div class="stat-pill"><div class="val">$50–$500</div><div class="key">Avg. State Filing Fee</div></div>
+        <div class="stat-pill"><div class="val">Low</div><div class="key">Complexity</div></div>
+        <div class="stat-pill"><div class="val">Flexible</div><div class="key">Tax Treatment</div></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h4>Pros</h4>
+          <ul>
+            <li class="pro">Personal assets are legally protected</li>
+            <li class="pro">Choose how you want to be taxed</li>
+            <li class="pro">No board meetings or complex rules</li>
+            <li class="pro">Works for solo owners or partners</li>
+            <li class="pro">Easy to open a business bank account</li>
+            <li class="pro">Builds credibility with customers</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>Cons</h4>
+          <ul>
+            <li class="con">Annual state filing fees required</li>
+            <li class="con">Self-employment taxes on profits</li>
+            <li class="con">Not ideal for raising venture capital</li>
+            <li class="con">Must keep personal and business finances separate</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>How It's Taxed</h4>
+          <p>By default, a single-member LLC is taxed as a sole proprietorship — profits pass through to your personal tax return. A multi-member LLC is taxed as a partnership. You can also elect to be taxed as an S-Corp or C-Corp for potential tax savings.</p>
+        </div>
+        <div class="detail-card">
+          <h4>Complexity Level</h4>
+          <p>Low. Filing is straightforward in most states. You don't need a lawyer to form one. Ongoing requirements are minimal — typically just an annual report and keeping your finances separate.</p>
+        </div>
+      </div>
+      <div class="best-for">
+        <h4>Best For</h4>
+        <ul>
+          <li>Freelancers and consultants who want liability protection</li>
+          <li>Small business owners starting their first venture</li>
+          <li>Side hustles that are growing into real businesses</li>
+          <li>Real estate investors holding properties</li>
+          <li>Anyone who wants simplicity with legal protection</li>
+        </ul>
+      </div>
+      <div class="examples">
+        <h4>Real World Examples</h4>
+        <div class="example-chips">
+          <span class="chip">Landscaping business</span>
+          <span class="chip">Online store</span>
+          <span class="chip">Freelance designer</span>
+          <span class="chip">Food truck</span>
+          <span class="chip">Real estate rental</span>
+          <span class="chip">Photography studio</span>
+          <span class="chip">Consulting firm</span>
+          <span class="chip">Cleaning service</span>
+        </div>
+      </div>
+      <a class="start-btn" href="index.html#pick">Start Forming My LLC →</a>
+    </div>
+
+    <!-- S-CORP PANEL -->
+    <div class="biz-panel" id="panel-scorp">
+      <div class="panel-header">
+        <div class="panel-icon">📊</div>
+        <div class="panel-title">
+          <p>Business Structure</p>
+          <h2>S-Corp</h2>
+        </div>
+      </div>
+      <p class="panel-intro">An S-Corporation is not a business structure you form from scratch — it's a tax election you make with the IRS on top of an existing LLC or corporation. The big advantage is tax savings: as an S-Corp, you pay yourself a reasonable salary and only pay self-employment taxes on that salary — not on the rest of your profits. This can save thousands of dollars per year once your business is profitable enough.</p>
+      <div class="stat-row">
+        <div class="stat-pill"><div class="val">$0</div><div class="key">IRS Election Fee</div></div>
+        <div class="stat-pill"><div class="val">Medium</div><div class="key">Complexity</div></div>
+        <div class="stat-pill"><div class="val">Pass-Through</div><div class="key">Tax Treatment</div></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h4>Pros</h4>
+          <ul>
+            <li class="pro">Significant self-employment tax savings</li>
+            <li class="pro">Profits pass through to personal return</li>
+            <li class="pro">Personal liability protection</li>
+            <li class="pro">Can save $5,000–$20,000+ per year in taxes</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>Cons</h4>
+          <ul>
+            <li class="con">Must pay yourself a "reasonable salary"</li>
+            <li class="con">More complex bookkeeping and payroll</li>
+            <li class="con">Limited to 100 shareholders, US citizens only</li>
+            <li class="con">Not worth it until earning $40,000+ in profit</li>
+            <li class="con">Requires more IRS compliance</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>How It's Taxed</h4>
+          <p>You pay yourself a salary (subject to payroll taxes), then take additional profits as distributions — which are NOT subject to self-employment tax. This split is where the savings come from. You still file a personal return, but your tax burden is lower.</p>
+        </div>
+        <div class="detail-card">
+          <h4>Complexity Level</h4>
+          <p>Medium to High. You'll need to run payroll, file additional tax forms, and work with an accountant. The tax savings are real, but so is the added paperwork. Most people hire a CPA once they elect S-Corp status.</p>
+        </div>
+      </div>
+      <div class="best-for">
+        <h4>Best For</h4>
+        <ul>
+          <li>Established businesses making $40,000+ in net profit per year</li>
+          <li>LLC owners looking to reduce self-employment taxes</li>
+          <li>Business owners ready to work with an accountant</li>
+          <li>Service-based businesses with high profit margins</li>
+        </ul>
+      </div>
+      <div class="examples">
+        <h4>Real World Examples</h4>
+        <div class="example-chips">
+          <span class="chip">Established consulting firm</span>
+          <span class="chip">Medical practice</span>
+          <span class="chip">Law firm</span>
+          <span class="chip">Marketing agency</span>
+          <span class="chip">Accounting firm</span>
+          <span class="chip">IT services company</span>
+        </div>
+      </div>
+      <a class="start-btn" href="index.html#pick">Start Forming My S-Corp →</a>
+    </div>
+
+    <!-- C-CORP PANEL -->
+    <div class="biz-panel" id="panel-ccorp">
+      <div class="panel-header">
+        <div class="panel-icon">🏦</div>
+        <div class="panel-title">
+          <p>Business Structure</p>
+          <h2>C-Corp</h2>
+        </div>
+      </div>
+      <p class="panel-intro">A C-Corporation is the most complex business structure — and the one used by most large companies and startups seeking venture capital. A C-Corp is its own legal entity that pays its own taxes, separate from the owners. While it comes with more rules and costs, it's the preferred structure for businesses planning to raise outside investment, go public, or issue stock to employees.</p>
+      <div class="stat-row">
+        <div class="stat-pill"><div class="val">$100–$800</div><div class="key">Avg. Filing Fee</div></div>
+        <div class="stat-pill"><div class="val">High</div><div class="key">Complexity</div></div>
+        <div class="stat-pill"><div class="val">21% Flat</div><div class="key">Corporate Tax Rate</div></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h4>Pros</h4>
+          <ul>
+            <li class="pro">Best structure for raising venture capital</li>
+            <li class="pro">Can issue multiple classes of stock</li>
+            <li class="pro">Unlimited shareholders</li>
+            <li class="pro">Foreign investors and entities can own shares</li>
+            <li class="pro">Can go public (IPO)</li>
+            <li class="pro">Strong liability protection</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>Cons</h4>
+          <ul>
+            <li class="con">Double taxation — corp pays tax, then you pay tax on dividends</li>
+            <li class="con">Most expensive and complex to maintain</li>
+            <li class="con">Requires board meetings and formal records</li>
+            <li class="con">Heavy compliance requirements</li>
+            <li class="con">Not recommended for most small businesses</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>How It's Taxed</h4>
+          <p>The corporation pays a flat 21% federal corporate income tax on profits. When those profits are distributed to shareholders as dividends, shareholders pay income tax on them again. This is called "double taxation." However, startup tax strategies can minimize this.</p>
+        </div>
+        <div class="detail-card">
+          <h4>Complexity Level</h4>
+          <p>High. You'll need a corporate attorney, an accountant, formal bylaws, a board of directors, regular meetings with minutes, and ongoing compliance. This is not a DIY structure for most people.</p>
+        </div>
+      </div>
+      <div class="best-for">
+        <h4>Best For</h4>
+        <ul>
+          <li>Tech startups planning to raise venture capital</li>
+          <li>Businesses planning to go public one day</li>
+          <li>Companies wanting to offer stock options to employees</li>
+          <li>Businesses with many investors or complex ownership structures</li>
+        </ul>
+      </div>
+      <div class="examples">
+        <h4>Real World Examples</h4>
+        <div class="example-chips">
+          <span class="chip">Tech startups</span>
+          <span class="chip">Apple, Google, Amazon</span>
+          <span class="chip">VC-backed companies</span>
+          <span class="chip">Publicly traded companies</span>
+        </div>
+      </div>
+      <a class="start-btn" href="index.html#pick">Start Forming My C-Corp →</a>
+    </div>
+
+    <!-- SOLE PROPRIETORSHIP PANEL -->
+    <div class="biz-panel" id="panel-sole">
+      <div class="panel-header">
+        <div class="panel-icon">👤</div>
+        <div class="panel-title">
+          <p>Business Structure</p>
+          <h2>Sole Proprietorship</h2>
+        </div>
+      </div>
+      <p class="panel-intro">A Sole Proprietorship is the simplest business structure that exists. There is no filing, no registration, and no separation between you and your business. The moment you start selling something or offering a service, you are automatically a sole proprietor. While it's the easiest way to get started, it offers zero liability protection — meaning your personal assets are on the line if something goes wrong.</p>
+      <div class="stat-row">
+        <div class="stat-pill"><div class="val">$0</div><div class="key">Formation Cost</div></div>
+        <div class="stat-pill"><div class="val">Lowest</div><div class="key">Complexity</div></div>
+        <div class="stat-pill"><div class="val">Personal</div><div class="key">Tax Treatment</div></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h4>Pros</h4>
+          <ul>
+            <li class="pro">No registration required — start immediately</li>
+            <li class="pro">Simplest taxes — just Schedule C on personal return</li>
+            <li class="pro">No ongoing state filing fees</li>
+            <li class="pro">Complete control — no partners or board</li>
+            <li class="pro">Good for testing a business idea cheaply</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>Cons</h4>
+          <ul>
+            <li class="con">Zero personal liability protection</li>
+            <li class="con">Your personal assets can be seized to pay business debts</li>
+            <li class="con">Harder to get business loans or open business accounts</li>
+            <li class="con">Less credibility with clients and vendors</li>
+            <li class="con">All profits subject to self-employment tax</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>How It's Taxed</h4>
+          <p>All business income is reported on your personal tax return using Schedule C. You pay income tax and self-employment tax (15.3%) on all net profits. There is no separation between business and personal income.</p>
+        </div>
+        <div class="detail-card">
+          <h4>Complexity Level</h4>
+          <p>Very Low. No formation required. Taxes are simple. However, the lack of protection means that as soon as your business starts making real money or taking on any risk, you should strongly consider upgrading to an LLC.</p>
+        </div>
+      </div>
+      <div class="best-for">
+        <h4>Best For</h4>
+        <ul>
+          <li>Testing a business idea before committing to formal registration</li>
+          <li>Very low-risk, low-income side hustles</li>
+          <li>Hobbies that generate a small amount of income</li>
+          <li>Temporary or short-term projects</li>
+        </ul>
+      </div>
+      <div class="examples">
+        <h4>Real World Examples</h4>
+        <div class="example-chips">
+          <span class="chip">Freelance writer</span>
+          <span class="chip">Babysitter</span>
+          <span class="chip">Lawn mowing side hustle</span>
+          <span class="chip">Handmade crafts seller</span>
+          <span class="chip">Tutor</span>
+        </div>
+      </div>
+      <a class="start-btn" href="index.html#pick">Start as Sole Proprietor →</a>
+    </div>
+
+    <!-- PARTNERSHIP PANEL -->
+    <div class="biz-panel" id="panel-partnership">
+      <div class="panel-header">
+        <div class="panel-icon">🤝</div>
+        <div class="panel-title">
+          <p>Business Structure</p>
+          <h2>Partnership</h2>
+        </div>
+      </div>
+      <p class="panel-intro">A Partnership is a business owned by two or more people. Like a sole proprietorship, a general partnership requires no formal registration — it exists the moment two people go into business together. There are two main types: a General Partnership where all partners share liability and management, and a Limited Partnership where some partners invest money but have limited involvement and liability.</p>
+      <div class="stat-row">
+        <div class="stat-pill"><div class="val">$0–$200</div><div class="key">Avg. Formation Cost</div></div>
+        <div class="stat-pill"><div class="val">Low–Med</div><div class="key">Complexity</div></div>
+        <div class="stat-pill"><div class="val">Pass-Through</div><div class="key">Tax Treatment</div></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h4>Pros</h4>
+          <ul>
+            <li class="pro">Easy to form — no registration needed for general partnerships</li>
+            <li class="pro">Profits pass through to partners' personal returns</li>
+            <li class="pro">Shared workload and resources</li>
+            <li class="pro">Complementary skills between partners</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>Cons</h4>
+          <ul>
+            <li class="con">Each general partner is personally liable for ALL business debts</li>
+            <li class="con">One partner's mistake can affect everyone</li>
+            <li class="con">Disagreements between partners can destroy the business</li>
+            <li class="con">No liability protection in a general partnership</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>How It's Taxed</h4>
+          <p>Partnerships file an informational tax return (Form 1065) but don't pay tax at the business level. Profits and losses pass through to each partner's personal tax return based on their ownership percentage. Each partner pays self-employment tax on their share.</p>
+        </div>
+        <div class="detail-card">
+          <h4>Complexity Level</h4>
+          <p>Low to Medium. A general partnership is simple to start but highly risky without a solid partnership agreement. Most business attorneys strongly recommend forming a multi-member LLC instead — you get the same pass-through taxation with much better liability protection.</p>
+        </div>
+      </div>
+      <div class="best-for">
+        <h4>Best For</h4>
+        <ul>
+          <li>Two or more people starting a low-risk business together</li>
+          <li>Professional practices like law firms or medical groups (as LLP)</li>
+          <li>Short-term business ventures or projects between known partners</li>
+        </ul>
+      </div>
+      <div class="examples">
+        <h4>Real World Examples</h4>
+        <div class="example-chips">
+          <span class="chip">Law firm (LLP)</span>
+          <span class="chip">Accounting firm (LLP)</span>
+          <span class="chip">Two friends starting a restaurant</span>
+          <span class="chip">Real estate investment group</span>
+        </div>
+      </div>
+      <a class="start-btn" href="index.html#pick">Start Forming My Partnership →</a>
+    </div>
+
+    <!-- NONPROFIT PANEL -->
+    <div class="biz-panel" id="panel-nonprofit">
+      <div class="panel-header">
+        <div class="panel-icon">❤️</div>
+        <div class="panel-title">
+          <p>Business Structure</p>
+          <h2>Nonprofit</h2>
+        </div>
+      </div>
+      <p class="panel-intro">A Nonprofit organization is formed to serve a public, charitable, educational, religious, or scientific purpose — not to generate profit for its owners. Nonprofits can apply for 501(c)(3) tax-exempt status with the IRS, meaning the organization doesn't pay federal income tax and donors can deduct their donations. While nonprofits can generate revenue and pay employees, any surplus must be reinvested into the mission — not distributed to founders.</p>
+      <div class="stat-row">
+        <div class="stat-pill"><div class="val">$275–$600</div><div class="key">IRS Application Fee</div></div>
+        <div class="stat-pill"><div class="val">High</div><div class="key">Complexity</div></div>
+        <div class="stat-pill"><div class="val">Tax Exempt</div><div class="key">Federal Tax Status</div></div>
+      </div>
+      <div class="detail-grid">
+        <div class="detail-card">
+          <h4>Pros</h4>
+          <ul>
+            <li class="pro">Federal and state tax exemption</li>
+            <li class="pro">Donors can deduct contributions</li>
+            <li class="pro">Eligible for grants and government funding</li>
+            <li class="pro">Strong public trust and credibility</li>
+            <li class="pro">Personal liability protection</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>Cons</h4>
+          <ul>
+            <li class="con">Complex and lengthy IRS application process</li>
+            <li class="con">Cannot distribute profits to founders or members</li>
+            <li class="con">Heavy ongoing compliance and reporting</li>
+            <li class="con">Board of directors required</li>
+            <li class="con">Public financial disclosure required</li>
+          </ul>
+        </div>
+        <div class="detail-card">
+          <h4>How It's Taxed</h4>
+          <p>Once approved for 501(c)(3) status, the organization pays no federal income tax on income related to its mission. However, unrelated business income (activities outside the mission) can be taxed. Employees still pay regular income and payroll taxes on their wages.</p>
+        </div>
+        <div class="detail-card">
+          <h4>Complexity Level</h4>
+          <p>High. Forming a nonprofit involves incorporating at the state level, drafting bylaws, forming a board of directors, and applying to the IRS for tax-exempt status — a process that can take 3–12 months. Ongoing compliance includes annual IRS filings and state reporting.</p>
+        </div>
+      </div>
+      <div class="best-for">
+        <h4>Best For</h4>
+        <ul>
+          <li>Charitable organizations serving a community need</li>
+          <li>Educational programs and schools</li>
+          <li>Religious organizations</li>
+          <li>Arts and cultural organizations</li>
+          <li>Anyone whose primary goal is mission — not profit</li>
+        </ul>
+      </div>
+      <div class="examples">
+        <h4>Real World Examples</h4>
+        <div class="example-chips">
+          <span class="chip">Food bank</span>
+          <span class="chip">Animal shelter</span>
+          <span class="chip">Community arts center</span>
+          <span class="chip">Youth sports league</span>
+          <span class="chip">Religious organization</span>
+          <span class="chip">Scholarship fund</span>
+        </div>
+      </div>
+      <a class="start-btn" href="index.html#pick">Start Forming My Nonprofit →</a>
+    </div>
+
+    <!-- QUIZ -->
+    <div class="quiz-section" id="quiz">
+      <div class="quiz-tag">Not Sure Yet?</div>
+      <h2>Let's Figure It Out Together</h2>
+      <p>Answer 6 quick questions and we'll recommend the business structure that fits your situation best.</p>
+
+      <div class="quiz-wrap">
+        <div class="q-progress">
+          <div class="q-dot" id="dot-0"></div>
+          <div class="q-dot" id="dot-1"></div>
+          <div class="q-dot" id="dot-2"></div>
+          <div class="q-dot" id="dot-3"></div>
+          <div class="q-dot" id="dot-4"></div>
+          <div class="q-dot" id="dot-5"></div>
+        </div>
+
+        <!-- Q1 -->
+        <div class="q-step active" id="q0">
+          <div class="q-num">Question 1 of 6</div>
+          <div class="q-text">Are you starting this business alone or with other people?</div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(0, 'solo')">Just me — I'm going solo</button>
+            <button class="q-opt" onclick="answer(0, 'partners')">With one or more partners</button>
+            <button class="q-opt" onclick="answer(0, 'investors')">With outside investors or a team</button>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="q-step" id="q1">
+          <div class="q-num">Question 2 of 6</div>
+          <div class="q-text">How important is protecting your personal assets from business risks?</div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(1, 'critical')">Very important — I want full protection</button>
+            <button class="q-opt" onclick="answer(1, 'somewhat')">Somewhat important</button>
+            <button class="q-opt" onclick="answer(1, 'notnow')">Not a concern right now — it's a small side hustle</button>
+          </div>
+          <div class="q-nav"><button class="q-back" onclick="goBack(1)">← Back</button></div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="q-step" id="q2">
+          <div class="q-num">Question 3 of 6</div>
+          <div class="q-text">What is the main goal of this business?</div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(2, 'profit')">Make money — this is a for-profit business</button>
+            <button class="q-opt" onclick="answer(2, 'mission')">Serve a cause — this is mission-driven, not profit-driven</button>
+            <button class="q-opt" onclick="answer(2, 'unsure')">I'm not totally sure yet</button>
+          </div>
+          <div class="q-nav"><button class="q-back" onclick="goBack(2)">← Back</button></div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="q-step" id="q3">
+          <div class="q-num">Question 4 of 6</div>
+          <div class="q-text">Do you plan to raise money from outside investors or venture capital?</div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(3, 'yes')">Yes — I plan to seek investors or VC funding</button>
+            <button class="q-opt" onclick="answer(3, 'maybe')">Maybe someday, but not right now</button>
+            <button class="q-opt" onclick="answer(3, 'no')">No — I'll fund this myself or through loans</button>
+          </div>
+          <div class="q-nav"><button class="q-back" onclick="goBack(3)">← Back</button></div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="q-step" id="q4">
+          <div class="q-num">Question 5 of 6</div>
+          <div class="q-text">How much is this business currently making (or expected to make) in net profit per year?</div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(4, 'low')">Under $20,000 — just getting started</button>
+            <button class="q-opt" onclick="answer(4, 'mid')">$20,000 to $60,000</button>
+            <button class="q-opt" onclick="answer(4, 'high')">Over $60,000</button>
+          </div>
+          <div class="q-nav"><button class="q-back" onclick="goBack(4)">← Back</button></div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="q-step" id="q5">
+          <div class="q-num">Question 6 of 6</div>
+          <div class="q-text">How do you feel about paperwork, compliance, and working with accountants?</div>
+          <div class="q-options">
+            <button class="q-opt" onclick="answer(5, 'simple')">Keep it simple — I want minimal paperwork</button>
+            <button class="q-opt" onclick="answer(5, 'some')">I can handle some paperwork if it saves money</button>
+            <button class="q-opt" onclick="answer(5, 'complex')">I'm fine with complexity if it means maximum benefits</button>
+          </div>
+          <div class="q-nav"><button class="q-back" onclick="goBack(5)">← Back</button></div>
+        </div>
+
+        <!-- RESULT -->
+        <div class="quiz-result" id="quizResult">
+          <div class="result-tag">Your Recommendation</div>
+          <div class="result-box">
+            <h3 id="resultTitle"></h3>
+            <p id="resultText"></p>
+          </div>
+          <div class="result-actions">
+            <a class="result-primary" id="resultLink" href="#">Start Forming Mine →</a>
+            <button class="result-secondary" onclick="resetQuiz()">Retake Quiz</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Learn The Biz &middot; All Rights Reserved</p>
+  </footer>
+
+  <script>
+    var answers = {};
+
+    function showPanel(id, btn) {
+      document.querySelectorAll('.biz-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.getElementById('panel-' + id).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    function answer(q, val) {
+      answers[q] = val;
+      document.querySelectorAll('#q' + q + ' .q-opt').forEach(function(o) { o.classList.remove('selected'); });
+      event.target.classList.add('selected');
+      document.getElementById('dot-' + q).classList.add('done');
+      setTimeout(function() { nextQ(q); }, 300);
+    }
+
+    function nextQ(current) {
+      var next = current + 1;
+      if (next < 6) {
+        document.getElementById('q' + current).classList.remove('active');
+        document.getElementById('q' + next).classList.add('active');
+      } else {
+        showResult();
+      }
+    }
+
+    function goBack(current) {
+      document.getElementById('q' + current).classList.remove('active');
+      document.getElementById('q' + (current - 1)).classList.add('active');
+      document.getElementById('dot-' + (current - 1)).classList.remove('done');
+    }
+
+    function showResult() {
+      document.querySelectorAll('.q-step').forEach(function(s) { s.classList.remove('active'); });
+      var result = getRecommendation();
+      document.getElementById('resultTitle').textContent = result.title;
+      document.getElementById('resultText').textContent = result.text;
+      document.getElementById('resultLink').href = result.link;
+      document.getElementById('resultLink').textContent = result.cta;
+      document.getElementById('quizResult').classList.add('show');
+    }
+
+    function getRecommendation() {
+      var a = answers;
+      if (a[2] === 'mission') {
+        return { title: 'Nonprofit (501c3)', text: 'Based on your answers, your primary goal is mission-driven — not profit. A Nonprofit organization gives you tax-exempt status, the ability to accept donations, and access to grants. It requires more setup but is the right structure for a cause-driven organization.', link: 'index.html#pick', cta: 'Learn About Nonprofits →' };
+      }
+      if (a[3] === 'yes') {
+        return { title: 'C-Corporation', text: 'You plan to raise outside investment. Venture capitalists and institutional investors almost exclusively invest in C-Corporations because of the ability to issue preferred stock and have unlimited shareholders. This is the structure built for high-growth, investor-backed businesses.', link: 'index.html#pick', cta: 'Learn About C-Corps →' };
+      }
+      if (a[1] === 'notnow' && a[4] === 'low') {
+        return { title: 'Sole Proprietorship', text: 'For a low-risk, low-income side hustle where liability protection isn\'t a priority, a Sole Proprietorship is the simplest way to get started. No registration needed. Just start. When your income grows or risk increases, upgrade to an LLC.', link: 'index.html#pick', cta: 'Learn About Sole Proprietorships →' };
+      }
+      if (a[0] === 'partners' && a[1] !== 'critical') {
+        return { title: 'Partnership or Multi-Member LLC', text: 'You\'re starting with partners and liability protection isn\'t your top priority. A general Partnership is simple to form but offers no personal protection. We strongly recommend a Multi-Member LLC instead — you get the same pass-through taxes with actual liability protection.', link: 'index.html#pick', cta: 'Learn About LLCs →' };
+      }
+      if (a[4] === 'high' && a[5] !== 'simple') {
+        return { title: 'LLC with S-Corp Tax Election', text: 'You\'re making solid profits and you\'re open to some complexity. The smartest move is to form an LLC and then elect S-Corp tax treatment with the IRS. This lets you pay yourself a salary and take the rest as distributions — saving thousands in self-employment taxes each year.', link: 'index.html#pick', cta: 'Learn About S-Corps →' };
+      }
+      return { title: 'LLC (Limited Liability Company)', text: 'Based on your answers, an LLC is your best fit. It gives you personal liability protection, flexible tax options, and simplicity — all at once. It\'s the most versatile business structure for the vast majority of small business owners and entrepreneurs.', link: 'index.html#pick', cta: 'Start Forming My LLC →' };
+    }
+
+    function resetQuiz() {
+      answers = {};
+      document.querySelectorAll('.q-step').forEach(function(s) { s.classList.remove('active'); });
+      document.querySelectorAll('.q-opt').forEach(function(o) { o.classList.remove('selected'); });
+      document.querySelectorAll('.q-dot').forEach(function(d) { d.classList.remove('done'); });
+      document.getElementById('quizResult').classList.remove('show');
+      document.getElementById('q0').classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
