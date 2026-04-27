@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Learn The Biz — Start Your Business the Right Way</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0a0a0a;
+      color: #fff;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 40px;
+      border-bottom: 0.5px solid #2a2a2a;
+      background: #0a0a0a;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 4px;
+      color: #c9a84c;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-size: 13px;
+      color: #aaa;
+      text-decoration: none;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+    .nav-links a:hover { color: #c9a84c; }
+
+    /* ── DROPDOWN ── */
+    .dropdown-wrap { position: relative; }
+    .dropdown-btn {
+      font-size: 13px;
+      color: #aaa;
+      background: none;
+      border: 0.5px solid #2a2a2a;
+      padding: 7px 14px;
+      border-radius: 6px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      font-family: inherit;
+    }
+    .dropdown-btn:hover { border-color: #c9a84c; color: #c9a84c; }
+    .dropdown-menu {
+      display: none;
+      position: absolute;
+      top: 40px;
+      right: 0;
+      background: #111;
+      border: 0.5px solid #2a2a2a;
+      border-radius: 8px;
+      min-width: 220px;
+      overflow: hidden;
+      z-index: 200;
+    }
+    .dropdown-menu.open { display: block; }
+    .dropdown-menu a {
+      display: block;
+      padding: 12px 18px;
+      font-size: 13px;
+      color: #ccc;
+      text-decoration: none;
+      border-bottom: 0.5px solid #1a1a1a;
+    }
+    .dropdown-menu a:last-child { border-bottom: none; }
+    .dropdown-menu a:hover { background: #1a1a1a; color: #c9a84c; }
+    .dropdown-menu .coming { color: #555; font-size: 12px; cursor: default; }
+    .dropdown-menu .coming:hover { background: none; color: #555; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 560px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 40px 80px;
+      background: #0a0a0a;
+      border-bottom: 0.5px solid #1e1a08;
+    }
+    .hero-tag {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #c9a84c;
+      text-transform: uppercase;
+      margin-bottom: 24px;
+    }
+    .hero h1 {
+      font-size: 54px;
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -1px;
+      margin-bottom: 20px;
+    }
+    .hero h1 span { color: #c9a84c; }
+    .gold-line {
+      width: 60px;
+      height: 2px;
+      background: #c9a84c;
+      margin: 0 auto 32px;
+      border-radius: 1px;
+    }
+    .hero p {
+      font-size: 17px;
+      color: #888;
+      max-width: 480px;
+      line-height: 1.65;
+      margin-bottom: 40px;
+    }
+    .cta-btn {
+      background: #c9a84c;
+      color: #0a0a0a;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 15px 36px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      font-family: inherit;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .cta-btn:hover { background: #e2bf6a; }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 80px 40px;
+      border-bottom: 0.5px solid #1a1a1a;
+    }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      color: #c9a84c;
+      text-transform: uppercase;
+      margin-bottom: 14px;
+      text-align: center;
+    }
+    section h2 {
+      font-size: 32px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 52px;
+      letter-spacing: -0.5px;
+      line-height: 1.2;
+    }
+
+    /* ── CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #111;
+      border: 0.5px solid #222;
+      border-radius: 12px;
+      padding: 28px 24px;
+    }
+    .card-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #1a1a1a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c9a84c;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .card h3 { font-size: 15px; font-weight: 500; margin-bottom: 10px; }
+    .card p { font-size: 13px; color: #777; line-height: 1.65; }
+    .card.gold-card { border-color: #3a2e10; }
+    .card.gold-card h3 { color: #c9a84c; }
+
+    /* ── SOLUTION ── */
+    .solution-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      max-width: 860px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    .steps { display: flex; flex-direction: column; gap: 24px; }
+    .step { display: flex; align-items: flex-start; gap: 16px; }
+    .step-num {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: #c9a84c;
+      color: #0a0a0a;
+      font-size: 13px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .step h4 { font-size: 14px; font-weight: 500; margin-bottom: 5px; }
+    .step p { font-size: 13px; color: #666; line-height: 1.55; }
+    .trust-visual {
+      background: #0f0c03;
+      border: 0.5px solid #3a2e10;
+      border-radius: 12px;
+      padding: 36px 28px;
+      text-align: center;
+    }
+    .trust-visual .big {
+      font-size: 44px;
+      font-weight: 900;
+      color: #c9a84c;
+    }
+    .trust-visual .lbl {
+      font-size: 12px;
+      color: #666;
+      letter-spacing: 1px;
+      margin-top: 6px;
+    }
+    .divider { height: 0.5px; background: #2a2a2a; margin: 22px 0; }
+
+    /* ── CTA SECTION ── */
+    .cta-section {
+      padding: 90px 40px;
+      text-align: center;
+      background: #0f0c03;
+    }
+    .cta-section h2 { font-size: 34px; margin-bottom: 14px; }
+    .cta-section > p { font-size: 15px; color: #888; margin-bottom: 44px; }
+    .biz-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      max-width: 660px;
+      margin: 0 auto 40px;
+    }
+    .biz-btn {
+      background: #111;
+      border: 0.5px solid #2a2a2a;
+      border-radius: 10px;
+      padding: 20px 14px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #ccc;
+      cursor: pointer;
+      font-family: inherit;
+      letter-spacing: 0.5px;
+      line-height: 1.4;
+    }
+    .biz-btn:hover { border-color: #c9a84c; color: #c9a84c; background: #0f0c03; }
+    .biz-btn.soon { color: #444; border-color: #1a1a1a; cursor: default; font-size: 12px; }
+    .biz-btn.soon:hover { border-color: #1a1a1a; color: #444; background: #111; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 28px 40px;
+      text-align: center;
+      border-top: 0.5px solid #1a1a1a;
+    }
+    footer p { font-size: 12px; color: #333; letter-spacing: 1px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 70px 24px 60px; }
+      .hero h1 { font-size: 36px; }
+      section { padding: 60px 24px; }
+      .cards { grid-template-columns: 1fr; }
+      .solution-grid { grid-template-columns: 1fr; }
+      .biz-grid { grid-template-columns: 1fr 1fr; }
+      .cta-section { padding: 60px 24px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">LEARN THE BIZ</div>
+    <div class="nav-links">
+      <a href="#problem">The Problem</a>
+      <a href="#solution">How It Works</a>
+      <div class="dropdown-wrap">
+        <button class="dropdown-btn" id="dropBtn">Start Here &#9660;</button>
+        <div class="dropdown-menu" id="dropMenu">
+          <a href="llc.html">LLC</a>
+          <a href="scorp.html">S-Corp</a>
+          <a href="sole.html">Sole Proprietorship</a>
+          <a class="coming">Partnership — coming soon</a>
+          <a class="coming">C-Corp — coming soon</a>
+          <a class="coming">Nonprofit — coming soon</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-tag">Learn The Biz — Business Education for Real People</div>
+    <h1>Stop Guessing.<br><span>Start Building.</span></h1>
+    <div class="gold-line"></div>
+    <p>The step-by-step guide to starting your business — no fluff, plain English, zero experience required.</p>
+    <a class="cta-btn" href="#pick">Choose Your Business Type &rarr;</a>
+  </section>
+
+  <!-- PROBLEM -->
+  <section id="problem">
+    <div class="section-label">The Problem</div>
+    <h2>Starting a business feels impossible.<br>It doesn't have to.</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon">?</div>
+        <h3>You don't know where to start</h3>
+        <p>Google sends you in circles. Every article contradicts the last. You end up more confused than when you started.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">!</div>
+        <h3>Legal paperwork feels overwhelming</h3>
+        <p>LLCs, EINs, registered agents — the jargon alone is enough to make you quit before you even begin.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">$</div>
+        <h3>Fear of making a costly mistake</h3>
+        <p>You worry that one wrong move will cost you money, time, or worse — set you back before you even launch.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SOLUTION -->
+  <section id="solution">
+    <div class="section-label">The Solution</div>
+    <h2>JAY breaks it all down for you.</h2>
+    <div class="solution-grid">
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div>
+            <h4>Pick your business type</h4>
+            <p>Choose the structure that fits your goals — we explain what each one actually means.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div>
+            <h4>Follow your step-by-step guide</h4>
+            <p>No legal jargon. No filler. Just clear, numbered steps written for real beginners.</p>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div>
+            <h4>Launch with confidence</h4>
+            <p>Know exactly what you've done, why you did it, and what comes next.</p>
+          </div>
+        </div>
+      </div>
+      <div class="trust-visual">
+        <div class="big">100%</div>
+        <div class="lbl">Plain English</div>
+        <div class="divider"></div>
+        <div class="big">0</div>
+        <div class="lbl">Jargon. Zero Fluff.</div>
+        <div class="divider"></div>
+        <div class="big">Free</div>
+        <div class="lbl">To Get Started</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section id="trust">
+    <div class="section-label">Why Trust JAY</div>
+    <h2>Built for people who are starting from zero.</h2>
+    <div class="cards">
+      <div class="card gold-card">
+        <h3>Plain English, always</h3>
+        <p>No law degree required. Every concept is explained the way a knowledgeable friend would — not a textbook.</p>
+      </div>
+      <div class="card gold-card">
+        <h3>Beginner-first, always</h3>
+        <p>We never assume you know the basics. Every guide starts at step one and walks you through to the finish line.</p>
+      </div>
+      <div class="card gold-card">
+        <h3>Step-by-step, always</h3>
+        <p>No vague advice. No "it depends." Every guide gives you a clear, numbered path from idea to official business.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="cta-section" id="pick">
+    <div class="section-label">Get Started</div>
+    <h2>Ready? Pick your business type.</h2>
+    <p>Each one gets its own complete, plain-English guide — built just for beginners.</p>
+    <div class="biz-grid">
+      <button class="biz-btn" onclick="window.location.href='llc.html'">LLC</button>
+      <button class="biz-btn" onclick="window.location.href='scorp.html'">S-Corp</button>
+      <button class="biz-btn" onclick="window.location.href='sole.html'">Sole Proprietorship</button>
+      <button class="biz-btn soon">Partnership<br>coming soon</button>
+      <button class="biz-btn soon">C-Corp<br>coming soon</button>
+      <button class="biz-btn soon">Nonprofit<br>coming soon</button>
+    </div>
+    <a class="cta-btn" href="llc.html">Start With LLC &rarr;</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2025 Learn The Biz &middot; All Rights Reserved</p>
+  </footer>
+
+  <script>
+    const btn = document.getElementById('dropBtn');
+    const menu = document.getElementById('dropMenu');
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      menu.classList.toggle('open');
+    });
+    document.addEventListener('click', function() {
+      menu.classList.remove('open');
+    });
+  </script>
+
+</body>
+</html>
