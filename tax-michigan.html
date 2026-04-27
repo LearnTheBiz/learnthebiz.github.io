@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Michigan Business Taxes — Learn The Biz</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
+
+    nav {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px; border-bottom: 0.5px solid #2a2a2a;
+      background: #0a0a0a; position: sticky; top: 0; z-index: 100;
+    }
+    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; text-decoration: none; }
+    .nav-back { font-size: 13px; color: #aaa; text-decoration: none; letter-spacing: 1px; }
+    .nav-back:hover { color: #c9a84c; }
+
+    .hero {
+      text-align: center; padding: 72px 40px 52px;
+      border-bottom: 0.5px solid #1e1a08;
+    }
+    .state-badge {
+      display: inline-block; background: #1a1400; border: 0.5px solid #c9a84c;
+      color: #c9a84c; font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      padding: 6px 16px; border-radius: 20px; margin-bottom: 20px;
+    }
+    .hero h1 { font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+    .hero h1 span { color: #c9a84c; }
+    .gold-line { width: 60px; height: 2px; background: #c9a84c; margin: 0 auto 24px; border-radius: 1px; }
+    .hero p { font-size: 17px; color: #999; max-width: 600px; margin: 0 auto; line-height: 1.65; }
+
+    .disclaimer {
+      background: #1a1000; border-top: 0.5px solid #4a3000; border-bottom: 0.5px solid #4a3000;
+      padding: 16px 40px; text-align: center;
+    }
+    .disclaimer p { font-size: 13px; color: #888; line-height: 1.6; }
+    .disclaimer strong { color: #f0a500; }
+
+    /* TAB STRIP */
+    .tab-strip {
+      display: flex; overflow-x: auto; border-bottom: 0.5px solid #2a2a2a;
+      background: #0d0d0d; position: sticky; top: 61px; z-index: 90;
+      scrollbar-width: none;
+    }
+    .tab-strip::-webkit-scrollbar { display: none; }
+    .tab-btn {
+      flex-shrink: 0; padding: 16px 28px; font-size: 14px; font-weight: 500;
+      color: #666; background: none; border: none; border-bottom: 2px solid transparent;
+      cursor: pointer; font-family: inherit; letter-spacing: 0.5px; white-space: nowrap;
+    }
+    .tab-btn:hover { color: #c9a84c; }
+    .tab-btn.active { color: #c9a84c; border-bottom-color: #c9a84c; }
+
+    .main { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
+
+    .tax-panel { display: none; }
+    .tax-panel.active { display: block; }
+
+    .panel-header { display: flex; align-items: center; gap: 20px; margin-bottom: 12px; }
+    .panel-icon { width: 56px; height: 56px; border-radius: 14px; background: #1a1400; border: 0.5px solid #c9a84c; display: flex; align-items: center; justify-content: center; font-size: 24px; flex-shrink: 0; }
+    .panel-title h2 { font-size: 30px; font-weight: 900; }
+    .panel-title p { font-size: 13px; color: #666; letter-spacing: 1px; text-transform: uppercase; margin-top: 2px; }
+    .panel-intro { font-size: 17px; color: #bbb; line-height: 1.75; margin-bottom: 48px; padding-bottom: 40px; border-bottom: 0.5px solid #1a1a1a; }
+
+    /* QUICK NUMBERS */
+    .quick-nums { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 48px; }
+    .qnum { background: #0f0f0f; border: 0.5px solid #2a2a2a; border-radius: 10px; padding: 20px; text-align: center; }
+    .qnum .val { font-size: 22px; font-weight: 700; color: #c9a84c; }
+    .qnum .key { font-size: 11px; color: #666; letter-spacing: 1px; text-transform: uppercase; margin-top: 6px; }
+
+    /* TAX OPTION CARDS */
+    .tax-options-label { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 20px; }
+    .tax-option-card { background: #111; border: 0.5px solid #222; border-radius: 14px; padding: 32px; margin-bottom: 24px; }
+    .tax-option-card.recommended { border-color: #c9a84c; }
+    .rec-badge { display: inline-block; background: #1a1400; border: 0.5px solid #c9a84c; color: #c9a84c; font-size: 11px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 14px; }
+    .tax-option-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .tax-option-card .subtitle { font-size: 13px; color: #666; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 18px; }
+    .tax-option-card p { font-size: 16px; color: #999; line-height: 1.75; margin-bottom: 16px; }
+    .tax-option-card p:last-of-type { margin-bottom: 0; }
+
+    /* HOW IT WORKS */
+    .how-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 20px 0; }
+    .how-item { background: #0f0f0f; border: 0.5px solid #2a2a2a; border-radius: 10px; padding: 18px; }
+    .how-item h4 { font-size: 12px; letter-spacing: 2px; color: #c9a84c; text-transform: uppercase; margin-bottom: 10px; }
+    .how-item p { font-size: 14px; color: #999; line-height: 1.65; }
+
+    /* FILING DEADLINES */
+    .deadlines-section { margin: 32px 0; }
+    .deadlines-section h4 { font-size: 12px; letter-spacing: 2px; color: #c9a84c; text-transform: uppercase; margin-bottom: 16px; }
+    .deadline-row { display: flex; align-items: flex-start; gap: 16px; padding: 14px 0; border-bottom: 0.5px solid #1a1a1a; }
+    .deadline-row:last-child { border-bottom: none; }
+    .deadline-date { font-size: 14px; font-weight: 700; color: #c9a84c; min-width: 100px; flex-shrink: 0; }
+    .deadline-desc { font-size: 14px; color: #999; line-height: 1.6; }
+    .deadline-form { font-size: 12px; color: #555; margin-top: 4px; }
+
+    /* FORMS + LINKS */
+    .forms-section { margin: 32px 0; }
+    .forms-section h4 { font-size: 12px; letter-spacing: 2px; color: #c9a84c; text-transform: uppercase; margin-bottom: 16px; }
+    .form-link-row { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: #0f0f0f; border: 0.5px solid #2a2a2a; border-radius: 8px; margin-bottom: 10px; }
+    .form-link-row .form-name { font-size: 15px; font-weight: 500; color: #e0e0e0; }
+    .form-link-row .form-desc { font-size: 13px; color: #666; margin-top: 3px; }
+    .form-link-row a { display: inline-block; background: #1a1400; border: 0.5px solid #c9a84c; color: #c9a84c; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; padding: 8px 16px; border-radius: 6px; text-decoration: none; white-space: nowrap; flex-shrink: 0; }
+    .form-link-row a:hover { background: #2a2000; }
+
+    /* WARNING / TIP BOXES */
+    .warn-box { background: #1a1000; border: 0.5px solid #4a3000; border-radius: 10px; padding: 20px 24px; margin: 20px 0; }
+    .warn-box h4 { font-size: 12px; letter-spacing: 2px; color: #f0a500; text-transform: uppercase; margin-bottom: 10px; }
+    .warn-box p { font-size: 15px; color: #999; line-height: 1.65; }
+    .tip-box { background: #0a1a0a; border: 0.5px solid #2a4a2a; border-radius: 10px; padding: 20px 24px; margin: 20px 0; }
+    .tip-box h4 { font-size: 12px; letter-spacing: 2px; color: #4caf50; text-transform: uppercase; margin-bottom: 10px; }
+    .tip-box p { font-size: 15px; color: #999; line-height: 1.65; }
+
+    .section-divider { height: 0.5px; background: #1a1a1a; margin: 48px 0; }
+
+    footer { padding: 28px 40px; text-align: center; border-top: 0.5px solid #1a1a1a; }
+    footer p { font-size: 12px; color: #333; letter-spacing: 1px; }
+
+    @media (max-width: 700px) {
+      nav { padding: 16px 20px; }
+      .hero { padding: 52px 24px 36px; }
+      .hero h1 { font-size: 28px; }
+      .disclaimer { padding: 14px 24px; }
+      .main { padding: 40px 24px; }
+      .quick-nums { grid-template-columns: 1fr 1fr; }
+      .how-grid { grid-template-columns: 1fr; }
+      .form-link-row { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">LEARN THE BIZ</a>
+    <a class="nav-back" href="learn.html">← Back to Business Types</a>
+  </nav>
+
+  <div class="hero">
+    <div class="state-badge">Michigan Tax Guide</div>
+    <h1>Business Taxes in <span>Michigan</span></h1>
+    <div class="gold-line"></div>
+    <p>A complete plain-English breakdown of every tax obligation for each business type in Michigan — what you owe, when you file, and exactly where to do it. All information sourced from official IRS and Michigan Department of Treasury sources.</p>
+  </div>
+
+  <div class="disclaimer">
+    <p><strong>Important:</strong> This guide is for educational purposes only. Tax laws change and your situation may be unique. Always consult a licensed CPA or tax professional before making tax decisions. When in doubt, hire a pro — the cost of an accountant is almost always far less than the cost of a tax mistake.</p>
+  </div>
+
+  <!-- TAB STRIP -->
+  <div class="tab-strip">
+    <button class="tab-btn active" onclick="showTax('llc', this)">LLC</button>
+    <button class="tab-btn" onclick="showTax('scorp', this)">S-Corp</button>
+    <button class="tab-btn" onclick="showTax('ccorp', this)">C-Corp</button>
+    <button class="tab-btn" onclick="showTax('sole', this)">Sole Proprietorship</button>
+    <button class="tab-btn" onclick="showTax('partnership', this)">Partnership</button>
+    <button class="tab-btn" onclick="showTax('nonprofit', this)">Nonprofit</button>
+  </div>
+
+  <div class="main">
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- LLC TAX PANEL -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="tax-panel active" id="tax-llc">
+      <div class="panel-header">
+        <div class="panel-icon">🏢</div>
+        <div class="panel-title">
+          <p>Michigan Tax Guide</p>
+          <h2>LLC Taxes</h2>
+        </div>
+      </div>
+      <p class="panel-intro">Michigan LLCs are not taxed as a separate entity by default. Instead taxes "pass through" to the owners who report business income on their personal returns. However you have up to 4 different ways your LLC can be taxed — and choosing the right one can save you thousands of dollars per year.</p>
+
+      <div class="quick-nums">
+        <div class="qnum"><div class="val">4.25%</div><div class="key">MI Personal Income Tax</div></div>
+        <div class="qnum"><div class="val">15.3%</div><div class="key">Federal Self-Employment Tax</div></div>
+        <div class="qnum"><div class="val">6%</div><div class="key">MI Sales Tax (if applicable)</div></div>
+        <div class="qnum"><div class="val">$0</div><div class="key">MI Franchise Tax</div></div>
+      </div>
+
+      <div class="tax-options-label">Your Tax Options — Choose One</div>
+
+      <!-- OPTION 1 -->
+      <div class="tax-option-card recommended">
+        <div class="rec-badge">Most Common for New LLCs</div>
+        <h3>Option 1 — Default: Pass-Through Taxation</h3>
+        <div class="subtitle">Single-Member = Sole Prop Tax | Multi-Member = Partnership Tax</div>
+        <p>This is automatic — you don't have to do anything to elect it. If you have one member, the IRS treats your LLC as a "disregarded entity" and you report all business income and expenses on your personal tax return using Schedule C. If you have two or more members, the LLC files a partnership return and each member pays tax on their share.</p>
+        <p><strong style="color:#e0e0e0;">What you pay in Michigan:</strong> Michigan's flat 4.25% individual income tax rate on your share of LLC profits. You also pay federal self-employment tax (15.3%) on net profits — this covers Social Security and Medicare. You can deduct half of self-employment tax on your federal return.</p>
+
+        <div class="how-grid">
+          <div class="how-item">
+            <h4>Single-Member LLC</h4>
+            <p>Report income on IRS Schedule C (attached to Form 1040). Michigan: report on Form MI-1040. No separate LLC tax return needed. You pay all taxes personally.</p>
+          </div>
+          <div class="how-item">
+            <h4>Multi-Member LLC</h4>
+            <p>LLC files IRS Form 1065 (Partnership Return). Each member gets a Schedule K-1 showing their share. Members report K-1 income on personal Form 1040 and MI-1040.</p>
+          </div>
+        </div>
+
+        <div class="deadlines-section">
+          <h4>Key Filing Deadlines</h4>
+          <div class="deadline-row">
+            <div class="deadline-date">April 15</div>
+            <div><div class="deadline-desc">Personal tax return due (Form 1040 + Schedule C for single-member)</div><div class="deadline-form">Form: IRS Form 1040 + Schedule C</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">March 15</div>
+            <div><div class="deadline-desc">Partnership return due (multi-member LLCs)</div><div class="deadline-form">Form: IRS Form 1065 + Schedule K-1 for each member</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">April 15</div>
+            <div><div class="deadline-desc">Michigan personal income tax return due</div><div class="deadline-form">Form: MI-1040</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Apr 15, Jun 16, Sep 15, Jan 15</div>
+            <div><div class="deadline-desc">Quarterly estimated tax payments (if you expect to owe $1,000+ in federal tax or $500+ in Michigan tax)</div><div class="deadline-form">Federal: Form 1040-ES | Michigan: Form MI-1040ES</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">February 15</div>
+            <div><div class="deadline-desc">Michigan LLC Annual Statement due to LARA ($25 fee)</div><div class="deadline-form">File at: mibusinessregistry.lara.state.mi.us</div></div>
+          </div>
+        </div>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 1040 + Schedule C</div><div class="form-desc">Federal personal income tax — single-member LLC</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-schedule-c-form-1040" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 1065</div><div class="form-desc">Federal partnership return — multi-member LLC</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-form-1065" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Form MI-1040</div><div class="form-desc">Michigan personal income tax return</div></div>
+            <a href="https://www.michigan.gov/taxes/iit/iit-forms" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Treasury Online (MTO)</div><div class="form-desc">Register and pay Michigan business taxes online</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">Go to MTO</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION 2 -->
+      <div class="tax-option-card">
+        <h3>Option 2 — S-Corp Tax Election</h3>
+        <div class="subtitle">Best for LLCs making $60,000+ in net profit per year</div>
+        <p>You can elect to have your LLC taxed as an S-Corporation by filing IRS Form 2553. This lets you pay yourself a reasonable salary (subject to payroll taxes) and take the remaining profits as distributions — which are NOT subject to self-employment tax. This can save $5,000–$20,000+ per year once your profits are high enough.</p>
+        <p><strong style="color:#e0e0e0;">Michigan treatment:</strong> Michigan follows the federal S-Corp election. Your LLC is treated as an S-Corp at the state level. The LLC itself generally does not pay Michigan Corporate Income Tax — instead income passes through to shareholders who pay Michigan's 4.25% individual income tax rate on their share.</p>
+
+        <div class="how-grid">
+          <div class="how-item">
+            <h4>How to Elect S-Corp Status</h4>
+            <p>File IRS Form 2553 with the IRS. Must be filed by March 15 of the tax year you want it to take effect, or within 75 days of forming your LLC. All members must sign and consent.</p>
+          </div>
+          <div class="how-item">
+            <h4>Payroll Requirement</h4>
+            <p>You MUST pay yourself a "reasonable salary" as a W-2 employee of your own LLC. The IRS scrutinizes S-Corps that pay no salary. Work with a CPA to determine what's reasonable for your industry.</p>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <h4>💡 When Does S-Corp Make Sense?</h4>
+          <p>Most accountants recommend waiting until your LLC has at least $60,000–$70,000 in net profit per member before making the S-Corp election. Below that threshold, the added complexity and cost of running payroll often outweigh the tax savings. Talk to a CPA before making this election.</p>
+        </div>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 2553</div><div class="form-desc">S-Corporation election — file with the IRS</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-form-2553" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 1120-S</div><div class="form-desc">Annual S-Corp tax return</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-form-1120-s" target="_blank">File / Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION 3 -->
+      <div class="tax-option-card">
+        <h3>Option 3 — C-Corp Tax Election</h3>
+        <div class="subtitle">Rarely used — only for specific situations</div>
+        <p>You can elect to have your LLC taxed as a C-Corporation by filing IRS Form 8832. The corporation pays federal income tax at a flat 21% rate. Then when profits are distributed to members as dividends, members pay personal income tax again — this is "double taxation." Michigan also charges a 6% Corporate Income Tax (CIT) on C-Corps.</p>
+        <p>This election is rarely beneficial for most small businesses. It's mainly used by large employers who want to deduct 100% of employee health insurance premiums. Do not make this election without consulting a CPA first.</p>
+
+        <div class="warn-box">
+          <h4>⚠ Caution</h4>
+          <p>The C-Corp election triggers Michigan's 6% Corporate Income Tax if your gross receipts exceed $350,000. Combined with federal corporate tax (21%) and the double taxation on distributions, this option is almost never the right choice for a small LLC. Consult a CPA before electing C-Corp status.</p>
+        </div>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 8832</div><div class="form-desc">C-Corporation entity classification election</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-form-8832" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Form 4891</div><div class="form-desc">Michigan Corporate Income Tax annual return</div></div>
+            <a href="https://www.michigan.gov/taxes/business-taxes/cit" target="_blank">File / Learn More</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- OPTION 4 -->
+      <div class="tax-option-card">
+        <h3>Option 4 — Michigan Flow-Through Entity (FTE) Tax</h3>
+        <div class="subtitle">Optional election — can save money on federal taxes</div>
+        <p>Michigan offers an optional Flow-Through Entity Tax that allows multi-member LLCs and S-Corps to pay Michigan state income tax at the entity level (4.05% rate) instead of having members pay it individually. The big benefit: because the business pays it, it's fully deductible on the federal return — bypassing the federal $10,000 SALT deduction cap.</p>
+        <p><strong style="color:#e0e0e0;">Who it helps:</strong> Business owners whose state and local taxes exceed $10,000 per year. Single-member LLCs and sole proprietorships are NOT eligible for this election.</p>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Form 5772 via MTO</div><div class="form-desc">FTE Tax election and annual return — filed electronically</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">File via MTO</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADDITIONAL MICHIGAN TAXES -->
+      <div class="section-divider"></div>
+      <div class="tax-options-label">Other Michigan Taxes That May Apply to Your LLC</div>
+
+      <div class="tax-option-card">
+        <h3>Michigan Sales Tax</h3>
+        <p>If your LLC sells taxable goods or services in Michigan, you must collect and remit 6% sales tax. You must register with the Michigan Department of Treasury through Michigan Treasury Online (MTO) before making your first taxable sale. Michigan has NO local sales taxes — the state rate of 6% is the only rate.</p>
+        <div class="deadlines-section">
+          <h4>Filing Frequency & Deadlines</h4>
+          <div class="deadline-row">
+            <div class="deadline-date">Monthly</div>
+            <div><div class="deadline-desc">High-volume sellers — return due by the 20th of the following month</div><div class="deadline-form">Form: 5080 (monthly/quarterly) | File via MTO</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Quarterly</div>
+            <div><div class="deadline-desc">Medium-volume sellers — due by the 20th after each quarter ends</div><div class="deadline-form">Form: 5080 | File via MTO</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">February 28</div>
+            <div><div class="deadline-desc">Annual reconciliation return due for all filers</div><div class="deadline-form">Form: 5081 (annual) | File via MTO</div></div>
+          </div>
+        </div>
+        <div class="forms-section">
+          <h4>Where to Register and File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Treasury Online (MTO)</div><div class="form-desc">Register for sales tax license and file returns</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">Go to MTO</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="tax-option-card">
+        <h3>Michigan Employer / Payroll Taxes</h3>
+        <p>If your LLC has any employees (including yourself if you elect S-Corp status), you must register for and pay Michigan payroll taxes. This includes withholding Michigan income tax from employee wages at 4.25% and paying Michigan Unemployment Insurance (UI) tax.</p>
+        <div class="forms-section">
+          <h4>Where to Register and File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Treasury Online (MTO)</div><div class="form-desc">Register for withholding account and file employer returns</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">Go to MTO</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan UIA — MiWAM Portal</div><div class="form-desc">Register for Unemployment Insurance and file quarterly wage reports</div></div>
+            <a href="https://www.michigan.gov/uia" target="_blank">Go to MiWAM</a>
+          </div>
+        </div>
+        <div class="warn-box">
+          <h4>⚠ City Income Taxes</h4>
+          <p>24 Michigan cities charge their own local income taxes ranging from 1% to 2.4%. These include Detroit, Grand Rapids, Lansing, Flint, Saginaw, and Battle Creek. If your business operates in or employs people who work in any of these cities, you have separate local filing obligations. Check with your city's treasury department for requirements.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- S-CORP TAX PANEL -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="tax-panel" id="tax-scorp">
+      <div class="panel-header">
+        <div class="panel-icon">📊</div>
+        <div class="panel-title">
+          <p>Michigan Tax Guide</p>
+          <h2>S-Corp Taxes</h2>
+        </div>
+      </div>
+      <p class="panel-intro">An S-Corporation in Michigan is a pass-through entity — the business itself does not pay federal income tax. Instead profits and losses flow through to shareholders who report them on personal returns. The primary tax advantage is reduced self-employment taxes compared to a standard LLC. Michigan recognizes the federal S-Corp election automatically.</p>
+
+      <div class="quick-nums">
+        <div class="qnum"><div class="val">4.25%</div><div class="key">MI Individual Income Tax</div></div>
+        <div class="qnum"><div class="val">0%</div><div class="key">MI Corporate Tax (S-Corp)</div></div>
+        <div class="qnum"><div class="val">March 15</div><div class="key">Federal Return Due</div></div>
+        <div class="qnum"><div class="val">May 15</div><div class="key">MI Annual Report Due</div></div>
+      </div>
+
+      <div class="tax-options-label">Federal Tax Obligations</div>
+
+      <div class="tax-option-card recommended">
+        <div class="rec-badge">Primary Filing</div>
+        <h3>Federal S-Corp Return — IRS Form 1120-S</h3>
+        <div class="subtitle">Due March 15 each year (calendar year filers)</div>
+        <p>Your S-Corp must file IRS Form 1120-S every year reporting total income, deductions, credits, and each shareholder's share of those items. The S-Corp itself does not pay federal income tax. Each shareholder receives a Schedule K-1 showing their share of income which they report on their personal Form 1040.</p>
+
+        <div class="how-grid">
+          <div class="how-item">
+            <h4>Salary Requirement</h4>
+            <p>As a shareholder-employee you must pay yourself a "reasonable salary" subject to payroll taxes (FICA — 7.65% employer + 7.65% employee). Additional profits taken as distributions are NOT subject to self-employment tax — this is the S-Corp tax saving.</p>
+          </div>
+          <div class="how-item">
+            <h4>Payroll Forms Required</h4>
+            <p>File Form 941 quarterly (payroll tax deposits). File W-2 forms for all employees including yourself by January 31. File Form 940 annually for federal unemployment tax (FUTA).</p>
+          </div>
+        </div>
+
+        <div class="deadlines-section">
+          <h4>Key Deadlines</h4>
+          <div class="deadline-row">
+            <div class="deadline-date">March 15</div>
+            <div><div class="deadline-desc">Federal S-Corp return due</div><div class="deadline-form">Form: IRS Form 1120-S</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">April 15</div>
+            <div><div class="deadline-desc">Personal income tax return due (including K-1 income)</div><div class="deadline-form">Form: IRS Form 1040 + Schedule E</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Quarterly</div>
+            <div><div class="deadline-desc">Payroll tax deposits and returns</div><div class="deadline-form">Form: IRS Form 941 — due April 30, July 31, October 31, January 31</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">January 31</div>
+            <div><div class="deadline-desc">W-2 forms to employees and W-3 to SSA</div><div class="deadline-form">File via SSA Business Services Online</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">May 15</div>
+            <div><div class="deadline-desc">Michigan Annual Report due to LARA</div><div class="deadline-form">File at: mibusinessregistry.lara.state.mi.us</div></div>
+          </div>
+        </div>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 1120-S</div><div class="form-desc">Annual S-Corp federal return</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-form-1120-s" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 941</div><div class="form-desc">Quarterly payroll tax return</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-form-941" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Treasury Online (MTO)</div><div class="form-desc">Michigan payroll withholding, sales tax, and employer taxes</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">Go to MTO</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan LARA — Annual Report</div><div class="form-desc">Annual report for Michigan corporations — due May 15</div></div>
+            <a href="https://mibusinessregistry.lara.state.mi.us" target="_blank">File Annual Report</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <h4>⚠ Michigan Extension — Form 4</h4>
+        <p>Michigan allows a 4-month extension for state filing using Form 4. However unlike federal extensions, any Michigan tax owed must still be paid by the original deadline even if you file for an extension. A federal extension (Form 7004) does NOT automatically extend your Michigan filing deadline.</p>
+      </div>
+
+      <div class="tip-box">
+        <h4>💡 Michigan Flow-Through Entity Tax Also Available for S-Corps</h4>
+        <p>Michigan S-Corps are eligible to elect the Flow-Through Entity (FTE) Tax, allowing the business to pay Michigan income tax at the entity level (4.05%) instead of shareholders paying it individually. This can be a significant federal tax savings for shareholders whose state taxes exceed the $10,000 SALT cap. File Form 5772 via Michigan Treasury Online.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- C-CORP TAX PANEL -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="tax-panel" id="tax-ccorp">
+      <div class="panel-header">
+        <div class="panel-icon">🏦</div>
+        <div class="panel-title">
+          <p>Michigan Tax Guide</p>
+          <h2>C-Corp Taxes</h2>
+        </div>
+      </div>
+      <p class="panel-intro">C-Corporations pay their own federal and state income taxes — separate from the owners. Michigan imposes a flat 6% Corporate Income Tax (CIT) on C-Corps with over $350,000 in gross receipts. C-Corps also pay federal corporate income tax at 21%. When profits are distributed to shareholders as dividends, shareholders pay personal income tax on those dividends — this is called double taxation.</p>
+
+      <div class="quick-nums">
+        <div class="qnum"><div class="val">21%</div><div class="key">Federal Corporate Tax</div></div>
+        <div class="qnum"><div class="val">6%</div><div class="key">Michigan CIT Rate</div></div>
+        <div class="qnum"><div class="val">$350K</div><div class="key">MI CIT Gross Receipts Threshold</div></div>
+        <div class="qnum"><div class="val">April 15</div><div class="key">Federal Return Due</div></div>
+      </div>
+
+      <div class="tax-option-card recommended">
+        <div class="rec-badge">Primary Federal Filing</div>
+        <h3>Federal Corporate Return — IRS Form 1120</h3>
+        <div class="subtitle">Due April 15 for calendar-year C-Corps</div>
+        <p>Your C-Corp files IRS Form 1120 annually reporting all corporate income, deductions, and credits. The corporation pays federal income tax at a flat 21% rate on taxable income. Shareholders do not report corporate income on personal returns unless dividends are distributed.</p>
+
+        <div class="deadlines-section">
+          <h4>Key Deadlines</h4>
+          <div class="deadline-row">
+            <div class="deadline-date">April 15</div>
+            <div><div class="deadline-desc">Federal corporate income tax return due</div><div class="deadline-form">Form: IRS Form 1120</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Apr 15, Jun 15, Sep 15, Dec 15</div>
+            <div><div class="deadline-desc">Federal quarterly estimated tax payments (if liability over $500)</div><div class="deadline-form">Form: IRS Form 1120-W</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Apr 15, Jul 15, Oct 15, Jan 15</div>
+            <div><div class="deadline-desc">Michigan CIT quarterly estimated payments (if liability over $800)</div><div class="deadline-form">Form: Michigan Form 4913 via MTO</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">May 15</div>
+            <div><div class="deadline-desc">Michigan Annual Report due to LARA</div><div class="deadline-form">File at: mibusinessregistry.lara.state.mi.us</div></div>
+          </div>
+        </div>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 1120</div><div class="form-desc">Federal C-Corp annual income tax return</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-form-1120" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Form 4891</div><div class="form-desc">Michigan Corporate Income Tax (CIT) annual return</div></div>
+            <a href="https://www.michigan.gov/taxes/business-taxes/cit" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Form 4913</div><div class="form-desc">Michigan CIT quarterly estimated payments</div></div>
+            <a href="https://www.michigan.gov/taxes/business-taxes/cit" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Treasury Online (MTO)</div><div class="form-desc">Register and pay all Michigan business taxes</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">Go to MTO</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="warn-box">
+        <h4>⚠ Double Taxation Explained</h4>
+        <p>When your C-Corp earns $100,000 in profit, it pays 21% federal corporate tax ($21,000) leaving $79,000. If you distribute that $79,000 to yourself as a dividend, you pay personal income tax on it again at your individual rate (0%, 15%, or 20% depending on your bracket). Michigan also taxes dividend income on your personal MI-1040. This is why most small businesses avoid the C-Corp structure.</p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- SOLE PROPRIETORSHIP TAX PANEL -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="tax-panel" id="tax-sole">
+      <div class="panel-header">
+        <div class="panel-icon">👤</div>
+        <div class="panel-title">
+          <p>Michigan Tax Guide</p>
+          <h2>Sole Proprietorship Taxes</h2>
+        </div>
+      </div>
+      <p class="panel-intro">Sole proprietorship taxes are the simplest of any business structure. There is no separate business tax return. All business income and expenses are reported directly on your personal tax return. You and your business are legally and financially the same entity — which means taxes are simple but personal liability risk is high.</p>
+
+      <div class="quick-nums">
+        <div class="qnum"><div class="val">4.25%</div><div class="key">MI Personal Income Tax</div></div>
+        <div class="qnum"><div class="val">15.3%</div><div class="key">Self-Employment Tax</div></div>
+        <div class="qnum"><div class="val">10–37%</div><div class="key">Federal Income Tax Rate</div></div>
+        <div class="qnum"><div class="val">$0</div><div class="key">Separate Business Return</div></div>
+      </div>
+
+      <div class="tax-option-card recommended">
+        <div class="rec-badge">Only Tax Option</div>
+        <h3>Pass-Through — Schedule C on Personal Return</h3>
+        <div class="subtitle">The only tax treatment for sole proprietors</div>
+        <p>All business income is reported on IRS Schedule C which is attached to your personal Form 1040. Net profit from Schedule C flows to your personal return where you pay federal income tax at your personal rate (10%–37%) plus self-employment tax of 15.3% (covers Social Security and Medicare). You can deduct half of self-employment tax on your federal return.</p>
+        <p><strong style="color:#e0e0e0;">Michigan:</strong> Report business income on Form MI-1040. Michigan taxes at a flat 4.25% rate on all income including business profit. Michigan has no separate sole proprietorship tax filing.</p>
+
+        <div class="deadlines-section">
+          <h4>Key Deadlines</h4>
+          <div class="deadline-row">
+            <div class="deadline-date">April 15</div>
+            <div><div class="deadline-desc">Federal personal tax return with Schedule C due</div><div class="deadline-form">Form: IRS Form 1040 + Schedule C</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">April 15</div>
+            <div><div class="deadline-desc">Michigan personal income tax return due</div><div class="deadline-form">Form: MI-1040</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Apr 15, Jun 16, Sep 15, Jan 15</div>
+            <div><div class="deadline-desc">Quarterly estimated tax payments (if expecting $1,000+ federal or $500+ Michigan tax owed)</div><div class="deadline-form">Federal: Form 1040-ES | Michigan: MI-1040ES via MTO</div></div>
+          </div>
+        </div>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 1040 + Schedule C</div><div class="form-desc">Report business income and expenses — file with IRS</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-schedule-c-form-1040" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Schedule SE</div><div class="form-desc">Calculate self-employment tax (15.3%) on net profit</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-schedule-se-form-1040" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Form MI-1040</div><div class="form-desc">Michigan personal income tax return</div></div>
+            <a href="https://www.michigan.gov/taxes/iit/iit-forms" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Treasury Online (MTO)</div><div class="form-desc">Pay estimated taxes and register for sales tax if applicable</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">Go to MTO</a>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <h4>💡 Common Deductions for Sole Proprietors</h4>
+          <p>You can deduct legitimate business expenses on Schedule C to reduce taxable income. Common deductions include: home office (if used exclusively for business), vehicle mileage (67 cents/mile in 2024), business meals (50%), health insurance premiums, business phone and internet, equipment and tools, professional services (accountant, attorney), and advertising costs. Keep receipts for everything.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- PARTNERSHIP TAX PANEL -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="tax-panel" id="tax-partnership">
+      <div class="panel-header">
+        <div class="panel-icon">🤝</div>
+        <div class="panel-title">
+          <p>Michigan Tax Guide</p>
+          <h2>Partnership Taxes</h2>
+        </div>
+      </div>
+      <p class="panel-intro">Partnerships are pass-through entities — the partnership itself does not pay federal or Michigan income tax. Instead income and losses flow through to each partner who reports their share on their personal returns. The partnership does file an informational tax return each year. Each partner pays self-employment tax on their share of profits.</p>
+
+      <div class="quick-nums">
+        <div class="qnum"><div class="val">4.25%</div><div class="key">MI Personal Income Tax</div></div>
+        <div class="qnum"><div class="val">15.3%</div><div class="key">Self-Employment Tax Per Partner</div></div>
+        <div class="qnum"><div class="val">March 15</div><div class="key">Partnership Return Due</div></div>
+        <div class="qnum"><div class="val">$0</div><div class="key">Entity-Level Federal Tax</div></div>
+      </div>
+
+      <div class="tax-option-card recommended">
+        <div class="rec-badge">Primary Filing</div>
+        <h3>Partnership Return — IRS Form 1065</h3>
+        <div class="subtitle">Due March 15 each year — informational return only</div>
+        <p>The partnership files IRS Form 1065 each year as an informational return. The partnership itself pays no tax. Each partner receives a Schedule K-1 from the partnership showing their share of income, deductions, and credits. Partners report K-1 income on their personal Form 1040 and pay tax at their individual rate.</p>
+        <p><strong style="color:#e0e0e0;">Michigan:</strong> Multi-member partnerships may need to file a Michigan Partnership Return (Form MI-1065) with the Michigan Department of Treasury. Each partner reports their share of Michigan income on Form MI-1040 at the 4.25% flat rate.</p>
+
+        <div class="deadlines-section">
+          <h4>Key Deadlines</h4>
+          <div class="deadline-row">
+            <div class="deadline-date">March 15</div>
+            <div><div class="deadline-desc">Federal partnership return due</div><div class="deadline-form">Form: IRS Form 1065 + Schedule K-1 for each partner</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">April 15</div>
+            <div><div class="deadline-desc">Each partner's personal return due (including K-1 income)</div><div class="deadline-form">Form: IRS Form 1040 + Schedule E</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">April 15</div>
+            <div><div class="deadline-desc">Michigan personal return due for each partner</div><div class="deadline-form">Form: MI-1040</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Quarterly</div>
+            <div><div class="deadline-desc">Each partner makes estimated tax payments if expected to owe $1,000+</div><div class="deadline-form">Federal: 1040-ES | Michigan: MI-1040ES</div></div>
+          </div>
+        </div>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 1065</div><div class="form-desc">Federal partnership informational return</div></div>
+            <a href="https://www.irs.gov/forms-pubs/about-form-1065" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Form MI-1065</div><div class="form-desc">Michigan partnership return</div></div>
+            <a href="https://www.michigan.gov/taxes/business-taxes/pit" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Treasury Online (MTO)</div><div class="form-desc">Pay Michigan estimated taxes and business taxes</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">Go to MTO</a>
+          </div>
+        </div>
+
+        <div class="tip-box">
+          <h4>💡 FTE Tax Also Available for Partnerships</h4>
+          <p>Michigan partnerships are eligible for the Flow-Through Entity (FTE) Tax election. This allows the partnership to pay Michigan income tax at the entity level (4.05%) instead of partners paying individually — bypassing the federal $10,000 SALT deduction cap. File Form 5772 via MTO. Must be elected by the 15th day of the 3rd month following the close of the tax year.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════ -->
+    <!-- NONPROFIT TAX PANEL -->
+    <!-- ═══════════════════════════════════════════════════ -->
+    <div class="tax-panel" id="tax-nonprofit">
+      <div class="panel-header">
+        <div class="panel-icon">❤️</div>
+        <div class="panel-title">
+          <p>Michigan Tax Guide</p>
+          <h2>Nonprofit Taxes</h2>
+        </div>
+      </div>
+      <p class="panel-intro">Nonprofits with 501(c)(3) status are exempt from federal and Michigan income taxes on income related to their mission. However they are not completely tax-free — they must file annual information returns with the IRS, may owe taxes on unrelated business income, and must comply with Michigan state requirements. Employees still pay regular income and payroll taxes on their wages.</p>
+
+      <div class="quick-nums">
+        <div class="qnum"><div class="val">Exempt</div><div class="key">Federal Income Tax</div></div>
+        <div class="qnum"><div class="val">Exempt</div><div class="key">Michigan Income Tax</div></div>
+        <div class="qnum"><div class="val">May 15</div><div class="key">IRS Form 990 Due</div></div>
+        <div class="qnum"><div class="val">$275–$600</div><div class="key">IRS 501(c)(3) Application Fee</div></div>
+      </div>
+
+      <div class="tax-option-card recommended">
+        <div class="rec-badge">Annual Federal Filing</div>
+        <h3>IRS Form 990 — Annual Information Return</h3>
+        <div class="subtitle">Due the 15th day of the 5th month after your fiscal year ends</div>
+        <p>Even though nonprofits don't pay income tax, they must file an annual information return with the IRS showing their financial activities, governance, and compliance. Which version of Form 990 you file depends on your annual gross receipts. Failure to file for 3 consecutive years results in automatic revocation of your tax-exempt status.</p>
+
+        <div class="how-grid">
+          <div class="how-item">
+            <h4>Form 990-N (e-Postcard)</h4>
+            <p>For organizations with gross receipts of $50,000 or less. The simplest filing — just confirm basic information online. Free to file at IRS.gov.</p>
+          </div>
+          <div class="how-item">
+            <h4>Form 990-EZ</h4>
+            <p>For organizations with gross receipts under $200,000 and total assets under $500,000. A simplified version of the full 990.</p>
+          </div>
+          <div class="how-item">
+            <h4>Form 990 (Full)</h4>
+            <p>For organizations with gross receipts of $200,000 or more OR total assets of $500,000 or more. Most comprehensive — requires detailed financial statements.</p>
+          </div>
+          <div class="how-item">
+            <h4>Unrelated Business Income (UBIT)</h4>
+            <p>If your nonprofit earns income from activities unrelated to its mission (like advertising or a business venture), that income is taxable. File Form 990-T to report and pay Unrelated Business Income Tax.</p>
+          </div>
+        </div>
+
+        <div class="deadlines-section">
+          <h4>Key Deadlines</h4>
+          <div class="deadline-row">
+            <div class="deadline-date">May 15</div>
+            <div><div class="deadline-desc">IRS Form 990 due (for calendar-year nonprofits — 15th day of 5th month after fiscal year end)</div><div class="deadline-form">File at: IRS.gov or through tax software</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Ongoing</div>
+            <div><div class="deadline-desc">Michigan Annual Report due to LARA</div><div class="deadline-form">File at: mibusinessregistry.lara.state.mi.us</div></div>
+          </div>
+          <div class="deadline-row">
+            <div class="deadline-date">Annually</div>
+            <div><div class="deadline-desc">Michigan Charitable Organization Registration (if soliciting donations over $25,000)</div><div class="deadline-form">File with Michigan Attorney General — ag.state.mi.us</div></div>
+          </div>
+        </div>
+
+        <div class="forms-section">
+          <h4>Where to File</h4>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 990 / 990-EZ / 990-N</div><div class="form-desc">Annual IRS information return for nonprofits</div></div>
+            <a href="https://www.irs.gov/charities-non-profits/annual-reporting-and-filing" target="_blank">File / Learn More</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">IRS Form 1023 / 1023-EZ</div><div class="form-desc">Apply for 501(c)(3) tax-exempt status</div></div>
+            <a href="https://www.irs.gov/charities-non-profits/applying-for-tax-exempt-status" target="_blank">Apply Here</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Attorney General — Charitable Registration</div><div class="form-desc">Required if your nonprofit solicits donations in Michigan over $25,000/year</div></div>
+            <a href="https://www.michigan.gov/ag/consumer-protection/charitable-trust-section" target="_blank">Register Here</a>
+          </div>
+          <div class="form-link-row">
+            <div><div class="form-name">Michigan Treasury — Sales Tax Exemption</div><div class="form-desc">Apply for Michigan sales tax exemption for qualifying nonprofits</div></div>
+            <a href="https://www.michigan.gov/taxes/mto" target="_blank">Apply via MTO</a>
+          </div>
+        </div>
+
+        <div class="warn-box">
+          <h4>⚠ Michigan Charitable Solicitation Registration</h4>
+          <p>If your Michigan nonprofit plans to solicit charitable contributions (donations) and expects to raise more than $25,000 per year, you must register with the Michigan Attorney General's Charitable Trust Section before you start fundraising. Failure to register can result in fines and legal action. Registration must be renewed annually.</p>
+        </div>
+
+        <div class="tip-box">
+          <h4>💡 Michigan Sales Tax Exemption</h4>
+          <p>Qualifying Michigan nonprofits can apply for a Michigan Sales Tax exemption using Form 3372 (Michigan Sales and Use Tax Certificate of Exemption). This means the organization does not pay sales tax on purchases made for its exempt purpose. You must apply separately — 501(c)(3) status alone does not automatically exempt you from Michigan sales tax.</p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>&copy; 2025 Learn The Biz &middot; All Rights Reserved &middot; Tax information sourced from IRS.gov and Michigan Department of Treasury. Always consult a licensed CPA.</p>
+  </footer>
+
+  <script>
+    function showTax(id, btn) {
+      document.querySelectorAll('.tax-panel').forEach(function(p) { p.classList.remove('active'); });
+      document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+      document.getElementById('tax-' + id).classList.add('active');
+      btn.classList.add('active');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Auto-show panel from URL hash if present
+    var hash = window.location.hash.replace('#', '');
+    if (hash) {
+      var target = document.getElementById('tax-' + hash);
+      var targetBtn = document.querySelector('[onclick*="' + hash + '"]');
+      if (target && targetBtn) {
+        document.querySelectorAll('.tax-panel').forEach(function(p) { p.classList.remove('active'); });
+        document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+        target.classList.add('active');
+        targetBtn.classList.add('active');
+      }
+    }
+  </script>
+
+</body>
+</html>
