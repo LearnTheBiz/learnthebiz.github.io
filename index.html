@@ -8,330 +8,122 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;900&display=swap" rel="stylesheet" />
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
 
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0a0a0a;
-      color: #fff;
-    }
-
-    /* ── NAV ── */
     nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 18px 40px;
-      border-bottom: 0.5px solid #2a2a2a;
-      background: #0a0a0a;
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 40px; border-bottom: 0.5px solid #2a2a2a;
+      background: #0a0a0a; position: sticky; top: 0; z-index: 100;
     }
-    .nav-logo {
-      font-size: 22px;
-      font-weight: 900;
-      letter-spacing: 4px;
-      color: #c9a84c;
-    }
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      align-items: center;
-    }
-    .nav-links a {
-      font-size: 13px;
-      color: #aaa;
-      text-decoration: none;
-      letter-spacing: 1px;
-      cursor: pointer;
-    }
+    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a { font-size: 13px; color: #aaa; text-decoration: none; letter-spacing: 1px; cursor: pointer; }
     .nav-links a:hover { color: #c9a84c; }
 
-    /* ── NAV DROPDOWN ── */
-    .dropdown-wrap { position: relative; }
-    .dropdown-btn {
-      font-size: 13px;
-      color: #aaa;
-      background: none;
-      border: 0.5px solid #2a2a2a;
-      padding: 7px 14px;
-      border-radius: 6px;
-      cursor: pointer;
-      letter-spacing: 1px;
-      font-family: inherit;
+    .nav-drop-wrap { position: relative; }
+    .nav-drop-btn {
+      font-size: 13px; color: #aaa; background: none;
+      border: 0.5px solid #2a2a2a; padding: 7px 14px; border-radius: 6px;
+      cursor: pointer; letter-spacing: 1px; font-family: inherit;
     }
-    .dropdown-btn:hover { border-color: #c9a84c; color: #c9a84c; }
-    .dropdown-menu {
-      display: none;
-      position: absolute;
-      top: 40px;
-      right: 0;
-      background: #111;
-      border: 0.5px solid #2a2a2a;
-      border-radius: 8px;
-      min-width: 220px;
-      overflow: hidden;
-      z-index: 200;
+    .nav-drop-btn:hover { border-color: #c9a84c; color: #c9a84c; }
+    .nav-drop-menu {
+      display: none; position: absolute; top: 40px; right: 0;
+      background: #111; border: 0.5px solid #2a2a2a; border-radius: 8px;
+      min-width: 220px; overflow: hidden; z-index: 200;
     }
-    .dropdown-menu.open { display: block; }
-    .dropdown-menu a {
-      display: block;
-      padding: 12px 18px;
-      font-size: 13px;
-      color: #ccc;
-      text-decoration: none;
-      border-bottom: 0.5px solid #1a1a1a;
+    .nav-drop-menu.open { display: block; }
+    .nav-drop-menu a {
+      display: block; padding: 12px 18px; font-size: 13px; color: #ccc;
+      text-decoration: none; border-bottom: 0.5px solid #1a1a1a;
     }
-    .dropdown-menu a:last-child { border-bottom: none; }
-    .dropdown-menu a:hover { background: #1a1a1a; color: #c9a84c; }
-    .dropdown-menu .coming { color: #555; font-size: 12px; cursor: default; }
-    .dropdown-menu .coming:hover { background: none; color: #555; }
+    .nav-drop-menu a:last-child { border-bottom: none; }
+    .nav-drop-menu a:hover { background: #1a1a1a; color: #c9a84c; }
+    .nav-drop-menu .coming { color: #555; font-size: 12px; pointer-events: none; }
 
-    /* ── HERO ── */
     .hero {
-      min-height: 560px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 100px 40px 80px;
-      background: #0a0a0a;
-      border-bottom: 0.5px solid #1e1a08;
+      min-height: 560px; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; text-align: center;
+      padding: 100px 40px 80px; background: #0a0a0a; border-bottom: 0.5px solid #1e1a08;
     }
-    .hero-tag {
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: #c9a84c;
-      text-transform: uppercase;
-      margin-bottom: 24px;
-    }
-    .hero h1 {
-      font-size: 54px;
-      font-weight: 900;
-      line-height: 1.08;
-      letter-spacing: -1px;
-      margin-bottom: 20px;
-    }
+    .hero-tag { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 24px; }
+    .hero h1 { font-size: 54px; font-weight: 900; line-height: 1.08; letter-spacing: -1px; margin-bottom: 20px; }
     .hero h1 span { color: #c9a84c; }
-    .gold-line {
-      width: 60px;
-      height: 2px;
-      background: #c9a84c;
-      margin: 0 auto 32px;
-      border-radius: 1px;
-    }
-    .hero p {
-      font-size: 20px;
-      color: #aaa;
-      max-width: 540px;
-      line-height: 1.65;
-      margin-bottom: 40px;
-    }
+    .gold-line { width: 60px; height: 2px; background: #c9a84c; margin: 0 auto 32px; border-radius: 1px; }
+    .hero p { font-size: 20px; color: #aaa; max-width: 540px; line-height: 1.65; margin-bottom: 40px; }
     .cta-btn {
-      background: #c9a84c;
-      color: #0a0a0a;
-      font-size: 16px;
-      font-weight: 700;
-      padding: 18px 40px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      font-family: inherit;
-      text-decoration: none;
-      display: inline-block;
+      background: #c9a84c; color: #0a0a0a; font-size: 16px; font-weight: 700;
+      padding: 18px 40px; border-radius: 6px; border: none; cursor: pointer;
+      letter-spacing: 1px; text-transform: uppercase; font-family: inherit;
+      text-decoration: none; display: inline-block;
     }
     .cta-btn:hover { background: #e2bf6a; }
 
-    /* ── SECTIONS ── */
-    section {
-      padding: 80px 40px;
-      border-bottom: 0.5px solid #1a1a1a;
-    }
-    .section-label {
-      font-size: 11px;
-      letter-spacing: 3px;
-      color: #c9a84c;
-      text-transform: uppercase;
-      margin-bottom: 14px;
-      text-align: center;
-    }
-    section h2 {
-      font-size: 32px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 52px;
-      letter-spacing: -0.5px;
-      line-height: 1.2;
-    }
+    section { padding: 80px 40px; border-bottom: 0.5px solid #1a1a1a; }
+    .section-label { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; text-align: center; }
+    section h2 { font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 52px; letter-spacing: -0.5px; line-height: 1.2; }
 
-    /* ── CARDS ── */
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-    .card {
-      background: #111;
-      border: 0.5px solid #222;
-      border-radius: 12px;
-      padding: 28px 24px;
-    }
-    .card-icon {
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      background: #1a1a1a;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #c9a84c;
-      font-size: 16px;
-      font-weight: 700;
-      margin-bottom: 18px;
-    }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; }
+    .card { background: #111; border: 0.5px solid #222; border-radius: 12px; padding: 28px 24px; }
+    .card-icon { width: 36px; height: 36px; border-radius: 50%; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #c9a84c; font-size: 16px; font-weight: 700; margin-bottom: 18px; }
     .card h3 { font-size: 20px; font-weight: 500; margin-bottom: 12px; color: #e0e0e0; }
     .card p { font-size: 16px; color: #aaa; line-height: 1.7; }
     .card.gold-card { border-color: #3a2e10; }
     .card.gold-card h3 { color: #c9a84c; font-size: 20px; }
     .card.gold-card p { font-size: 16px; color: #aaa; line-height: 1.7; }
 
-    /* ── SOLUTION ── */
-    .solution-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
-      max-width: 860px;
-      margin: 0 auto;
-      align-items: center;
-    }
+    .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 860px; margin: 0 auto; align-items: center; }
     .steps { display: flex; flex-direction: column; gap: 24px; }
     .step { display: flex; align-items: flex-start; gap: 16px; }
-    .step-num {
-      width: 34px;
-      height: 34px;
-      border-radius: 50%;
-      background: #c9a84c;
-      color: #0a0a0a;
-      font-size: 13px;
-      font-weight: 700;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
+    .step-num { width: 34px; height: 34px; border-radius: 50%; background: #c9a84c; color: #0a0a0a; font-size: 13px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .step h4 { font-size: 17px; font-weight: 500; margin-bottom: 6px; color: #e0e0e0; }
     .step p { font-size: 15px; color: #999; line-height: 1.6; }
-    .trust-visual {
-      background: #0f0c03;
-      border: 0.5px solid #3a2e10;
-      border-radius: 12px;
-      padding: 36px 28px;
-      text-align: center;
-    }
-    .trust-visual .big {
-      font-size: 44px;
-      font-weight: 900;
-      color: #c9a84c;
-    }
-    .trust-visual .lbl {
-      font-size: 12px;
-      color: #666;
-      letter-spacing: 1px;
-      margin-top: 6px;
-    }
+    .trust-visual { background: #0f0c03; border: 0.5px solid #3a2e10; border-radius: 12px; padding: 36px 28px; text-align: center; }
+    .trust-visual .big { font-size: 44px; font-weight: 900; color: #c9a84c; }
+    .trust-visual .lbl { font-size: 12px; color: #666; letter-spacing: 1px; margin-top: 6px; }
     .divider { height: 0.5px; background: #2a2a2a; margin: 22px 0; }
 
-    /* ── CTA SECTION ── */
-    .cta-section {
-      padding: 90px 40px;
-      text-align: center;
-      background: #0f0c03;
-    }
+    .cta-section { padding: 90px 40px; text-align: center; background: #0f0c03; }
     .cta-section h2 { font-size: 44px; margin-bottom: 16px; }
     .cta-section > p { font-size: 20px; color: #aaa; margin-bottom: 44px; }
-    .biz-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      max-width: 660px;
-      margin: 0 auto 40px;
-    }
+
+    .biz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 660px; margin: 0 auto 40px; }
+
     .biz-btn {
-      background: #111;
-      border: 0.5px solid #2a2a2a;
-      border-radius: 10px;
-      padding: 26px 14px;
-      font-size: 19px;
-      font-weight: 500;
-      color: #ddd;
-      cursor: pointer;
-      font-family: inherit;
-      letter-spacing: 0.5px;
-      line-height: 1.4;
-      width: 100%;
+      background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px;
+      padding: 26px 14px; font-size: 19px; font-weight: 500; color: #ddd;
+      cursor: pointer; font-family: inherit; letter-spacing: 0.5px; line-height: 1.4; width: 100%;
     }
     .biz-btn:hover { border-color: #c9a84c; color: #c9a84c; background: #0f0c03; }
-    .biz-btn.soon { color: #777; border-color: #2a2a2a; cursor: default; font-size: 15px; }
-    .biz-btn.soon:hover { border-color: #2a2a2a; color: #777; background: #111; }
+    .biz-btn.soon { color: #777; border-color: #2a2a2a; cursor: default; font-size: 15px; pointer-events: none; }
 
-    /* ── STATE DROPDOWN ── */
-    .state-dropdown-wrap { position: relative; display: inline-block; width: 100%; }
-    .state-dropdown {
-      display: none;
-      position: absolute;
-      bottom: calc(100% + 12px);
-      left: 50%;
-      transform: translateX(-50%);
-      background: #111;
-      border: 0.5px solid #c9a84c;
-      border-radius: 10px;
-      width: 260px;
-      max-height: 280px;
-      overflow-y: auto;
-      z-index: 500;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    .state-drop-wrap { position: relative; width: 100%; }
+    .state-drop-menu {
+      display: none; position: absolute; bottom: calc(100% + 12px); left: 50%;
+      transform: translateX(-50%); background: #111; border: 0.5px solid #c9a84c;
+      border-radius: 10px; width: 260px; max-height: 280px; overflow-y: auto;
+      z-index: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.8);
     }
-    .state-dropdown.open { display: block; }
-    .state-dropdown::-webkit-scrollbar { width: 6px; }
-    .state-dropdown::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 3px; }
-    .state-dropdown::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
-    .state-dropdown-header {
-      padding: 12px 16px;
-      font-size: 11px;
-      letter-spacing: 2px;
-      color: #c9a84c;
-      text-transform: uppercase;
-      border-bottom: 0.5px solid #2a2a2a;
-      position: sticky;
-      top: 0;
-      background: #111;
+    .state-drop-menu.open { display: block; }
+    .state-drop-menu::-webkit-scrollbar { width: 6px; }
+    .state-drop-menu::-webkit-scrollbar-track { background: #1a1a1a; }
+    .state-drop-menu::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
+    .state-drop-header {
+      padding: 12px 16px; font-size: 11px; letter-spacing: 2px; color: #c9a84c;
+      text-transform: uppercase; border-bottom: 0.5px solid #2a2a2a;
+      position: sticky; top: 0; background: #111;
     }
-    .state-dropdown a {
-      display: block;
-      padding: 11px 16px;
-      font-size: 14px;
-      color: #ccc;
-      text-decoration: none;
-      border-bottom: 0.5px solid #1a1a1a;
+    .state-drop-menu a {
+      display: block; padding: 11px 16px; font-size: 14px; color: #ccc;
+      text-decoration: none; border-bottom: 0.5px solid #1a1a1a;
     }
-    .state-dropdown a:last-child { border-bottom: none; }
-    .state-dropdown a:hover { background: #1a1400; color: #c9a84c; }
-    .state-dropdown a.soon { color: #444; cursor: default; font-size: 13px; pointer-events: none; }
+    .state-drop-menu a:last-child { border-bottom: none; }
+    .state-drop-menu a:hover { background: #1a1400; color: #c9a84c; }
+    .state-drop-menu a.soon { color: #444; pointer-events: none; font-size: 13px; }
 
-    /* ── FOOTER ── */
-    footer {
-      padding: 28px 40px;
-      text-align: center;
-      border-top: 0.5px solid #1a1a1a;
-    }
+    footer { padding: 28px 40px; text-align: center; border-top: 0.5px solid #1a1a1a; }
     footer p { font-size: 12px; color: #333; letter-spacing: 1px; }
 
-    /* ── RESPONSIVE ── */
     @media (max-width: 700px) {
       nav { padding: 16px 20px; }
       .hero { padding: 70px 24px 60px; }
@@ -346,15 +138,14 @@
 </head>
 <body>
 
-  <!-- NAV -->
   <nav>
     <div class="nav-logo">LEARN THE BIZ</div>
     <div class="nav-links">
       <a href="#problem">The Problem</a>
       <a href="#solution">How It Works</a>
-      <div class="dropdown-wrap">
-        <button class="dropdown-btn" id="dropBtn">Start Here &#9660;</button>
-        <div class="dropdown-menu" id="dropMenu">
+      <div class="nav-drop-wrap">
+        <button class="nav-drop-btn" id="navBtn">Start Here &#9660;</button>
+        <div class="nav-drop-menu" id="navMenu">
           <a href="#pick">LLC</a>
           <a href="#pick">S-Corp</a>
           <a href="#pick">Sole Proprietorship</a>
@@ -366,7 +157,6 @@
     </div>
   </nav>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-tag">Learn The Biz — Business Education for Real People</div>
     <h1>Stop Guessing.<br><span>Start Building.</span></h1>
@@ -375,7 +165,6 @@
     <a class="cta-btn" href="#pick">Choose Your Business Type &rarr;</a>
   </section>
 
-  <!-- PROBLEM -->
   <section id="problem">
     <div class="section-label">The Problem</div>
     <h2>Starting a business feels impossible.<br>It doesn't have to.</h2>
@@ -398,7 +187,6 @@
     </div>
   </section>
 
-  <!-- SOLUTION -->
   <section id="solution">
     <div class="section-label">The Solution</div>
     <h2>Jay breaks it all down for you.</h2>
@@ -439,7 +227,6 @@
     </div>
   </section>
 
-  <!-- TRUST -->
   <section id="trust">
     <div class="section-label">Why Trust Jay</div>
     <h2>Built for people who are starting from zero.</h2>
@@ -459,17 +246,16 @@
     </div>
   </section>
 
-  <!-- BOTTOM CTA -->
   <section class="cta-section" id="pick">
     <div class="section-label">Get Started</div>
     <h2>Ready? Pick your business type.</h2>
     <p>Each one gets its own complete, plain-English guide — built just for beginners.</p>
     <div class="biz-grid">
 
-      <div class="state-dropdown-wrap">
-        <button class="biz-btn" onclick="toggleStateDropdown(event, 'llc-states')">LLC &#9660;</button>
-        <div class="state-dropdown" id="llc-states">
-          <div class="state-dropdown-header">Select Your State</div>
+      <div class="state-drop-wrap">
+        <button class="biz-btn" id="llcBtn">LLC &#9660;</button>
+        <div class="state-drop-menu" id="llcStates">
+          <div class="state-drop-header">Select Your State</div>
           <a href="llc-michigan.html">Michigan</a>
           <a class="soon">Alabama — coming soon</a>
           <a class="soon">Alaska — coming soon</a>
@@ -529,41 +315,47 @@
       <button class="biz-btn soon">C-Corp<br>coming soon</button>
       <button class="biz-btn soon">Nonprofit<br>coming soon</button>
     </div>
-    <button class="cta-btn" onclick="scrollToLLC(event)">Start With LLC &darr;</button>
+    <button class="cta-btn" id="startLLCBtn">Start With LLC &#8595;</button>
   </section>
 
-  <!-- FOOTER -->
   <footer>
     <p>&copy; 2025 Learn The Biz &middot; All Rights Reserved</p>
   </footer>
 
   <script>
-    const btn = document.getElementById('dropBtn');
-    const menu = document.getElementById('dropMenu');
-    btn.addEventListener('click', function(e) {
+    var navBtn = document.getElementById('navBtn');
+    var navMenu = document.getElementById('navMenu');
+    var llcBtn = document.getElementById('llcBtn');
+    var llcStates = document.getElementById('llcStates');
+    var startLLCBtn = document.getElementById('startLLCBtn');
+
+    navBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      menu.classList.toggle('open');
+      navMenu.classList.toggle('open');
+      llcStates.classList.remove('open');
     });
-    document.addEventListener('click', function() {
-      menu.classList.remove('open');
-      document.querySelectorAll('.state-dropdown').forEach(d => d.classList.remove('open'));
+
+    llcBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      llcStates.classList.toggle('open');
+      navMenu.classList.remove('open');
     });
-    function scrollToLLC(e) {
-      if (e) e.preventDefault();
-      document.querySelectorAll('.state-dropdown').forEach(d => d.classList.remove('open'));
-      const wrap = document.querySelector('.state-dropdown-wrap');
-      const dropdown = document.getElementById('llc-states');
+
+    startLLCBtn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      navMenu.classList.remove('open');
+      llcStates.classList.remove('open');
+      var wrap = document.querySelector('.state-drop-wrap');
       wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
       setTimeout(function() {
-        dropdown.classList.add('open');
-      }, 600);
-    }
-      e.stopPropagation();
-      const dropdown = document.getElementById(id);
-      const isOpen = dropdown.classList.contains('open');
-      document.querySelectorAll('.state-dropdown').forEach(d => d.classList.remove('open'));
-      if (!isOpen) dropdown.classList.add('open');
-    }
+        llcStates.classList.add('open');
+      }, 700);
+    });
+
+    document.addEventListener('click', function() {
+      navMenu.classList.remove('open');
+      llcStates.classList.remove('open');
+    });
   </script>
 
 </body>
