@@ -529,7 +529,7 @@
       <button class="biz-btn soon">C-Corp<br>coming soon</button>
       <button class="biz-btn soon">Nonprofit<br>coming soon</button>
     </div>
-    <button class="cta-btn" onclick="scrollToLLC()">Start With LLC &darr;</button>
+    <button class="cta-btn" onclick="scrollToLLC(event)">Start With LLC &darr;</button>
   </section>
 
   <!-- FOOTER -->
@@ -548,7 +548,8 @@
       menu.classList.remove('open');
       document.querySelectorAll('.state-dropdown').forEach(d => d.classList.remove('open'));
     });
-    function scrollToLLC() {
+    function scrollToLLC(e) {
+      if (e) e.preventDefault();
       const dropdown = document.getElementById('llc-states');
       document.querySelectorAll('.state-dropdown').forEach(d => d.classList.remove('open'));
       dropdown.classList.add('open');
