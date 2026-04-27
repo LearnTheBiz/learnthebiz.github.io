@@ -141,6 +141,30 @@
     .q-dot { height: 4px; flex: 1; background: #2a2a2a; border-radius: 2px; }
     .q-dot.done { background: #c9a84c; }
 
+    /* TAX BUTTON + STATE DROPDOWN */
+    .tax-btn-wrap { position: relative; display: inline-block; margin-bottom: 48px; margin-right: 12px; }
+    .tax-btn {
+      background: none; color: #c9a84c; font-size: 15px; font-weight: 700;
+      padding: 14px 28px; border-radius: 6px; border: 0.5px solid #c9a84c;
+      cursor: pointer; letter-spacing: 1px; text-transform: uppercase;
+      font-family: inherit;
+    }
+    .tax-btn:hover { background: #1a1400; }
+    .tax-state-drop {
+      display: none; position: absolute; top: calc(100% + 8px); left: 0;
+      background: #111; border: 0.5px solid #c9a84c; border-radius: 10px;
+      width: 240px; max-height: 260px; overflow-y: auto; z-index: 500;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.8);
+    }
+    .tax-state-drop.open { display: block; }
+    .tax-state-drop::-webkit-scrollbar { width: 6px; }
+    .tax-state-drop::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
+    .tax-state-drop-header { padding: 10px 14px; font-size: 11px; letter-spacing: 2px; color: #c9a84c; text-transform: uppercase; border-bottom: 0.5px solid #2a2a2a; position: sticky; top: 0; background: #111; }
+    .tax-state-drop a { display: block; padding: 10px 14px; font-size: 14px; color: #ccc; text-decoration: none; border-bottom: 0.5px solid #1a1a1a; }
+    .tax-state-drop a:last-child { border-bottom: none; }
+    .tax-state-drop a:hover { background: #1a1400; color: #c9a84c; }
+    .tax-state-drop a.soon { color: #444; pointer-events: none; font-size: 13px; }
+
     /* RESULT */
     .quiz-result { display: none; text-align: center; padding: 40px 0; }
     .quiz-result.show { display: block; }
@@ -270,6 +294,62 @@
           <span class="chip">Cleaning service</span>
         </div>
       </div>
+      <div class="tax-btn-wrap">
+        <button class="tax-btn" onclick="toggleTaxDrop(event,'llc-tax-drop')">Tax Guide &#9660;</button>
+        <div class="tax-state-drop" id="llc-tax-drop">
+          <div class="tax-state-drop-header">Select Your State</div>
+          <a href="tax-michigan.html#llc" target="_blank">Michigan</a>
+          <a class="soon">Alabama — coming soon</a>
+          <a class="soon">Alaska — coming soon</a>
+          <a class="soon">Arizona — coming soon</a>
+          <a class="soon">Arkansas — coming soon</a>
+          <a class="soon">California — coming soon</a>
+          <a class="soon">Colorado — coming soon</a>
+          <a class="soon">Connecticut — coming soon</a>
+          <a class="soon">Delaware — coming soon</a>
+          <a class="soon">Florida — coming soon</a>
+          <a class="soon">Georgia — coming soon</a>
+          <a class="soon">Hawaii — coming soon</a>
+          <a class="soon">Idaho — coming soon</a>
+          <a class="soon">Illinois — coming soon</a>
+          <a class="soon">Indiana — coming soon</a>
+          <a class="soon">Iowa — coming soon</a>
+          <a class="soon">Kansas — coming soon</a>
+          <a class="soon">Kentucky — coming soon</a>
+          <a class="soon">Louisiana — coming soon</a>
+          <a class="soon">Maine — coming soon</a>
+          <a class="soon">Maryland — coming soon</a>
+          <a class="soon">Massachusetts — coming soon</a>
+          <a class="soon">Minnesota — coming soon</a>
+          <a class="soon">Mississippi — coming soon</a>
+          <a class="soon">Missouri — coming soon</a>
+          <a class="soon">Montana — coming soon</a>
+          <a class="soon">Nebraska — coming soon</a>
+          <a class="soon">Nevada — coming soon</a>
+          <a class="soon">New Hampshire — coming soon</a>
+          <a class="soon">New Jersey — coming soon</a>
+          <a class="soon">New Mexico — coming soon</a>
+          <a class="soon">New York — coming soon</a>
+          <a class="soon">North Carolina — coming soon</a>
+          <a class="soon">North Dakota — coming soon</a>
+          <a class="soon">Ohio — coming soon</a>
+          <a class="soon">Oklahoma — coming soon</a>
+          <a class="soon">Oregon — coming soon</a>
+          <a class="soon">Pennsylvania — coming soon</a>
+          <a class="soon">Rhode Island — coming soon</a>
+          <a class="soon">South Carolina — coming soon</a>
+          <a class="soon">South Dakota — coming soon</a>
+          <a class="soon">Tennessee — coming soon</a>
+          <a class="soon">Texas — coming soon</a>
+          <a class="soon">Utah — coming soon</a>
+          <a class="soon">Vermont — coming soon</a>
+          <a class="soon">Virginia — coming soon</a>
+          <a class="soon">Washington — coming soon</a>
+          <a class="soon">West Virginia — coming soon</a>
+          <a class="soon">Wisconsin — coming soon</a>
+          <a class="soon">Wyoming — coming soon</a>
+        </div>
+      </div>
       <a class="start-btn" href="index.html#pick">Start Forming My LLC →</a>
     </div>
 
@@ -335,6 +415,14 @@
           <span class="chip">Marketing agency</span>
           <span class="chip">Accounting firm</span>
           <span class="chip">IT services company</span>
+        </div>
+      </div>
+      <div class="tax-btn-wrap">
+        <button class="tax-btn" onclick="toggleTaxDrop(event,'scorp-tax-drop')">Tax Guide &#9660;</button>
+        <div class="tax-state-drop" id="scorp-tax-drop">
+          <div class="tax-state-drop-header">Select Your State</div>
+          <a href="tax-michigan.html#scorp" target="_blank">Michigan</a>
+          <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
         </div>
       </div>
       <a class="start-btn" href="index.html#pick">Start Forming My S-Corp →</a>
@@ -404,6 +492,14 @@
           <span class="chip">Publicly traded companies</span>
         </div>
       </div>
+      <div class="tax-btn-wrap">
+        <button class="tax-btn" onclick="toggleTaxDrop(event,'ccorp-tax-drop')">Tax Guide &#9660;</button>
+        <div class="tax-state-drop" id="ccorp-tax-drop">
+          <div class="tax-state-drop-header">Select Your State</div>
+          <a href="tax-michigan.html#ccorp" target="_blank">Michigan</a>
+          <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
+        </div>
+      </div>
       <a class="start-btn" href="index.html#pick">Start Forming My C-Corp →</a>
     </div>
 
@@ -471,6 +567,14 @@
           <span class="chip">Tutor</span>
         </div>
       </div>
+      <div class="tax-btn-wrap">
+        <button class="tax-btn" onclick="toggleTaxDrop(event,'sole-tax-drop')">Tax Guide &#9660;</button>
+        <div class="tax-state-drop" id="sole-tax-drop">
+          <div class="tax-state-drop-header">Select Your State</div>
+          <a href="tax-michigan.html#sole" target="_blank">Michigan</a>
+          <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
+        </div>
+      </div>
       <a class="start-btn" href="index.html#pick">Start as Sole Proprietor →</a>
     </div>
 
@@ -532,6 +636,14 @@
           <span class="chip">Accounting firm (LLP)</span>
           <span class="chip">Two friends starting a restaurant</span>
           <span class="chip">Real estate investment group</span>
+        </div>
+      </div>
+      <div class="tax-btn-wrap">
+        <button class="tax-btn" onclick="toggleTaxDrop(event,'partner-tax-drop')">Tax Guide &#9660;</button>
+        <div class="tax-state-drop" id="partner-tax-drop">
+          <div class="tax-state-drop-header">Select Your State</div>
+          <a href="tax-michigan.html#partnership" target="_blank">Michigan</a>
+          <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
         </div>
       </div>
       <a class="start-btn" href="index.html#pick">Start Forming My Partnership →</a>
@@ -601,6 +713,14 @@
           <span class="chip">Youth sports league</span>
           <span class="chip">Religious organization</span>
           <span class="chip">Scholarship fund</span>
+        </div>
+      </div>
+      <div class="tax-btn-wrap">
+        <button class="tax-btn" onclick="toggleTaxDrop(event,'nonprofit-tax-drop')">Tax Guide &#9660;</button>
+        <div class="tax-state-drop" id="nonprofit-tax-drop">
+          <div class="tax-state-drop-header">Select Your State</div>
+          <a href="tax-michigan.html#nonprofit" target="_blank">Michigan</a>
+          <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
         </div>
       </div>
       <a class="start-btn" href="index.html#pick">Start Forming My Nonprofit →</a>
@@ -718,7 +838,17 @@
   <script>
     var answers = {};
 
-    function showPanel(id, btn) {
+    function toggleTaxDrop(e, id) {
+      e.stopPropagation();
+      var drop = document.getElementById(id);
+      var isOpen = drop.classList.contains('open');
+      document.querySelectorAll('.tax-state-drop').forEach(function(d) { d.classList.remove('open'); });
+      if (!isOpen) drop.classList.add('open');
+    }
+
+    document.addEventListener('click', function() {
+      document.querySelectorAll('.tax-state-drop').forEach(function(d) { d.classList.remove('open'); });
+    });
       document.querySelectorAll('.biz-panel').forEach(function(p) { p.classList.remove('active'); });
       document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
       document.getElementById('panel-' + id).classList.add('active');
