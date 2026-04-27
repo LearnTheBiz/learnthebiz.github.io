@@ -529,7 +529,7 @@
       <button class="biz-btn soon">C-Corp<br>coming soon</button>
       <button class="biz-btn soon">Nonprofit<br>coming soon</button>
     </div>
-    <a class="cta-btn" href="#" onclick="toggleStateDropdown(event, 'llc-states')">Start With LLC &darr;</a>
+    <button class="cta-btn" onclick="scrollToLLC()">Start With LLC &darr;</button>
   </section>
 
   <!-- FOOTER -->
@@ -548,7 +548,12 @@
       menu.classList.remove('open');
       document.querySelectorAll('.state-dropdown').forEach(d => d.classList.remove('open'));
     });
-    function toggleStateDropdown(e, id) {
+    function scrollToLLC() {
+      const dropdown = document.getElementById('llc-states');
+      document.querySelectorAll('.state-dropdown').forEach(d => d.classList.remove('open'));
+      dropdown.classList.add('open');
+      dropdown.closest('.state-dropdown-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
       e.stopPropagation();
       const dropdown = document.getElementById(id);
       const isOpen = dropdown.classList.contains('open');
