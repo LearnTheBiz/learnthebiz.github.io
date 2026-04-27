@@ -10,59 +10,52 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
 
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 40px; border-bottom: 0.5px solid #2a2a2a;
-      background: #0a0a0a; position: sticky; top: 0; z-index: 100;
-    }
-    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; }
-    .nav-links { display: flex; gap: 28px; align-items: center; }
-    .nav-links a { font-size: 13px; color: #aaa; text-decoration: none; letter-spacing: 1px; cursor: pointer; }
-    .nav-links a:hover { color: #c9a84c; }
+    /* ── UNIVERSAL NAV ── */
+    .ltb-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 62px; background: #0a0a0a; border-bottom: 0.5px solid #2a2a2a; position: sticky; top: 0; z-index: 1000; }
+    .ltb-logo { font-size: 20px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; text-decoration: none; flex-shrink: 0; }
+    .ltb-links { display: flex; align-items: center; gap: 4px; }
+    .ltb-item { position: relative; }
+    .ltb-item-btn { display: flex; align-items: center; gap: 6px; padding: 0 16px; height: 62px; font-size: 13px; font-weight: 500; color: #aaa; background: none; border: none; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; white-space: nowrap; text-decoration: none; }
+    .ltb-item-btn:hover { color: #c9a84c; }
+    .ltb-item.open > .ltb-item-btn { color: #c9a84c; }
+    .ltb-arrow { font-size: 9px; transition: transform 0.2s; }
+    .ltb-item.open > .ltb-item-btn .ltb-arrow { transform: rotate(180deg); }
+    .ltb-drop { display: none; position: absolute; top: 62px; left: 0; background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px; min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.7); z-index: 1001; overflow: visible; padding: 6px 0; }
+    .ltb-item.open > .ltb-drop { display: block; }
+    .ltb-drop-item { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; font-size: 14px; color: #ccc; text-decoration: none; cursor: pointer; white-space: nowrap; gap: 12px; background: none; border: none; width: 100%; font-family: inherit; text-align: left; }
+    .ltb-drop-item:hover { background: #1a1a1a; color: #c9a84c; }
+    .ltb-drop-item .ltb-sub-arrow { font-size: 10px; color: #555; flex-shrink: 0; }
+    .ltb-drop-item:hover .ltb-sub-arrow { color: #c9a84c; }
+    .ltb-drop-divider { height: 0.5px; background: #1e1e1e; margin: 4px 0; }
+    .ltb-drop-label { padding: 8px 16px 4px; font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; }
+    .ltb-drop-item.soon { color: #444; cursor: default; pointer-events: none; }
+    .ltb-sub { display: none; position: absolute; top: -6px; left: calc(100% + 1px); background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px; width: 220px; max-height: 320px; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.7); z-index: 1002; padding: 6px 0; }
+    .ltb-drop-item.open-sub > .ltb-sub { display: block; }
+    .ltb-sub::-webkit-scrollbar { width: 5px; }
+    .ltb-sub::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
+    .ltb-sub a { display: block; padding: 10px 16px; font-size: 13px; color: #ccc; text-decoration: none; }
+    .ltb-sub a:hover { background: #1a1400; color: #c9a84c; }
+    .ltb-sub a.soon { color: #333; pointer-events: none; font-size: 12px; }
+    .ltb-sub-header { padding: 8px 16px 4px; font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; }
+    .ltb-cta { background: #c9a84c; color: #0a0a0a; font-size: 12px; font-weight: 700; padding: 9px 20px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block; margin-left: 8px; white-space: nowrap; }
+    .ltb-cta:hover { background: #e2bf6a; }
 
-    .nav-drop-wrap { position: relative; }
-    .nav-drop-btn {
-      font-size: 13px; color: #aaa; background: none;
-      border: 0.5px solid #2a2a2a; padding: 7px 14px; border-radius: 6px;
-      cursor: pointer; letter-spacing: 1px; font-family: inherit;
-    }
-    .nav-drop-btn:hover { border-color: #c9a84c; color: #c9a84c; }
-    .nav-drop-menu {
-      display: none; position: absolute; top: 40px; right: 0;
-      background: #111; border: 0.5px solid #2a2a2a; border-radius: 8px;
-      min-width: 220px; overflow: hidden; z-index: 200;
-    }
-    .nav-drop-menu.open { display: block; }
-    .nav-drop-menu a {
-      display: block; padding: 12px 18px; font-size: 13px; color: #ccc;
-      text-decoration: none; border-bottom: 0.5px solid #1a1a1a;
-    }
-    .nav-drop-menu a:last-child { border-bottom: none; }
-    .nav-drop-menu a:hover { background: #1a1a1a; color: #c9a84c; }
-    .nav-drop-menu .coming { color: #555; font-size: 12px; pointer-events: none; }
-
-    .hero {
-      min-height: 560px; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; text-align: center;
-      padding: 100px 40px 80px; background: #0a0a0a; border-bottom: 0.5px solid #1e1a08;
-    }
+    /* ── HERO ── */
+    .hero { min-height: 560px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 100px 40px 80px; background: #0a0a0a; border-bottom: 0.5px solid #1e1a08; }
     .hero-tag { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 24px; }
     .hero h1 { font-size: 54px; font-weight: 900; line-height: 1.08; letter-spacing: -1px; margin-bottom: 20px; }
     .hero h1 span { color: #c9a84c; }
     .gold-line { width: 60px; height: 2px; background: #c9a84c; margin: 0 auto 32px; border-radius: 1px; }
     .hero p { font-size: 20px; color: #aaa; max-width: 540px; line-height: 1.65; margin-bottom: 40px; }
-    .cta-btn {
-      background: #c9a84c; color: #0a0a0a; font-size: 16px; font-weight: 700;
-      padding: 18px 40px; border-radius: 6px; border: none; cursor: pointer;
-      letter-spacing: 1px; text-transform: uppercase; font-family: inherit;
-      text-decoration: none; display: inline-block;
-    }
+    .cta-btn { background: #c9a84c; color: #0a0a0a; font-size: 16px; font-weight: 700; padding: 18px 40px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block; }
     .cta-btn:hover { background: #e2bf6a; }
 
+    /* ── SECTIONS ── */
     section { padding: 80px 40px; border-bottom: 0.5px solid #1a1a1a; }
     .section-label { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; text-align: center; }
     section h2 { font-size: 32px; font-weight: 700; text-align: center; margin-bottom: 52px; letter-spacing: -0.5px; line-height: 1.2; }
 
+    /* ── CARDS ── */
     .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 900px; margin: 0 auto; }
     .card { background: #111; border: 0.5px solid #222; border-radius: 12px; padding: 28px 24px; }
     .card-icon { width: 36px; height: 36px; border-radius: 50%; background: #1a1a1a; display: flex; align-items: center; justify-content: center; color: #c9a84c; font-size: 16px; font-weight: 700; margin-bottom: 18px; }
@@ -72,6 +65,7 @@
     .card.gold-card h3 { color: #c9a84c; font-size: 20px; }
     .card.gold-card p { font-size: 16px; color: #aaa; line-height: 1.7; }
 
+    /* ── SOLUTION ── */
     .solution-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; max-width: 860px; margin: 0 auto; align-items: center; }
     .steps { display: flex; flex-direction: column; gap: 24px; }
     .step { display: flex; align-items: flex-start; gap: 16px; }
@@ -83,40 +77,23 @@
     .trust-visual .lbl { font-size: 12px; color: #666; letter-spacing: 1px; margin-top: 6px; }
     .divider { height: 0.5px; background: #2a2a2a; margin: 22px 0; }
 
+    /* ── CTA SECTION ── */
     .cta-section { padding: 90px 40px; text-align: center; background: #0f0c03; }
     .cta-section h2 { font-size: 44px; margin-bottom: 16px; }
     .cta-section > p { font-size: 20px; color: #aaa; margin-bottom: 44px; }
-
     .biz-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; max-width: 660px; margin: 0 auto 40px; }
-
-    .biz-btn {
-      background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px;
-      padding: 26px 14px; font-size: 19px; font-weight: 500; color: #ddd;
-      cursor: pointer; font-family: inherit; letter-spacing: 0.5px; line-height: 1.4; width: 100%;
-    }
+    .biz-btn { background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px; padding: 26px 14px; font-size: 19px; font-weight: 500; color: #ddd; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; line-height: 1.4; width: 100%; }
     .biz-btn:hover { border-color: #c9a84c; color: #c9a84c; background: #0f0c03; }
     .biz-btn.soon { color: #777; border-color: #2a2a2a; cursor: default; font-size: 15px; pointer-events: none; }
 
+    /* ── STATE DROPDOWN ── */
     .state-drop-wrap { position: relative; width: 100%; }
-    .state-drop-menu {
-      display: none; position: absolute; bottom: calc(100% + 12px); left: 50%;
-      transform: translateX(-50%); background: #111; border: 0.5px solid #c9a84c;
-      border-radius: 10px; width: 260px; max-height: 280px; overflow-y: auto;
-      z-index: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.8);
-    }
+    .state-drop-menu { display: none; position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%); background: #111; border: 0.5px solid #c9a84c; border-radius: 10px; width: 260px; max-height: 280px; overflow-y: auto; z-index: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.8); }
     .state-drop-menu.open { display: block; }
     .state-drop-menu::-webkit-scrollbar { width: 6px; }
-    .state-drop-menu::-webkit-scrollbar-track { background: #1a1a1a; }
     .state-drop-menu::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
-    .state-drop-header {
-      padding: 12px 16px; font-size: 11px; letter-spacing: 2px; color: #c9a84c;
-      text-transform: uppercase; border-bottom: 0.5px solid #2a2a2a;
-      position: sticky; top: 0; background: #111;
-    }
-    .state-drop-menu a {
-      display: block; padding: 11px 16px; font-size: 14px; color: #ccc;
-      text-decoration: none; border-bottom: 0.5px solid #1a1a1a;
-    }
+    .state-drop-header { padding: 12px 16px; font-size: 11px; letter-spacing: 2px; color: #c9a84c; text-transform: uppercase; border-bottom: 0.5px solid #2a2a2a; position: sticky; top: 0; background: #111; }
+    .state-drop-menu a { display: block; padding: 11px 16px; font-size: 14px; color: #ccc; text-decoration: none; border-bottom: 0.5px solid #1a1a1a; }
     .state-drop-menu a:last-child { border-bottom: none; }
     .state-drop-menu a:hover { background: #1a1400; color: #c9a84c; }
     .state-drop-menu a.soon { color: #444; pointer-events: none; font-size: 13px; }
@@ -125,7 +102,8 @@
     footer p { font-size: 12px; color: #333; letter-spacing: 1px; }
 
     @media (max-width: 700px) {
-      nav { padding: 16px 20px; }
+      .ltb-nav { padding: 0 20px; }
+      .ltb-cta { display: none; }
       .hero { padding: 70px 24px 60px; }
       .hero h1 { font-size: 36px; }
       section { padding: 60px 24px; }
@@ -138,25 +116,60 @@
 </head>
 <body>
 
-  <nav>
-    <div class="nav-logo">LEARN THE BIZ</div>
-    <div class="nav-links">
-      <a href="#problem">The Problem</a>
-      <a href="#solution">How It Works</a>
-      <div class="nav-drop-wrap">
-        <button class="nav-drop-btn" id="navBtn">Start Here &#9660;</button>
-        <div class="nav-drop-menu" id="navMenu">
-          <a href="#pick">LLC</a>
-          <a href="#pick">S-Corp</a>
-          <a href="#pick">Sole Proprietorship</a>
-          <a class="coming">Partnership — coming soon</a>
-          <a class="coming">C-Corp — coming soon</a>
-          <a class="coming">Nonprofit — coming soon</a>
+  <!-- UNIVERSAL NAV -->
+  <nav class="ltb-nav">
+    <a class="ltb-logo" href="index.html">LEARN THE BIZ</a>
+    <div class="ltb-links">
+      <div class="ltb-item"><a class="ltb-item-btn" href="index.html">Home</a></div>
+
+      <div class="ltb-item" id="nav-learn">
+        <button class="ltb-item-btn">Learn <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Business Types</div>
+          <a class="ltb-drop-item" href="learn.html">Find My Business Type</a>
+          <a class="ltb-drop-item" href="learn.html">LLC — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">S-Corp — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">C-Corp — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">Sole Proprietorship — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">Partnership — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">Nonprofit — What It Is</a>
+          <div class="ltb-drop-divider"></div>
+          <div class="ltb-drop-label">Quiz</div>
+          <a class="ltb-drop-item" href="learn.html#quiz">Help Me Choose My Business Type</a>
         </div>
       </div>
+
+      <div class="ltb-item" id="nav-taxes">
+        <button class="ltb-item-btn">Taxes <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Select Business Type</div>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-llc')">LLC Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-llc"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#llc" target="_blank">Michigan</a><a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-scorp')">S-Corp Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-scorp"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#scorp" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-ccorp')">C-Corp Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-ccorp"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#ccorp" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-sole')">Sole Proprietorship Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-sole"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#sole" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-partner')">Partnership Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-partner"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#partnership" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-nonprofit')">Nonprofit Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-nonprofit"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#nonprofit" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+        </div>
+      </div>
+
+      <div class="ltb-item" id="nav-form">
+        <button class="ltb-item-btn">Start Forming <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Choose Your Structure</div>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-form-llc')">Form an LLC <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-form-llc"><div class="ltb-sub-header">Select Your State</div><a href="llc-michigan.html">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <span class="ltb-drop-item soon">Form an S-Corp — coming soon</span>
+          <span class="ltb-drop-item soon">Form a C-Corp — coming soon</span>
+          <span class="ltb-drop-item soon">Sole Proprietorship — coming soon</span>
+          <span class="ltb-drop-item soon">Partnership — coming soon</span>
+          <span class="ltb-drop-item soon">Nonprofit — coming soon</span>
+        </div>
+      </div>
+
+      <a class="ltb-cta" href="learn.html">Find My Business Type</a>
     </div>
   </nav>
 
+  <!-- HERO -->
   <section class="hero">
     <div class="hero-tag">Learn The Biz — Business Education for Real People</div>
     <h1>Stop Guessing.<br><span>Start Building.</span></h1>
@@ -165,150 +178,62 @@
     <a class="cta-btn" href="learn.html">Find My Business Type &rarr;</a>
   </section>
 
+  <!-- PROBLEM -->
   <section id="problem">
     <div class="section-label">The Problem</div>
     <h2>Starting a business feels impossible.<br>It doesn't have to.</h2>
     <div class="cards">
-      <div class="card">
-        <div class="card-icon">?</div>
-        <h3>You don't know where to start</h3>
-        <p>Google sends you in circles. Every article contradicts the last. You end up more confused than when you started.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">!</div>
-        <h3>Legal paperwork feels overwhelming</h3>
-        <p>LLCs, EINs, registered agents — the jargon alone is enough to make you quit before you even begin.</p>
-      </div>
-      <div class="card">
-        <div class="card-icon">$</div>
-        <h3>Fear of making a costly mistake</h3>
-        <p>You worry that one wrong move will cost you money, time, or worse — set you back before you even launch.</p>
-      </div>
+      <div class="card"><div class="card-icon">?</div><h3>You don't know where to start</h3><p>Google sends you in circles. Every article contradicts the last. You end up more confused than when you started.</p></div>
+      <div class="card"><div class="card-icon">!</div><h3>Legal paperwork feels overwhelming</h3><p>LLCs, EINs, registered agents — the jargon alone is enough to make you quit before you even begin.</p></div>
+      <div class="card"><div class="card-icon">$</div><h3>Fear of making a costly mistake</h3><p>You worry that one wrong move will cost you money, time, or worse — set you back before you even launch.</p></div>
     </div>
   </section>
 
+  <!-- SOLUTION -->
   <section id="solution">
     <div class="section-label">The Solution</div>
     <h2>Jay breaks it all down for you.</h2>
     <div class="solution-grid">
       <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
-          <div>
-            <h4>Pick your business type</h4>
-            <p>Choose the structure that fits your goals — we explain what each one actually means.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <div>
-            <h4>Follow your step-by-step guide</h4>
-            <p>No legal jargon. No filler. Just clear, numbered steps written for real beginners.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="step-num">3</div>
-          <div>
-            <h4>Launch with confidence</h4>
-            <p>Know exactly what you've done, why you did it, and what comes next.</p>
-          </div>
-        </div>
+        <div class="step"><div class="step-num">1</div><div><h4>Pick your business type</h4><p>Choose the structure that fits your goals — we explain what each one actually means.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h4>Follow your step-by-step guide</h4><p>No legal jargon. No filler. Just clear, numbered steps written for real beginners.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h4>Launch with confidence</h4><p>Know exactly what you've done, why you did it, and what comes next.</p></div></div>
       </div>
       <div class="trust-visual">
-        <div class="big">100%</div>
-        <div class="lbl">Plain English</div>
+        <div class="big">100%</div><div class="lbl">Plain English</div>
         <div class="divider"></div>
-        <div class="big">0</div>
-        <div class="lbl">Jargon. Zero Fluff.</div>
+        <div class="big">0</div><div class="lbl">Jargon. Zero Fluff.</div>
         <div class="divider"></div>
-        <div class="big">Free</div>
-        <div class="lbl">To Get Started</div>
+        <div class="big">Free</div><div class="lbl">To Get Started</div>
       </div>
     </div>
   </section>
 
+  <!-- TRUST -->
   <section id="trust">
     <div class="section-label">Why Trust Jay</div>
     <h2>Built for people who are starting from zero.</h2>
     <div class="cards">
-      <div class="card gold-card">
-        <h3>Plain English, always</h3>
-        <p>No law degree required. Every concept is explained the way a knowledgeable friend would — not a textbook.</p>
-      </div>
-      <div class="card gold-card">
-        <h3>Beginner-first, always</h3>
-        <p>We never assume you know the basics. Every guide starts at step one and walks you through to the finish line.</p>
-      </div>
-      <div class="card gold-card">
-        <h3>Step-by-step, always</h3>
-        <p>No vague advice. No "it depends." Every guide gives you a clear, numbered path from idea to official business.</p>
-      </div>
+      <div class="card gold-card"><h3>Plain English, always</h3><p>No law degree required. Every concept is explained the way a knowledgeable friend would — not a textbook.</p></div>
+      <div class="card gold-card"><h3>Beginner-first, always</h3><p>We never assume you know the basics. Every guide starts at step one and walks you through to the finish line.</p></div>
+      <div class="card gold-card"><h3>Step-by-step, always</h3><p>No vague advice. No "it depends." Every guide gives you a clear, numbered path from idea to official business.</p></div>
     </div>
   </section>
 
+  <!-- BOTTOM CTA -->
   <section class="cta-section" id="pick">
     <div class="section-label">Get Started</div>
     <h2>Ready? Pick your business type.</h2>
     <p>Each one gets its own complete, plain-English guide — built just for beginners.</p>
     <div class="biz-grid">
-
       <div class="state-drop-wrap">
         <button class="biz-btn" id="llcBtn">LLC &#9660;</button>
         <div class="state-drop-menu" id="llcStates">
           <div class="state-drop-header">Select Your State</div>
           <a href="llc-michigan.html">Michigan</a>
-          <a class="soon">Alabama — coming soon</a>
-          <a class="soon">Alaska — coming soon</a>
-          <a class="soon">Arizona — coming soon</a>
-          <a class="soon">Arkansas — coming soon</a>
-          <a class="soon">California — coming soon</a>
-          <a class="soon">Colorado — coming soon</a>
-          <a class="soon">Connecticut — coming soon</a>
-          <a class="soon">Delaware — coming soon</a>
-          <a class="soon">Florida — coming soon</a>
-          <a class="soon">Georgia — coming soon</a>
-          <a class="soon">Hawaii — coming soon</a>
-          <a class="soon">Idaho — coming soon</a>
-          <a class="soon">Illinois — coming soon</a>
-          <a class="soon">Indiana — coming soon</a>
-          <a class="soon">Iowa — coming soon</a>
-          <a class="soon">Kansas — coming soon</a>
-          <a class="soon">Kentucky — coming soon</a>
-          <a class="soon">Louisiana — coming soon</a>
-          <a class="soon">Maine — coming soon</a>
-          <a class="soon">Maryland — coming soon</a>
-          <a class="soon">Massachusetts — coming soon</a>
-          <a class="soon">Minnesota — coming soon</a>
-          <a class="soon">Mississippi — coming soon</a>
-          <a class="soon">Missouri — coming soon</a>
-          <a class="soon">Montana — coming soon</a>
-          <a class="soon">Nebraska — coming soon</a>
-          <a class="soon">Nevada — coming soon</a>
-          <a class="soon">New Hampshire — coming soon</a>
-          <a class="soon">New Jersey — coming soon</a>
-          <a class="soon">New Mexico — coming soon</a>
-          <a class="soon">New York — coming soon</a>
-          <a class="soon">North Carolina — coming soon</a>
-          <a class="soon">North Dakota — coming soon</a>
-          <a class="soon">Ohio — coming soon</a>
-          <a class="soon">Oklahoma — coming soon</a>
-          <a class="soon">Oregon — coming soon</a>
-          <a class="soon">Pennsylvania — coming soon</a>
-          <a class="soon">Rhode Island — coming soon</a>
-          <a class="soon">South Carolina — coming soon</a>
-          <a class="soon">South Dakota — coming soon</a>
-          <a class="soon">Tennessee — coming soon</a>
-          <a class="soon">Texas — coming soon</a>
-          <a class="soon">Utah — coming soon</a>
-          <a class="soon">Vermont — coming soon</a>
-          <a class="soon">Virginia — coming soon</a>
-          <a class="soon">Washington — coming soon</a>
-          <a class="soon">West Virginia — coming soon</a>
-          <a class="soon">Wisconsin — coming soon</a>
-          <a class="soon">Wyoming — coming soon</a>
+          <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
         </div>
       </div>
-
       <button class="biz-btn soon">S-Corp<br>coming soon</button>
       <button class="biz-btn soon">Sole Proprietorship<br>coming soon</button>
       <button class="biz-btn soon">Partnership<br>coming soon</button>
@@ -323,39 +248,67 @@
   </footer>
 
   <script>
-    var navBtn = document.getElementById('navBtn');
-    var navMenu = document.getElementById('navMenu');
+    // ── PAGE-SPECIFIC BUTTONS ──
     var llcBtn = document.getElementById('llcBtn');
     var llcStates = document.getElementById('llcStates');
     var startLLCBtn = document.getElementById('startLLCBtn');
 
-    navBtn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      navMenu.classList.toggle('open');
-      llcStates.classList.remove('open');
-    });
-
     llcBtn.addEventListener('click', function(e) {
       e.stopPropagation();
       llcStates.classList.toggle('open');
-      navMenu.classList.remove('open');
     });
 
     startLLCBtn.addEventListener('click', function(e) {
       e.stopPropagation();
-      navMenu.classList.remove('open');
       llcStates.classList.remove('open');
-      var wrap = document.querySelector('.state-drop-wrap');
-      wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      setTimeout(function() {
-        llcStates.classList.add('open');
-      }, 700);
+      document.querySelector('.state-drop-wrap').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(function() { llcStates.classList.add('open'); }, 700);
     });
 
     document.addEventListener('click', function() {
-      navMenu.classList.remove('open');
       llcStates.classList.remove('open');
     });
+
+    // ── UNIVERSAL NAV ──
+    (function() {
+      var hoverDelay = 150;
+      var closeTimer = {};
+      var items = document.querySelectorAll('.ltb-item');
+
+      items.forEach(function(item) {
+        var id = item.id || Math.random();
+        item.addEventListener('mouseenter', function() {
+          clearTimeout(closeTimer[id]);
+          items.forEach(function(i) { if (i !== item) i.classList.remove('open'); });
+          item.classList.add('open');
+        });
+        item.addEventListener('mouseleave', function() {
+          closeTimer[id] = setTimeout(function() { item.classList.remove('open'); }, hoverDelay);
+        });
+        var btn = item.querySelector('.ltb-item-btn');
+        if (btn && btn.tagName === 'BUTTON') {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = item.classList.contains('open');
+            items.forEach(function(i) { i.classList.remove('open'); });
+            if (!isOpen) item.classList.add('open');
+          });
+        }
+      });
+
+      document.addEventListener('click', function() {
+        items.forEach(function(i) { i.classList.remove('open'); });
+        document.querySelectorAll('.ltb-drop-item').forEach(function(i) { i.classList.remove('open-sub'); });
+      });
+
+      window.toggleSub = function(e, id) {
+        e.stopPropagation();
+        var btn = e.currentTarget;
+        var isOpen = btn.classList.contains('open-sub');
+        document.querySelectorAll('.ltb-drop-item').forEach(function(i) { i.classList.remove('open-sub'); });
+        if (!isOpen) btn.classList.add('open-sub');
+      };
+    })();
   </script>
 
 </body>
