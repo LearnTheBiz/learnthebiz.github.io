@@ -47,7 +47,7 @@
     }
     .nav-links a:hover { color: #c9a84c; }
 
-    /* ── DROPDOWN ── */
+    /* ── NAV DROPDOWN ── */
     .dropdown-wrap { position: relative; }
     .dropdown-btn {
       font-size: 13px;
@@ -194,10 +194,11 @@
       font-weight: 700;
       margin-bottom: 18px;
     }
-    .card h3 { font-size: 18px; font-weight: 500; margin-bottom: 12px; color: #e0e0e0; }
-    .card p { font-size: 15px; color: #999; line-height: 1.7; }
-    .card.gold-card h3 { color: #c9a84c; font-size: 18px; }
-    .card.gold-card p { font-size: 15px; color: #999; line-height: 1.7; }
+    .card h3 { font-size: 20px; font-weight: 500; margin-bottom: 12px; color: #e0e0e0; }
+    .card p { font-size: 16px; color: #aaa; line-height: 1.7; }
+    .card.gold-card { border-color: #3a2e10; }
+    .card.gold-card h3 { color: #c9a84c; font-size: 20px; }
+    .card.gold-card p { font-size: 16px; color: #aaa; line-height: 1.7; }
 
     /* ── SOLUTION ── */
     .solution-grid {
@@ -251,8 +252,8 @@
       text-align: center;
       background: #0f0c03;
     }
-    .cta-section h2 { font-size: 34px; margin-bottom: 14px; }
-    .cta-section > p { font-size: 15px; color: #888; margin-bottom: 44px; }
+    .cta-section h2 { font-size: 44px; margin-bottom: 16px; }
+    .cta-section > p { font-size: 20px; color: #aaa; margin-bottom: 44px; }
     .biz-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -264,18 +265,63 @@
       background: #111;
       border: 0.5px solid #2a2a2a;
       border-radius: 10px;
-      padding: 20px 14px;
-      font-size: 14px;
+      padding: 26px 14px;
+      font-size: 19px;
       font-weight: 500;
-      color: #ccc;
+      color: #ddd;
       cursor: pointer;
       font-family: inherit;
       letter-spacing: 0.5px;
       line-height: 1.4;
+      width: 100%;
     }
     .biz-btn:hover { border-color: #c9a84c; color: #c9a84c; background: #0f0c03; }
-    .biz-btn.soon { color: #444; border-color: #1a1a1a; cursor: default; font-size: 12px; }
-    .biz-btn.soon:hover { border-color: #1a1a1a; color: #444; background: #111; }
+    .biz-btn.soon { color: #777; border-color: #2a2a2a; cursor: default; font-size: 15px; }
+    .biz-btn.soon:hover { border-color: #2a2a2a; color: #777; background: #111; }
+
+    /* ── STATE DROPDOWN ── */
+    .state-dropdown-wrap { position: relative; display: inline-block; width: 100%; }
+    .state-dropdown {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%);
+      background: #111;
+      border: 0.5px solid #c9a84c;
+      border-radius: 10px;
+      width: 260px;
+      max-height: 280px;
+      overflow-y: auto;
+      z-index: 500;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.6);
+    }
+    .state-dropdown.open { display: block; }
+    .state-dropdown::-webkit-scrollbar { width: 6px; }
+    .state-dropdown::-webkit-scrollbar-track { background: #1a1a1a; border-radius: 3px; }
+    .state-dropdown::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
+    .state-dropdown-header {
+      padding: 12px 16px;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: #c9a84c;
+      text-transform: uppercase;
+      border-bottom: 0.5px solid #2a2a2a;
+      position: sticky;
+      top: 0;
+      background: #111;
+    }
+    .state-dropdown a {
+      display: block;
+      padding: 11px 16px;
+      font-size: 14px;
+      color: #ccc;
+      text-decoration: none;
+      border-bottom: 0.5px solid #1a1a1a;
+    }
+    .state-dropdown a:last-child { border-bottom: none; }
+    .state-dropdown a:hover { background: #1a1400; color: #c9a84c; }
+    .state-dropdown a.soon { color: #444; cursor: default; font-size: 13px; pointer-events: none; }
 
     /* ── FOOTER ── */
     footer {
@@ -309,9 +355,9 @@
       <div class="dropdown-wrap">
         <button class="dropdown-btn" id="dropBtn">Start Here &#9660;</button>
         <div class="dropdown-menu" id="dropMenu">
-          <a href="llc.html">LLC</a>
-          <a href="scorp.html">S-Corp</a>
-          <a href="sole.html">Sole Proprietorship</a>
+          <a href="#pick">LLC</a>
+          <a href="#pick">S-Corp</a>
+          <a href="#pick">Sole Proprietorship</a>
           <a class="coming">Partnership — coming soon</a>
           <a class="coming">C-Corp — coming soon</a>
           <a class="coming">Nonprofit — coming soon</a>
@@ -419,8 +465,9 @@
     <h2>Ready? Pick your business type.</h2>
     <p>Each one gets its own complete, plain-English guide — built just for beginners.</p>
     <div class="biz-grid">
+
       <div class="state-dropdown-wrap">
-        <button class="biz-btn" onclick="toggleStateDropdown(event, 'llc-states')">LLC ▾</button>
+        <button class="biz-btn" onclick="toggleStateDropdown(event, 'llc-states')">LLC &#9660;</button>
         <div class="state-dropdown" id="llc-states">
           <div class="state-dropdown-header">Select Your State</div>
           <a href="llc-michigan.html">Michigan</a>
@@ -475,13 +522,14 @@
           <a class="soon">Wyoming — coming soon</a>
         </div>
       </div>
-      <button class="biz-btn" onclick="window.location.href='scorp.html'">S-Corp</button>
-      <button class="biz-btn" onclick="window.location.href='sole.html'">Sole Proprietorship</button>
+
+      <button class="biz-btn soon">S-Corp<br>coming soon</button>
+      <button class="biz-btn soon">Sole Proprietorship<br>coming soon</button>
       <button class="biz-btn soon">Partnership<br>coming soon</button>
       <button class="biz-btn soon">C-Corp<br>coming soon</button>
       <button class="biz-btn soon">Nonprofit<br>coming soon</button>
     </div>
-    <a class="cta-btn" href="llc.html">Start With LLC &rarr;</a>
+    <a class="cta-btn" href="#" onclick="toggleStateDropdown(event, 'llc-states')">Start With LLC &darr;</a>
   </section>
 
   <!-- FOOTER -->
