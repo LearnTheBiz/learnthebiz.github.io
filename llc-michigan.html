@@ -10,163 +10,124 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
 
-    /* NAV */
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 40px; border-bottom: 0.5px solid #2a2a2a;
-      background: #0a0a0a; position: sticky; top: 0; z-index: 100;
-    }
-    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; text-decoration: none; }
-    .nav-back { font-size: 13px; color: #aaa; text-decoration: none; letter-spacing: 1px; }
-    .nav-back:hover { color: #c9a84c; }
+    /* ── UNIVERSAL NAV ── */
+    .ltb-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 62px; background: #0a0a0a; border-bottom: 0.5px solid #2a2a2a; position: sticky; top: 0; z-index: 1000; }
+    .ltb-logo { font-size: 20px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; text-decoration: none; flex-shrink: 0; }
+    .ltb-links { display: flex; align-items: center; gap: 4px; }
+    .ltb-item { position: relative; }
+    .ltb-item-btn { display: flex; align-items: center; gap: 6px; padding: 0 16px; height: 62px; font-size: 13px; font-weight: 500; color: #aaa; background: none; border: none; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; white-space: nowrap; text-decoration: none; }
+    .ltb-item-btn:hover { color: #c9a84c; }
+    .ltb-item.open > .ltb-item-btn { color: #c9a84c; }
+    .ltb-arrow { font-size: 9px; transition: transform 0.2s; }
+    .ltb-item.open > .ltb-item-btn .ltb-arrow { transform: rotate(180deg); }
+    .ltb-drop { display: none; position: absolute; top: 62px; left: auto; right: 0; background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px; min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.7); z-index: 1001; overflow: visible; padding: 6px 0; }
+    .ltb-item.open > .ltb-drop { display: block; }
+    .ltb-drop-item { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; font-size: 14px; color: #ccc; text-decoration: none; cursor: pointer; white-space: nowrap; gap: 12px; background: none; border: none; width: 100%; font-family: inherit; text-align: left; }
+    .ltb-drop-item:hover { background: #1a1a1a; color: #c9a84c; }
+    .ltb-drop-item .ltb-sub-arrow { font-size: 10px; color: #555; flex-shrink: 0; }
+    .ltb-drop-item:hover .ltb-sub-arrow { color: #c9a84c; }
+    .ltb-drop-divider { height: 0.5px; background: #1e1e1e; margin: 4px 0; }
+    .ltb-drop-label { padding: 8px 16px 4px; font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; }
+    .ltb-drop-item.soon { color: #444; cursor: default; pointer-events: none; }
+    .ltb-sub { display: none; position: absolute; top: -6px; right: calc(100% + 1px); left: auto; background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px; width: 220px; max-height: 320px; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.7); z-index: 1002; padding: 6px 0; }
+    .ltb-drop-item.open-sub > .ltb-sub { display: block; }
+    .ltb-sub::-webkit-scrollbar { width: 5px; }
+    .ltb-sub::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
+    .ltb-sub a { display: block; padding: 10px 16px; font-size: 13px; color: #ccc; text-decoration: none; }
+    .ltb-sub a:hover { background: #1a1400; color: #c9a84c; }
+    .ltb-sub a.soon { color: #333; pointer-events: none; font-size: 12px; }
+    .ltb-sub-header { padding: 8px 16px 4px; font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; }
+    .ltb-cta { background: #c9a84c; color: #0a0a0a; font-size: 12px; font-weight: 700; padding: 9px 20px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block; margin-left: 8px; white-space: nowrap; }
+    .ltb-cta:hover { background: #e2bf6a; }
 
-    /* HERO */
-    .hero {
-      text-align: center; padding: 80px 40px 60px;
-      border-bottom: 0.5px solid #1e1a08; background: #0a0a0a;
-    }
-    .state-badge {
-      display: inline-block; background: #1a1400; border: 0.5px solid #c9a84c;
-      color: #c9a84c; font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-      padding: 6px 16px; border-radius: 20px; margin-bottom: 24px;
-    }
+    /* ── PAGE STYLES ── */
+    .hero { text-align: center; padding: 80px 40px 60px; border-bottom: 0.5px solid #1e1a08; background: #0a0a0a; }
+    .state-badge { display: inline-block; background: #1a1400; border: 0.5px solid #c9a84c; color: #c9a84c; font-size: 11px; letter-spacing: 3px; text-transform: uppercase; padding: 6px 16px; border-radius: 20px; margin-bottom: 24px; }
     .hero h1 { font-size: 48px; font-weight: 900; line-height: 1.1; margin-bottom: 20px; }
     .hero h1 span { color: #c9a84c; }
     .gold-line { width: 60px; height: 2px; background: #c9a84c; margin: 0 auto 28px; border-radius: 1px; }
     .hero p { font-size: 18px; color: #999; max-width: 600px; margin: 0 auto 36px; line-height: 1.65; }
 
-    /* QUICK STATS */
-    .stats-bar {
-      display: grid; grid-template-columns: repeat(4, 1fr);
-      gap: 1px; background: #1a1a1a; border-top: 0.5px solid #1a1a1a;
-      border-bottom: 0.5px solid #1a1a1a;
-    }
+    .stats-bar { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: #1a1a1a; border-top: 0.5px solid #1a1a1a; border-bottom: 0.5px solid #1a1a1a; }
     .stat { background: #0f0f0f; padding: 28px 20px; text-align: center; }
     .stat .num { font-size: 28px; font-weight: 900; color: #c9a84c; }
     .stat .lbl { font-size: 12px; color: #666; letter-spacing: 1px; margin-top: 6px; text-transform: uppercase; }
 
-    /* WHAT IS AN LLC */
-    .what-section {
-      max-width: 860px; margin: 0 auto; padding: 72px 40px;
-      border-bottom: 0.5px solid #1a1a1a;
-    }
+    .what-section { max-width: 860px; margin: 0 auto; padding: 72px 40px; border-bottom: 0.5px solid #1a1a1a; }
     .section-tag { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 14px; }
     .what-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 24px; line-height: 1.2; }
     .what-section p { font-size: 17px; color: #999; line-height: 1.75; margin-bottom: 18px; }
     .pro-con { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 36px; }
-    .pro-box, .con-box { border-radius: 12px; padding: 24px; }
-    .pro-box { background: #0a1a0a; border: 0.5px solid #1a3a1a; }
-    .con-box { background: #1a0a0a; border: 0.5px solid #3a1a1a; }
+    .pro-box { background: #0a1a0a; border: 0.5px solid #1a3a1a; border-radius: 12px; padding: 24px; }
+    .con-box { background: #1a0a0a; border: 0.5px solid #3a1a1a; border-radius: 12px; padding: 24px; }
     .pro-box h4 { color: #4caf50; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
     .con-box h4 { color: #e57373; font-size: 14px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 14px; }
     .pro-box li, .con-box li { font-size: 14px; color: #999; line-height: 1.7; margin-left: 16px; margin-bottom: 6px; }
 
-    /* STEPS */
     .steps-section { max-width: 860px; margin: 0 auto; padding: 72px 40px; }
     .steps-section > h2 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
     .steps-section > p { font-size: 17px; color: #999; margin-bottom: 52px; line-height: 1.65; }
 
-    .step-card {
-      background: #111; border: 0.5px solid #222; border-radius: 16px;
-      padding: 36px 32px; margin-bottom: 24px; position: relative;
-    }
+    .step-card { background: #111; border: 0.5px solid #222; border-radius: 16px; padding: 36px 32px; margin-bottom: 24px; }
     .step-card.active-step { border-color: #3a2e10; }
     .step-header { display: flex; align-items: flex-start; gap: 20px; margin-bottom: 20px; }
-    .step-circle {
-      width: 44px; height: 44px; border-radius: 50%; background: #c9a84c;
-      color: #0a0a0a; font-size: 16px; font-weight: 900;
-      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
-    }
+    .step-circle { width: 44px; height: 44px; border-radius: 50%; background: #c9a84c; color: #0a0a0a; font-size: 16px; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
     .step-title-wrap h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
     .step-title-wrap .step-sub { font-size: 13px; color: #666; letter-spacing: 1px; text-transform: uppercase; }
     .step-body p { font-size: 16px; color: #999; line-height: 1.75; margin-bottom: 16px; }
     .step-body p:last-child { margin-bottom: 0; }
 
     .info-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 24px 0; }
-    .info-pill {
-      background: #0f0f0f; border: 0.5px solid #2a2a2a; border-radius: 10px;
-      padding: 16px; text-align: center;
-    }
+    .info-pill { background: #0f0f0f; border: 0.5px solid #2a2a2a; border-radius: 10px; padding: 16px; text-align: center; }
     .info-pill .pill-val { font-size: 20px; font-weight: 700; color: #c9a84c; }
     .info-pill .pill-key { font-size: 11px; color: #666; letter-spacing: 1px; text-transform: uppercase; margin-top: 4px; }
 
-    .action-box {
-      background: #0f0c03; border: 0.5px solid #3a2e10; border-radius: 10px;
-      padding: 20px 24px; margin-top: 20px;
-    }
+    .action-box { background: #0f0c03; border: 0.5px solid #3a2e10; border-radius: 10px; padding: 20px 24px; margin-top: 20px; }
     .action-box h4 { font-size: 13px; color: #c9a84c; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
     .action-box p { font-size: 15px; color: #999; line-height: 1.65; }
     .action-box a { color: #c9a84c; text-decoration: none; }
     .action-box a:hover { text-decoration: underline; }
 
-    .warning-box {
-      background: #1a1000; border: 0.5px solid #4a3000; border-radius: 10px;
-      padding: 20px 24px; margin-top: 20px;
-    }
+    .warning-box { background: #1a1000; border: 0.5px solid #4a3000; border-radius: 10px; padding: 20px 24px; margin-top: 20px; }
     .warning-box h4 { font-size: 13px; color: #f0a500; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; }
     .warning-box p { font-size: 15px; color: #999; line-height: 1.65; }
+    .warning-box a { color: #f0a500; text-decoration: none; }
 
     .checklist { list-style: none; margin-top: 16px; }
-    .checklist li {
-      font-size: 15px; color: #999; padding: 10px 0;
-      border-bottom: 0.5px solid #1a1a1a; display: flex; align-items: flex-start; gap: 12px; line-height: 1.6;
-    }
+    .checklist li { font-size: 15px; color: #999; padding: 10px 0; border-bottom: 0.5px solid #1a1a1a; display: flex; align-items: flex-start; gap: 12px; line-height: 1.6; }
     .checklist li:last-child { border-bottom: none; }
     .checklist li::before { content: "→"; color: #c9a84c; font-weight: 700; flex-shrink: 0; margin-top: 2px; }
 
-    /* ONGOING */
-    .ongoing-section {
-      background: #0f0c03; border-top: 0.5px solid #1e1a08;
-      border-bottom: 0.5px solid #1e1a08; padding: 72px 40px;
-    }
+    .ongoing-section { background: #0f0c03; border-top: 0.5px solid #1e1a08; border-bottom: 0.5px solid #1e1a08; padding: 72px 40px; }
     .ongoing-inner { max-width: 860px; margin: 0 auto; }
     .ongoing-inner h2 { font-size: 32px; font-weight: 700; margin-bottom: 8px; }
     .ongoing-inner > p { font-size: 17px; color: #999; margin-bottom: 40px; line-height: 1.65; }
     .ongoing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-    .ongoing-card {
-      background: #111; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 28px 24px;
-    }
+    .ongoing-card { background: #111; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 28px 24px; }
     .ongoing-card h3 { font-size: 17px; font-weight: 500; color: #c9a84c; margin-bottom: 12px; }
     .ongoing-card p { font-size: 15px; color: #999; line-height: 1.7; }
-    .ongoing-card .fee-tag {
-      display: inline-block; background: #1a1400; border: 0.5px solid #c9a84c;
-      color: #c9a84c; font-size: 12px; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px;
-    }
+    .ongoing-card .fee-tag { display: inline-block; background: #1a1400; border: 0.5px solid #c9a84c; color: #c9a84c; font-size: 12px; padding: 3px 10px; border-radius: 20px; margin-bottom: 12px; }
 
-    /* VETERAN CALLOUT */
-    .veteran-box {
-      max-width: 860px; margin: 0 auto; padding: 0 40px 72px;
-    }
-    .veteran-inner {
-      background: #0a1a0a; border: 0.5px solid #2a4a2a; border-radius: 16px;
-      padding: 32px; margin-top: 40px;
-    }
+    .veteran-box { max-width: 860px; margin: 0 auto; padding: 0 40px 72px; }
+    .veteran-inner { background: #0a1a0a; border: 0.5px solid #2a4a2a; border-radius: 16px; padding: 32px; margin-top: 40px; }
     .veteran-inner h3 { font-size: 20px; font-weight: 700; color: #4caf50; margin-bottom: 12px; }
     .veteran-inner p { font-size: 16px; color: #999; line-height: 1.75; }
 
-    /* CTA */
     .cta-section { padding: 80px 40px; text-align: center; border-top: 0.5px solid #1a1a1a; }
     .cta-section h2 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
     .cta-section p { font-size: 17px; color: #999; margin-bottom: 40px; }
     .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .cta-btn {
-      background: #c9a84c; color: #0a0a0a; font-size: 15px; font-weight: 700;
-      padding: 16px 36px; border-radius: 6px; border: none; cursor: pointer;
-      letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block;
-    }
+    .cta-btn { background: #c9a84c; color: #0a0a0a; font-size: 15px; font-weight: 700; padding: 16px 36px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block; }
     .cta-btn:hover { background: #e2bf6a; }
-    .cta-btn-outline {
-      background: transparent; color: #c9a84c; font-size: 15px; font-weight: 700;
-      padding: 16px 36px; border-radius: 6px; border: 0.5px solid #c9a84c; cursor: pointer;
-      letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block;
-    }
+    .cta-btn-outline { background: transparent; color: #c9a84c; font-size: 15px; font-weight: 700; padding: 16px 36px; border-radius: 6px; border: 0.5px solid #c9a84c; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block; }
     .cta-btn-outline:hover { background: #1a1400; }
 
     footer { padding: 28px 40px; text-align: center; border-top: 0.5px solid #1a1a1a; }
     footer p { font-size: 12px; color: #333; letter-spacing: 1px; }
 
     @media (max-width: 700px) {
-      nav { padding: 16px 20px; }
+      .ltb-nav { padding: 0 20px; }
+      .ltb-cta { display: none; }
       .hero { padding: 60px 24px 40px; }
       .hero h1 { font-size: 32px; }
       .stats-bar { grid-template-columns: 1fr 1fr; }
@@ -182,10 +143,57 @@
 </head>
 <body>
 
-  <!-- NAV -->
-  <nav>
-    <a class="nav-logo" href="index.html">LEARN THE BIZ</a>
-    <a class="nav-back" href="index.html">← Back to Home</a>
+  <!-- UNIVERSAL NAV -->
+  <nav class="ltb-nav">
+    <a class="ltb-logo" href="index.html">LEARN THE BIZ</a>
+    <div class="ltb-links">
+      <div class="ltb-item"><a class="ltb-item-btn" href="index.html">Home</a></div>
+
+      <div class="ltb-item" id="nav-learn">
+        <button class="ltb-item-btn">Learn <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Business Types</div>
+          <a class="ltb-drop-item" href="learn.html?panel=llc">Find My Business Type</a>
+          <a class="ltb-drop-item" href="learn.html?panel=llc">LLC — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html?panel=scorp">S-Corp — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html?panel=ccorp">C-Corp — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html?panel=sole">Sole Proprietorship — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html?panel=partnership">Partnership — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html?panel=nonprofit">Nonprofit — What It Is</a>
+          <div class="ltb-drop-divider"></div>
+          <div class="ltb-drop-label">Quiz</div>
+          <a class="ltb-drop-item" href="learn.html#quiz">Help Me Choose My Business Type</a>
+        </div>
+      </div>
+
+      <div class="ltb-item" id="nav-taxes">
+        <button class="ltb-item-btn">Taxes <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Select Business Type</div>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-llc')">LLC Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-llc"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#llc" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-scorp')">S-Corp Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-scorp"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#scorp" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-ccorp')">C-Corp Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-ccorp"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#ccorp" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-sole')">Sole Prop Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-sole"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#sole" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-partner')">Partnership Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-partner"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#partnership" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-nonprofit')">Nonprofit Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-nonprofit"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#nonprofit" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+        </div>
+      </div>
+
+      <div class="ltb-item" id="nav-form">
+        <button class="ltb-item-btn">Start Forming <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Choose Your Structure</div>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-form-llc')">Form an LLC <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-form-llc"><div class="ltb-sub-header">Select Your State</div><a href="llc-michigan.html">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <span class="ltb-drop-item soon">Form an S-Corp — coming soon</span>
+          <span class="ltb-drop-item soon">Form a C-Corp — coming soon</span>
+          <span class="ltb-drop-item soon">Sole Proprietorship — coming soon</span>
+          <span class="ltb-drop-item soon">Partnership — coming soon</span>
+          <span class="ltb-drop-item soon">Nonprofit — coming soon</span>
+        </div>
+      </div>
+
+      <a class="ltb-cta" href="learn.html">Find My Business Type</a>
+    </div>
   </nav>
 
   <!-- HERO -->
@@ -198,22 +206,10 @@
 
   <!-- QUICK STATS -->
   <div class="stats-bar">
-    <div class="stat">
-      <div class="num">$50</div>
-      <div class="lbl">State Filing Fee</div>
-    </div>
-    <div class="stat">
-      <div class="num">7–10</div>
-      <div class="lbl">Business Days</div>
-    </div>
-    <div class="stat">
-      <div class="num">$25</div>
-      <div class="lbl">Annual Fee / Year</div>
-    </div>
-    <div class="stat">
-      <div class="num">Feb 15</div>
-      <div class="lbl">Annual Deadline</div>
-    </div>
+    <div class="stat"><div class="num">$50</div><div class="lbl">State Filing Fee</div></div>
+    <div class="stat"><div class="num">7–10</div><div class="lbl">Business Days</div></div>
+    <div class="stat"><div class="num">$25</div><div class="lbl">Annual Fee / Year</div></div>
+    <div class="stat"><div class="num">Feb 15</div><div class="lbl">Annual Deadline</div></div>
   </div>
 
   <!-- WHAT IS AN LLC -->
@@ -241,7 +237,7 @@
           <li>$25 annual statement required every year</li>
           <li>Must maintain a registered agent in Michigan</li>
           <li>Mixing personal and business money can void your protection</li>
-          <li>Not ideal if you plan to raise venture capital (C-Corp is better for that)</li>
+          <li>Not ideal if you plan to raise venture capital</li>
           <li>Self-employment taxes still apply to your income</li>
         </ul>
       </div>
@@ -258,48 +254,29 @@
     <div class="step-card active-step">
       <div class="step-header">
         <div class="step-circle">1</div>
-        <div class="step-title-wrap">
-          <div class="step-sub">Step One</div>
-          <h3>Name Your LLC</h3>
-        </div>
+        <div class="step-title-wrap"><div class="step-sub">Step One</div><h3>Name Your LLC</h3></div>
       </div>
       <div class="step-body">
-        <p>Your LLC name is your legal identity in the state of Michigan. Before you fall in love with a name, you need to make sure it's available and that it meets Michigan's legal requirements.</p>
+        <p>Your LLC name is your legal identity in the state of Michigan. Before you fall in love with a name, you need to make sure it's available and meets Michigan's legal requirements.</p>
         <p><strong style="color:#e0e0e0;">Michigan naming rules you must follow:</strong></p>
         <ul class="checklist">
           <li>Your name MUST include "Limited Liability Company", "LLC", or "L.L.C." at the end</li>
           <li>Your name must be distinguishable from all other registered businesses in Michigan</li>
-          <li>Your name cannot imply it's a government agency (no "FBI", "Treasury", "State", etc.)</li>
+          <li>Your name cannot imply it's a government agency</li>
           <li>Your name cannot include words like "Bank", "Insurance", or "University" without special approval</li>
         </ul>
         <div class="info-grid">
-          <div class="info-pill">
-            <div class="pill-val">Free</div>
-            <div class="pill-key">Name Search</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">$25</div>
-            <div class="pill-key">Name Reservation (optional)</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">6 mo</div>
-            <div class="pill-key">Reservation Duration</div>
-          </div>
+          <div class="info-pill"><div class="pill-val">Free</div><div class="pill-key">Name Search</div></div>
+          <div class="info-pill"><div class="pill-val">$25</div><div class="pill-key">Name Reservation (optional)</div></div>
+          <div class="info-pill"><div class="pill-val">6 mo</div><div class="pill-key">Reservation Duration</div></div>
         </div>
         <div class="action-box">
           <h4>Your Action Step</h4>
-          <p>Go to the Michigan Business Entity Search at <a href="https://mibusinessregistry.lara.state.mi.us" target="_blank">mibusinessregistry.lara.state.mi.us</a> and search your desired name. If it's available and you're not ready to file yet, you can reserve it for 6 months by filing an Application for Reservation of Name for $25.</p>
+          <p>Go to the Michigan Business Entity Search at <a href="https://mibusinessregistry.lara.state.mi.us" target="_blank">mibusinessregistry.lara.state.mi.us</a> and search your desired name. If available and you're not ready to file yet, reserve it for 6 months by filing an Application for Reservation of Name for $25.</p>
         </div>
         <div class="warning-box">
           <h4>⚠ Do This BEFORE You Fall in Love With a Name</h4>
-          <p>Most beginners pick a name, get excited, file their LLC — and then find out the domain name is already taken. Don't let that be you. Before you commit to any name, run all four of these checks:</p>
-          <ul class="checklist" style="margin-top:12px;">
-            <li><strong style="color:#e0e0e0;">Michigan Business Search</strong> — confirm the name is available as an LLC in Michigan at mibusinessregistry.lara.state.mi.us</li>
-            <li><strong style="color:#e0e0e0;">Domain Name</strong> — check if the .com version of your name is available at a registrar like GoDaddy, Namecheap, or Google Domains. A .com is strongly preferred — it's what people default to typing. If your name is "Apex Cleaning" check apexcleaning.com first.</li>
-            <li><strong style="color:#e0e0e0;">Email Address</strong> — if you want a professional email like info@yourcompany.com, you'll need that domain. No domain = no custom email.</li>
-            <li><strong style="color:#e0e0e0;">Social Media Handles</strong> — check Instagram, Facebook, TikTok, and any platform you plan to use. Your handle should match your business name so customers can find you easily.</li>
-          </ul>
-          <p style="margin-top:14px; font-size:15px; color:#999;">The perfect business name is one that is available as an LLC in Michigan, available as a .com domain, and available on the social media platforms you plan to use — all at the same time. It takes a little extra work upfront but saves you a major headache later. Do not file until you have confirmed all four.</p>
+          <p>Before you commit to any name, run all four of these checks: Michigan Business Search, domain name availability (.com), email address availability, and social media handles. The perfect business name is available as an LLC in Michigan, as a .com domain, and on the social platforms you plan to use — all at the same time.</p>
         </div>
       </div>
     </div>
@@ -308,13 +285,10 @@
     <div class="step-card active-step">
       <div class="step-header">
         <div class="step-circle">2</div>
-        <div class="step-title-wrap">
-          <div class="step-sub">Step Two</div>
-          <h3>Choose a Resident Agent</h3>
-        </div>
+        <div class="step-title-wrap"><div class="step-sub">Step Two</div><h3>Choose a Resident Agent</h3></div>
       </div>
       <div class="step-body">
-        <p>Michigan calls this a "Resident Agent" — most other states call it a Registered Agent. They mean the same thing. This is a person or company designated to receive official legal and government documents on behalf of your LLC. Think of it as your business's official point of contact with the state.</p>
+        <p>Michigan calls this a "Resident Agent" — most other states call it a Registered Agent. This is a person or company designated to receive official legal and government documents on behalf of your LLC.</p>
         <p><strong style="color:#e0e0e0;">Michigan requirements for your Resident Agent:</strong></p>
         <ul class="checklist">
           <li>Must be a Michigan resident OR a company authorized to do business in Michigan</li>
@@ -323,18 +297,9 @@
           <li>Must be listed in your Articles of Organization when you file</li>
         </ul>
         <div class="info-grid">
-          <div class="info-pill">
-            <div class="pill-val">Free</div>
-            <div class="pill-key">If You Are Your Own Agent</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">$100–300</div>
-            <div class="pill-key">Hiring a Service / Year</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">Required</div>
-            <div class="pill-key">Must Maintain One Always</div>
-          </div>
+          <div class="info-pill"><div class="pill-val">Free</div><div class="pill-key">If You Are Your Own Agent</div></div>
+          <div class="info-pill"><div class="pill-val">$100–300</div><div class="pill-key">Hiring a Service / Year</div></div>
+          <div class="info-pill"><div class="pill-val">Required</div><div class="pill-key">Must Maintain One Always</div></div>
         </div>
         <div class="action-box">
           <h4>Your Action Step</h4>
@@ -342,7 +307,7 @@
         </div>
         <div class="warning-box">
           <h4>⚠ Important</h4>
-          <p>If your Resident Agent moves or becomes unavailable and you don't update the state, your LLC can fall out of good standing. This is one of the most common mistakes new business owners make. Always keep this information current with LARA.</p>
+          <p>If your Resident Agent moves or becomes unavailable and you don't update the state, your LLC can fall out of good standing. Always keep this information current with LARA.</p>
         </div>
       </div>
     </div>
@@ -351,43 +316,31 @@
     <div class="step-card active-step">
       <div class="step-header">
         <div class="step-circle">3</div>
-        <div class="step-title-wrap">
-          <div class="step-sub">Step Three</div>
-          <h3>File Your Articles of Organization</h3>
-        </div>
+        <div class="step-title-wrap"><div class="step-sub">Step Three</div><h3>File Your Articles of Organization</h3></div>
       </div>
       <div class="step-body">
-        <p>This is the official step that legally creates your LLC in Michigan. The Articles of Organization is a simple form — called Form CSCL/CD-700 — that you file with the Michigan Department of Licensing and Regulatory Affairs (LARA). Once it's approved, your LLC officially exists.</p>
+        <p>This is the official step that legally creates your LLC in Michigan. The Articles of Organization is a simple form — called Form CSCL/CD-700 — that you file with the Michigan Department of Licensing and Regulatory Affairs (LARA). Once approved, your LLC officially exists.</p>
         <p><strong style="color:#e0e0e0;">What you'll need to fill out:</strong></p>
         <ul class="checklist">
           <li>Your LLC name (with LLC or L.L.C. at the end)</li>
           <li>Your LLC's purpose (can be broad — "any lawful business purpose" is fine)</li>
           <li>Your Resident Agent's name and Michigan address</li>
           <li>Whether your LLC is member-managed or manager-managed</li>
-          <li>The effective date (defaults to the date filed unless you choose a future date up to 90 days out)</li>
+          <li>The effective date (defaults to the date filed)</li>
           <li>Signature of an organizer (that's you)</li>
         </ul>
         <div class="info-grid">
-          <div class="info-pill">
-            <div class="pill-val">$50</div>
-            <div class="pill-key">Filing Fee</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">7–10</div>
-            <div class="pill-key">Business Days (standard)</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">Same Day</div>
-            <div class="pill-key">Expedited Option Available</div>
-          </div>
+          <div class="info-pill"><div class="pill-val">$50</div><div class="pill-key">Filing Fee</div></div>
+          <div class="info-pill"><div class="pill-val">7–10</div><div class="pill-key">Business Days (standard)</div></div>
+          <div class="info-pill"><div class="pill-val">Same Day</div><div class="pill-key">Expedited Option Available</div></div>
         </div>
         <div class="action-box">
           <h4>Your Action Step</h4>
-          <p>File online at the MiBusiness Registry Portal at <a href="https://mibusinessregistry.lara.state.mi.us" target="_blank">mibusinessregistry.lara.state.mi.us</a>. You'll need to create a free MiLogin for Business account first. File online — it's faster and you get confirmation immediately. The $50 fee is paid by credit card online. Mail filing is also accepted at: Michigan Corporations Division, PO Box 30054, Lansing, MI 48909-7554.</p>
+          <p>File online at the MiBusiness Registry Portal at <a href="https://mibusinessregistry.lara.state.mi.us" target="_blank">mibusinessregistry.lara.state.mi.us</a>. You'll need to create a free MiLogin for Business account first. The $50 fee is paid by credit card online. Mail filing is also accepted at: Michigan Corporations Division, PO Box 30054, Lansing, MI 48909-7554.</p>
         </div>
         <div class="warning-box">
           <h4>⚠ Veterans: File for Free</h4>
-          <p>If you are a veteran, Michigan waives the $50 filing fee. You'll need to submit a Veteran Fee Waiver Affidavit along with proof of your veteran status when you file. The $50 fee drops to $0.</p>
+          <p>If you are a veteran, Michigan waives the $50 filing fee. Submit a Veteran Fee Waiver Affidavit along with proof of your veteran status when you file.</p>
         </div>
       </div>
     </div>
@@ -396,13 +349,10 @@
     <div class="step-card active-step">
       <div class="step-header">
         <div class="step-circle">4</div>
-        <div class="step-title-wrap">
-          <div class="step-sub">Step Four</div>
-          <h3>Create an Operating Agreement</h3>
-        </div>
+        <div class="step-title-wrap"><div class="step-sub">Step Four</div><h3>Create an Operating Agreement</h3></div>
       </div>
       <div class="step-body">
-        <p>Michigan does NOT legally require you to file an Operating Agreement with the state — but you absolutely should have one. This is a private internal document that lays out the rules for how your LLC operates. Think of it as the rulebook for your business.</p>
+        <p>Michigan does NOT legally require you to file an Operating Agreement with the state — but you absolutely should have one. This is a private internal document that lays out the rules for how your LLC operates.</p>
         <p><strong style="color:#e0e0e0;">What a good Operating Agreement covers:</strong></p>
         <ul class="checklist">
           <li>Who owns the LLC and what percentage each person owns</li>
@@ -413,26 +363,17 @@
           <li>How new members can be added</li>
         </ul>
         <div class="info-grid">
-          <div class="info-pill">
-            <div class="pill-val">Free</div>
-            <div class="pill-key">You Write It Yourself</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">Not Filed</div>
-            <div class="pill-key">Keep It Private</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">Critical</div>
-            <div class="pill-key">Especially With Partners</div>
-          </div>
+          <div class="info-pill"><div class="pill-val">Free</div><div class="pill-key">You Write It Yourself</div></div>
+          <div class="info-pill"><div class="pill-val">Not Filed</div><div class="pill-key">Keep It Private</div></div>
+          <div class="info-pill"><div class="pill-val">Critical</div><div class="pill-key">Especially With Partners</div></div>
         </div>
         <div class="action-box">
           <h4>Your Action Step</h4>
-          <p>Write your Operating Agreement and have all members sign it. Keep it stored safely — you may need it to open a bank account or resolve disputes. If you have a single-member LLC (just you), it's still worth having one as it reinforces your LLC's legitimacy and liability protection. Many free templates are available online.</p>
+          <p>Write your Operating Agreement and have all members sign it. Keep it stored safely — you may need it to open a bank account or resolve disputes. Even for a single-member LLC, having one reinforces your LLC's legitimacy and liability protection.</p>
         </div>
         <div class="warning-box">
           <h4>⚠ Don't Skip This</h4>
-          <p>If you have business partners and no Operating Agreement, you are one disagreement away from a serious legal mess. Courts in Michigan can and will look at this document. Do not operate a multi-member LLC without one.</p>
+          <p>If you have business partners and no Operating Agreement, you are one disagreement away from a serious legal mess. Do not operate a multi-member LLC without one.</p>
         </div>
       </div>
     </div>
@@ -441,13 +382,10 @@
     <div class="step-card active-step">
       <div class="step-header">
         <div class="step-circle">5</div>
-        <div class="step-title-wrap">
-          <div class="step-sub">Step Five</div>
-          <h3>Get Your EIN (Federal Tax ID)</h3>
-        </div>
+        <div class="step-title-wrap"><div class="step-sub">Step Five</div><h3>Get Your EIN (Federal Tax ID)</h3></div>
       </div>
       <div class="step-body">
-        <p>An EIN — Employer Identification Number — is your business's Social Security Number. It's issued by the IRS and it's completely free. You'll need it to open a business bank account, hire employees, file federal taxes, and more. Even if you have no employees, get one. It keeps your personal SSN off business paperwork.</p>
+        <p>An EIN — Employer Identification Number — is your business's Social Security Number. It's issued by the IRS and it's completely free. You'll need it to open a business bank account, hire employees, file federal taxes, and more.</p>
         <p><strong style="color:#e0e0e0;">You need an EIN if:</strong></p>
         <ul class="checklist">
           <li>You plan to hire any employees</li>
@@ -457,22 +395,13 @@
           <li>You want to keep your SSN off business documents for privacy</li>
         </ul>
         <div class="info-grid">
-          <div class="info-pill">
-            <div class="pill-val">Free</div>
-            <div class="pill-key">No Cost — IRS Issues It</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">Instant</div>
-            <div class="pill-key">Online Application</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">Required</div>
-            <div class="pill-key">For Business Banking</div>
-          </div>
+          <div class="info-pill"><div class="pill-val">Free</div><div class="pill-key">No Cost — IRS Issues It</div></div>
+          <div class="info-pill"><div class="pill-val">Instant</div><div class="pill-key">Online Application</div></div>
+          <div class="info-pill"><div class="pill-val">Required</div><div class="pill-key">For Business Banking</div></div>
         </div>
         <div class="action-box">
           <h4>Your Action Step</h4>
-          <p>Apply for free directly at the IRS website: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online" target="_blank">irs.gov — Apply for EIN Online</a>. The online application is available Monday–Friday 7am–10pm Eastern. You'll receive your EIN immediately upon completion. Never pay anyone to get your EIN — it is always free directly from the IRS.</p>
+          <p>Apply for free directly at the IRS website: <a href="https://www.irs.gov/businesses/small-businesses-self-employed/apply-for-an-employer-identification-number-ein-online" target="_blank">irs.gov — Apply for EIN Online</a>. Available Monday–Friday 7am–10pm Eastern. You'll receive your EIN immediately upon completion. Never pay anyone to get your EIN — it is always free directly from the IRS.</p>
         </div>
         <div class="warning-box">
           <h4>⚠ Watch Out for Scams</h4>
@@ -485,13 +414,10 @@
     <div class="step-card active-step">
       <div class="step-header">
         <div class="step-circle">6</div>
-        <div class="step-title-wrap">
-          <div class="step-sub">Step Six</div>
-          <h3>Open a Business Bank Account</h3>
-        </div>
+        <div class="step-title-wrap"><div class="step-sub">Step Six</div><h3>Open a Business Bank Account</h3></div>
       </div>
       <div class="step-body">
-        <p>This is one of the most important steps most beginners skip — and it's a costly mistake. To keep your LLC protection intact, you must keep your business money completely separate from your personal money. The moment you mix them, a court can "pierce the corporate veil" and hold you personally responsible for business debts.</p>
+        <p>This is one of the most important steps most beginners skip. To keep your LLC protection intact, you must keep your business money completely separate from your personal money.</p>
         <p><strong style="color:#e0e0e0;">What you'll need to open a business account:</strong></p>
         <ul class="checklist">
           <li>Your EIN (Employer Identification Number)</li>
@@ -501,22 +427,13 @@
           <li>An initial deposit (varies by bank — some require $0, some up to $100)</li>
         </ul>
         <div class="info-grid">
-          <div class="info-pill">
-            <div class="pill-val">$0–$100</div>
-            <div class="pill-key">Typical Opening Deposit</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">Required</div>
-            <div class="pill-key">To Protect Your LLC</div>
-          </div>
-          <div class="info-pill">
-            <div class="pill-val">Same Day</div>
-            <div class="pill-key">Most Banks Open Instantly</div>
-          </div>
+          <div class="info-pill"><div class="pill-val">$0–$100</div><div class="pill-key">Typical Opening Deposit</div></div>
+          <div class="info-pill"><div class="pill-val">Required</div><div class="pill-key">To Protect Your LLC</div></div>
+          <div class="info-pill"><div class="pill-val">Same Day</div><div class="pill-key">Most Banks Open Instantly</div></div>
         </div>
         <div class="action-box">
           <h4>Your Action Step</h4>
-          <p>Visit any bank or credit union and ask to open a business checking account. Popular options in Michigan include Chase, Huntington Bank, Flagstar, and Credit Unions. Online banks like Mercury and Relay are also excellent free options for new LLCs with no monthly fees. Bring your EIN, Articles of Organization, and Operating Agreement.</p>
+          <p>Visit any bank or credit union and ask to open a business checking account. Popular options in Michigan include Chase, Huntington Bank, Flagstar, and Credit Unions. Online banks like Mercury and Relay are also excellent free options for new LLCs with no monthly fees.</p>
         </div>
         <div class="warning-box">
           <h4>⚠ Never Mix Personal and Business Money</h4>
@@ -529,13 +446,10 @@
     <div class="step-card active-step">
       <div class="step-header">
         <div class="step-circle">7</div>
-        <div class="step-title-wrap">
-          <div class="step-sub">Step Seven</div>
-          <h3>Get Licenses and Permits</h3>
-        </div>
+        <div class="step-title-wrap"><div class="step-sub">Step Seven</div><h3>Get Licenses and Permits</h3></div>
       </div>
       <div class="step-body">
-        <p>Michigan does not require a general state business license — but depending on what your business does and where it operates, you may need specific licenses or permits at the federal, state, or local level. This step is where most people get confused. Here's how to think about it clearly.</p>
+        <p>Michigan does not require a general state business license — but depending on what your business does and where it operates, you may need specific licenses or permits at the federal, state, or local level.</p>
         <p><strong style="color:#e0e0e0;">Three levels to check:</strong></p>
         <ul class="checklist">
           <li><strong style="color:#e0e0e0;">Federal:</strong> Required if you work in industries like firearms, alcohol, aviation, transportation, or broadcasting</li>
@@ -544,15 +458,14 @@
         </ul>
         <div class="action-box">
           <h4>Your Action Step</h4>
-          <p>For Michigan state licenses, visit <a href="https://www.michigan.gov/lara" target="_blank">michigan.gov/lara</a> and search your profession or industry. For federal requirements, visit <a href="https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits" target="_blank">sba.gov</a>. For local requirements, call your city or township clerk's office — a 5 minute phone call can save you major headaches later.</p>
+          <p>For Michigan state licenses, visit <a href="https://www.michigan.gov/lara" target="_blank">michigan.gov/lara</a> and search your profession or industry. For federal requirements, visit <a href="https://www.sba.gov/business-guide/launch-your-business/apply-licenses-permits" target="_blank">sba.gov</a>. For local requirements, call your city or township clerk's office.</p>
         </div>
         <div class="warning-box">
           <h4>⚠ Sales Tax License</h4>
-          <p>If you sell any physical products in Michigan, you are required to collect sales tax and you need a Michigan Sales Tax License. Register for free at <a href="https://www.michigan.gov/taxes" target="_blank" style="color:#f0a500;">michigan.gov/taxes</a>. This is free and required by law.</p>
+          <p>If you sell any physical products in Michigan, you are required to collect sales tax and you need a Michigan Sales Tax License. Register for free at <a href="https://www.michigan.gov/taxes" target="_blank">michigan.gov/taxes</a>. This is free and required by law.</p>
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- ONGOING REQUIREMENTS -->
@@ -565,22 +478,22 @@
         <div class="ongoing-card">
           <div class="fee-tag">$25 / Year</div>
           <h3>Annual Statement (Required)</h3>
-          <p>Every Michigan LLC must file an Annual Statement with LARA every year. It's due by <strong style="color:#e0e0e0;">February 15</strong> each year. It updates your LLC's contact info, resident agent, and basic details. File online at the MiBusiness Registry Portal. Missing this for 2 consecutive years can result in your LLC being dissolved.</p>
+          <p>Every Michigan LLC must file an Annual Statement with LARA every year. It's due by <strong style="color:#e0e0e0;">February 15</strong> each year. Missing this for 2 consecutive years can result in your LLC being dissolved.</p>
         </div>
         <div class="ongoing-card">
           <div class="fee-tag">$50 Late Penalty</div>
           <h3>Late Filing Penalty</h3>
-          <p>If you miss the February 15 deadline, LARA charges a <strong style="color:#e0e0e0;">$50 late penalty</strong> on top of the $25 fee. You have a 2-year window to catch up without losing your LLC. After 2 years of non-filing, the state can dissolve your LLC and your business name becomes available for others to use.</p>
+          <p>If you miss the February 15 deadline, LARA charges a <strong style="color:#e0e0e0;">$50 late penalty</strong> on top of the $25 fee. After 2 years of non-filing, the state can dissolve your LLC.</p>
         </div>
         <div class="ongoing-card">
           <div class="fee-tag">Ongoing</div>
           <h3>Maintain Your Resident Agent</h3>
-          <p>You must always have an active Resident Agent with a valid Michigan address on file with LARA. If your agent moves, quits, or is no longer available, you must update LARA immediately. Failure to maintain a valid Resident Agent can put your LLC out of good standing.</p>
+          <p>You must always have an active Resident Agent with a valid Michigan address on file with LARA. Failure to maintain a valid Resident Agent can put your LLC out of good standing.</p>
         </div>
         <div class="ongoing-card">
           <div class="fee-tag">Varies</div>
           <h3>Federal & State Taxes</h3>
-          <p>Your LLC will need to file taxes. How you file depends on your tax election. By default a single-member LLC is taxed as a sole proprietorship (Schedule C on your personal return). Multi-member LLCs file as a partnership. You can also elect S-Corp status. Consult a CPA to find the most tax-efficient option for your situation.</p>
+          <p>Your LLC will need to file taxes. By default a single-member LLC is taxed as a sole proprietorship (Schedule C). Multi-member LLCs file as a partnership. Consult a CPA to find the most tax-efficient option.</p>
         </div>
       </div>
     </div>
@@ -590,7 +503,7 @@
   <div class="veteran-box">
     <div class="veteran-inner">
       <h3>🎖 Special Note for Veterans</h3>
-      <p>Michigan offers significant fee waivers for veteran-owned businesses. If you are a veteran, you may be eligible to form your LLC for <strong>$0</strong> (waived $50 filing fee) and file your Annual Statement for <strong>$0</strong> each year (waived $25 fee). You'll need to submit a Veteran Fee Waiver Affidavit along with proof of veteran status with your filings. Contact LARA's Corporations Division at <strong>(517) 241-6470</strong> for details, or visit michigan.gov/lara.</p>
+      <p>Michigan offers significant fee waivers for veteran-owned businesses. If you are a veteran, you may be eligible to form your LLC for <strong>$0</strong> (waived $50 filing fee) and file your Annual Statement for <strong>$0</strong> each year (waived $25 fee). Submit a Veteran Fee Waiver Affidavit along with proof of veteran status. Contact LARA's Corporations Division at <strong>(517) 241-6470</strong> for details, or visit michigan.gov/lara.</p>
     </div>
   </div>
 
@@ -598,9 +511,10 @@
   <section class="cta-section">
     <div class="section-tag" style="text-align:center;">You're Ready</div>
     <h2>That's your complete Michigan LLC playbook.</h2>
-    <p>Follow these 7 steps and you'll have a legally formed, compliant Michigan LLC. Ready to explore other business types or go back home?</p>
+    <p>Follow these 7 steps and you'll have a legally formed, compliant Michigan LLC. Ready to explore other business types or learn about taxes?</p>
     <div class="cta-btns">
-      <a class="cta-btn" href="index.html#pick">Explore Other Business Types</a>
+      <a class="cta-btn" href="tax-michigan.html#llc" target="_blank">Michigan LLC Tax Guide</a>
+      <a class="cta-btn-outline" href="index.html#pick">Explore Other Business Types</a>
       <a class="cta-btn-outline" href="index.html">Back to Home</a>
     </div>
   </section>
@@ -608,6 +522,45 @@
   <footer>
     <p>&copy; 2025 Learn The Biz &middot; All Rights Reserved &middot; Information verified from official Michigan LARA and IRS sources</p>
   </footer>
+
+  <script>
+    (function() {
+      var hoverDelay = 150;
+      var closeTimer = {};
+      var items = document.querySelectorAll('.ltb-item');
+      items.forEach(function(item) {
+        var id = item.id || Math.random();
+        item.addEventListener('mouseenter', function() {
+          clearTimeout(closeTimer[id]);
+          items.forEach(function(i) { if (i !== item) i.classList.remove('open'); });
+          item.classList.add('open');
+        });
+        item.addEventListener('mouseleave', function() {
+          closeTimer[id] = setTimeout(function() { item.classList.remove('open'); }, hoverDelay);
+        });
+        var btn = item.querySelector('.ltb-item-btn');
+        if (btn && btn.tagName === 'BUTTON') {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = item.classList.contains('open');
+            items.forEach(function(i) { i.classList.remove('open'); });
+            if (!isOpen) item.classList.add('open');
+          });
+        }
+      });
+      document.addEventListener('click', function() {
+        items.forEach(function(i) { i.classList.remove('open'); });
+        document.querySelectorAll('.ltb-drop-item').forEach(function(i) { i.classList.remove('open-sub'); });
+      });
+      window.toggleSub = function(e, id) {
+        e.stopPropagation();
+        var btn = e.currentTarget;
+        var isOpen = btn.classList.contains('open-sub');
+        document.querySelectorAll('.ltb-drop-item').forEach(function(i) { i.classList.remove('open-sub'); });
+        if (!isOpen) btn.classList.add('open-sub');
+      };
+    })();
+  </script>
 
 </body>
 </html>
