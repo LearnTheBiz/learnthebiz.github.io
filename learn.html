@@ -10,15 +10,37 @@
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Inter', sans-serif; background: #0a0a0a; color: #fff; }
 
-    nav {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 40px; border-bottom: 0.5px solid #2a2a2a;
-      background: #0a0a0a; position: sticky; top: 0; z-index: 100;
-    }
-    .nav-logo { font-size: 22px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; text-decoration: none; }
-    .nav-back { font-size: 13px; color: #aaa; text-decoration: none; letter-spacing: 1px; }
-    .nav-back:hover { color: #c9a84c; }
+    /* ── UNIVERSAL NAV ── */
+    .ltb-nav { display: flex; align-items: center; justify-content: space-between; padding: 0 40px; height: 62px; background: #0a0a0a; border-bottom: 0.5px solid #2a2a2a; position: sticky; top: 0; z-index: 1000; }
+    .ltb-logo { font-size: 20px; font-weight: 900; letter-spacing: 4px; color: #c9a84c; text-decoration: none; flex-shrink: 0; }
+    .ltb-links { display: flex; align-items: center; gap: 4px; }
+    .ltb-item { position: relative; }
+    .ltb-item-btn { display: flex; align-items: center; gap: 6px; padding: 0 16px; height: 62px; font-size: 13px; font-weight: 500; color: #aaa; background: none; border: none; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; white-space: nowrap; text-decoration: none; }
+    .ltb-item-btn:hover { color: #c9a84c; }
+    .ltb-item.open > .ltb-item-btn { color: #c9a84c; }
+    .ltb-arrow { font-size: 9px; transition: transform 0.2s; }
+    .ltb-item.open > .ltb-item-btn .ltb-arrow { transform: rotate(180deg); }
+    .ltb-drop { display: none; position: absolute; top: 62px; left: auto; right: 0; background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px; min-width: 220px; box-shadow: 0 12px 40px rgba(0,0,0,0.7); z-index: 1001; overflow: visible; padding: 6px 0; }
+    .ltb-item.open > .ltb-drop { display: block; }
+    .ltb-drop-item { position: relative; display: flex; align-items: center; justify-content: space-between; padding: 11px 16px; font-size: 14px; color: #ccc; text-decoration: none; cursor: pointer; white-space: nowrap; gap: 12px; background: none; border: none; width: 100%; font-family: inherit; text-align: left; }
+    .ltb-drop-item:hover { background: #1a1a1a; color: #c9a84c; }
+    .ltb-drop-item .ltb-sub-arrow { font-size: 10px; color: #555; flex-shrink: 0; }
+    .ltb-drop-item:hover .ltb-sub-arrow { color: #c9a84c; }
+    .ltb-drop-divider { height: 0.5px; background: #1e1e1e; margin: 4px 0; }
+    .ltb-drop-label { padding: 8px 16px 4px; font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; }
+    .ltb-drop-item.soon { color: #444; cursor: default; pointer-events: none; }
+    .ltb-sub { display: none; position: absolute; top: -6px; right: calc(100% + 1px); left: auto; background: #111; border: 0.5px solid #2a2a2a; border-radius: 10px; width: 220px; max-height: 320px; overflow-y: auto; box-shadow: 0 12px 40px rgba(0,0,0,0.7); z-index: 1002; padding: 6px 0; }
+    .ltb-drop-item.open-sub > .ltb-sub { display: block; }
+    .ltb-sub::-webkit-scrollbar { width: 5px; }
+    .ltb-sub::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
+    .ltb-sub a { display: block; padding: 10px 16px; font-size: 13px; color: #ccc; text-decoration: none; }
+    .ltb-sub a:hover { background: #1a1400; color: #c9a84c; }
+    .ltb-sub a.soon { color: #333; pointer-events: none; font-size: 12px; }
+    .ltb-sub-header { padding: 8px 16px 4px; font-size: 10px; letter-spacing: 2px; color: #555; text-transform: uppercase; }
+    .ltb-cta { background: #c9a84c; color: #0a0a0a; font-size: 12px; font-weight: 700; padding: 9px 20px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; display: inline-block; margin-left: 8px; white-space: nowrap; }
+    .ltb-cta:hover { background: #e2bf6a; }
 
+    /* ── PAGE STYLES ── */
     .hero { text-align: center; padding: 72px 40px 52px; border-bottom: 0.5px solid #1e1a08; }
     .hero-tag { font-size: 11px; letter-spacing: 3px; color: #c9a84c; text-transform: uppercase; margin-bottom: 16px; }
     .hero h1 { font-size: 44px; font-weight: 900; line-height: 1.1; margin-bottom: 18px; }
@@ -26,21 +48,13 @@
     .gold-line { width: 60px; height: 2px; background: #c9a84c; margin: 0 auto 24px; border-radius: 1px; }
     .hero p { font-size: 18px; color: #999; max-width: 580px; margin: 0 auto; line-height: 1.65; }
 
-    .tab-strip {
-      display: flex; gap: 0; overflow-x: auto; border-bottom: 0.5px solid #2a2a2a;
-      background: #0d0d0d; position: sticky; top: 61px; z-index: 90; scrollbar-width: none;
-    }
+    .tab-strip { display: flex; overflow-x: auto; border-bottom: 0.5px solid #2a2a2a; background: #0d0d0d; position: sticky; top: 62px; z-index: 90; scrollbar-width: none; }
     .tab-strip::-webkit-scrollbar { display: none; }
-    .tab-btn {
-      flex-shrink: 0; padding: 16px 28px; font-size: 14px; font-weight: 500;
-      color: #666; background: none; border: none; border-bottom: 2px solid transparent;
-      cursor: pointer; font-family: inherit; letter-spacing: 0.5px; white-space: nowrap;
-    }
+    .tab-btn { flex-shrink: 0; padding: 16px 28px; font-size: 14px; font-weight: 500; color: #666; background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; font-family: inherit; letter-spacing: 0.5px; white-space: nowrap; }
     .tab-btn:hover { color: #c9a84c; }
     .tab-btn.active { color: #c9a84c; border-bottom-color: #c9a84c; }
 
     .main { max-width: 900px; margin: 0 auto; padding: 60px 40px; }
-
     .biz-panel { display: none; }
     .biz-panel.active { display: block; }
 
@@ -77,31 +91,14 @@
     .example-chips { display: flex; flex-wrap: wrap; gap: 10px; }
     .chip { background: #111; border: 0.5px solid #2a2a2a; border-radius: 20px; padding: 8px 16px; font-size: 14px; color: #999; }
 
-    /* ACTION BUTTONS ROW */
     .action-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-bottom: 80px; }
-
-    .start-btn {
-      display: inline-block; background: #c9a84c; color: #0a0a0a; font-size: 15px;
-      font-weight: 700; padding: 16px 36px; border-radius: 6px; border: none;
-      cursor: pointer; letter-spacing: 1px; text-transform: uppercase;
-      font-family: inherit; text-decoration: none;
-    }
+    .start-btn { display: inline-block; background: #c9a84c; color: #0a0a0a; font-size: 15px; font-weight: 700; padding: 16px 36px; border-radius: 6px; border: none; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; text-decoration: none; }
     .start-btn:hover { background: #e2bf6a; }
 
-    /* TAX BUTTON + STATE DROPDOWN */
     .tax-btn-wrap { position: relative; display: inline-block; }
-    .tax-btn {
-      background: none; color: #c9a84c; font-size: 15px; font-weight: 700;
-      padding: 16px 28px; border-radius: 6px; border: 0.5px solid #c9a84c;
-      cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit;
-    }
+    .tax-btn { background: none; color: #c9a84c; font-size: 15px; font-weight: 700; padding: 16px 28px; border-radius: 6px; border: 0.5px solid #c9a84c; cursor: pointer; letter-spacing: 1px; text-transform: uppercase; font-family: inherit; }
     .tax-btn:hover { background: #1a1400; }
-    .tax-state-drop {
-      display: none; position: absolute; bottom: calc(100% + 8px); left: 0;
-      background: #111; border: 0.5px solid #c9a84c; border-radius: 10px;
-      width: 240px; max-height: 260px; overflow-y: auto; z-index: 500;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.8);
-    }
+    .tax-state-drop { display: none; position: absolute; bottom: calc(100% + 8px); left: 0; background: #111; border: 0.5px solid #c9a84c; border-radius: 10px; width: 240px; max-height: 260px; overflow-y: auto; z-index: 500; box-shadow: 0 8px 32px rgba(0,0,0,0.8); }
     .tax-state-drop.open { display: block; }
     .tax-state-drop::-webkit-scrollbar { width: 6px; }
     .tax-state-drop::-webkit-scrollbar-thumb { background: #c9a84c; border-radius: 3px; }
@@ -147,7 +144,8 @@
     footer p { font-size: 12px; color: #333; letter-spacing: 1px; }
 
     @media (max-width: 700px) {
-      nav { padding: 16px 20px; }
+      .ltb-nav { padding: 0 20px; }
+      .ltb-cta { display: none; }
       .hero { padding: 52px 24px 36px; }
       .hero h1 { font-size: 30px; }
       .main { padding: 40px 24px; }
@@ -160,9 +158,57 @@
 </head>
 <body>
 
-  <nav>
-    <a class="nav-logo" href="index.html">LEARN THE BIZ</a>
-    <a class="nav-back" href="index.html">← Back to Home</a>
+  <!-- UNIVERSAL NAV -->
+  <nav class="ltb-nav">
+    <a class="ltb-logo" href="index.html">LEARN THE BIZ</a>
+    <div class="ltb-links">
+      <div class="ltb-item"><a class="ltb-item-btn" href="index.html">Home</a></div>
+
+      <div class="ltb-item" id="nav-learn">
+        <button class="ltb-item-btn">Learn <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Business Types</div>
+          <a class="ltb-drop-item" href="learn.html">Find My Business Type</a>
+          <a class="ltb-drop-item" href="learn.html">LLC — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">S-Corp — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">C-Corp — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">Sole Proprietorship — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">Partnership — What It Is</a>
+          <a class="ltb-drop-item" href="learn.html">Nonprofit — What It Is</a>
+          <div class="ltb-drop-divider"></div>
+          <div class="ltb-drop-label">Quiz</div>
+          <a class="ltb-drop-item" href="learn.html#quiz">Help Me Choose My Business Type</a>
+        </div>
+      </div>
+
+      <div class="ltb-item" id="nav-taxes">
+        <button class="ltb-item-btn">Taxes <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Select Business Type</div>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-llc')">LLC Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-llc"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#llc" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-scorp')">S-Corp Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-scorp"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#scorp" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-ccorp')">C-Corp Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-ccorp"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#ccorp" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-sole')">Sole Prop Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-sole"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#sole" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-partner')">Partnership Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-partner"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#partnership" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-tax-nonprofit')">Nonprofit Taxes <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-tax-nonprofit"><div class="ltb-sub-header">Select Your State</div><a href="tax-michigan.html#nonprofit" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+        </div>
+      </div>
+
+      <div class="ltb-item" id="nav-form">
+        <button class="ltb-item-btn">Start Forming <span class="ltb-arrow">▼</span></button>
+        <div class="ltb-drop">
+          <div class="ltb-drop-label">Choose Your Structure</div>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-form-llc')">Form an LLC <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-form-llc"><div class="ltb-sub-header">Select Your State</div><a href="llc-michigan.html">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
+          <span class="ltb-drop-item soon">Form an S-Corp — coming soon</span>
+          <span class="ltb-drop-item soon">Form a C-Corp — coming soon</span>
+          <span class="ltb-drop-item soon">Sole Proprietorship — coming soon</span>
+          <span class="ltb-drop-item soon">Partnership — coming soon</span>
+          <span class="ltb-drop-item soon">Nonprofit — coming soon</span>
+        </div>
+      </div>
+
+      <a class="ltb-cta" href="learn.html">Find My Business Type</a>
+    </div>
   </nav>
 
   <div class="hero">
@@ -183,12 +229,9 @@
 
   <div class="main">
 
-    <!-- LLC PANEL -->
+    <!-- LLC -->
     <div class="biz-panel active" id="panel-llc">
-      <div class="panel-header">
-        <div class="panel-icon">🏢</div>
-        <div class="panel-title"><p>Business Structure</p><h2>LLC</h2></div>
-      </div>
+      <div class="panel-header"><div class="panel-icon">🏢</div><div class="panel-title"><p>Business Structure</p><h2>LLC</h2></div></div>
       <p class="panel-intro">A Limited Liability Company (LLC) is the most popular business structure in America for good reason. It gives you the personal liability protection of a corporation with the simplicity and tax flexibility of a sole proprietorship. If you're starting any kind of business and you're not sure what to choose — an LLC is almost always the right starting point.</p>
       <div class="stat-row">
         <div class="stat-pill"><div class="val">$50–$500</div><div class="key">Avg. State Filing Fee</div></div>
@@ -198,7 +241,7 @@
       <div class="detail-grid">
         <div class="detail-card"><h4>Pros</h4><ul><li class="pro">Personal assets are legally protected</li><li class="pro">Choose how you want to be taxed</li><li class="pro">No board meetings or complex rules</li><li class="pro">Works for solo owners or partners</li><li class="pro">Easy to open a business bank account</li><li class="pro">Builds credibility with customers</li></ul></div>
         <div class="detail-card"><h4>Cons</h4><ul><li class="con">Annual state filing fees required</li><li class="con">Self-employment taxes on profits</li><li class="con">Not ideal for raising venture capital</li><li class="con">Must keep personal and business finances separate</li></ul></div>
-        <div class="detail-card"><h4>How It's Taxed</h4><p>By default, a single-member LLC is taxed as a sole proprietorship — profits pass through to your personal tax return. A multi-member LLC is taxed as a partnership. You can also elect to be taxed as an S-Corp or C-Corp for potential tax savings.</p></div>
+        <div class="detail-card"><h4>How It's Taxed</h4><p>By default, a single-member LLC is taxed as a sole proprietorship — profits pass through to your personal tax return. A multi-member LLC is taxed as a partnership. You can also elect S-Corp or C-Corp tax treatment.</p></div>
         <div class="detail-card"><h4>Complexity Level</h4><p>Low. Filing is straightforward in most states. You don't need a lawyer to form one. Ongoing requirements are minimal — typically just an annual report and keeping your finances separate.</p></div>
       </div>
       <div class="best-for"><h4>Best For</h4><ul><li>Freelancers and consultants who want liability protection</li><li>Small business owners starting their first venture</li><li>Side hustles that are growing into real businesses</li><li>Real estate investors holding properties</li><li>Anyone who wants simplicity with legal protection</li></ul></div>
@@ -206,23 +249,16 @@
       <div class="action-row">
         <div class="tax-btn-wrap">
           <button class="tax-btn" onclick="toggleTaxDrop(event,'llc-tax-drop')">Tax Guide &#9660;</button>
-          <div class="tax-state-drop" id="llc-tax-drop">
-            <div class="tax-drop-header">Select Your State</div>
-            <a href="tax-michigan.html#llc" target="_blank">Michigan</a>
-            <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
-          </div>
+          <div class="tax-state-drop" id="llc-tax-drop"><div class="tax-drop-header">Select Your State</div><a href="tax-michigan.html#llc" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div>
         </div>
         <a class="start-btn" href="index.html#pick">Start Forming My LLC →</a>
       </div>
     </div>
 
-    <!-- S-CORP PANEL -->
+    <!-- S-CORP -->
     <div class="biz-panel" id="panel-scorp">
-      <div class="panel-header">
-        <div class="panel-icon">📊</div>
-        <div class="panel-title"><p>Business Structure</p><h2>S-Corp</h2></div>
-      </div>
-      <p class="panel-intro">An S-Corporation is not a business structure you form from scratch — it's a tax election you make with the IRS on top of an existing LLC or corporation. The big advantage is tax savings: as an S-Corp, you pay yourself a reasonable salary and only pay self-employment taxes on that salary — not on the rest of your profits. This can save thousands of dollars per year once your business is profitable enough.</p>
+      <div class="panel-header"><div class="panel-icon">📊</div><div class="panel-title"><p>Business Structure</p><h2>S-Corp</h2></div></div>
+      <p class="panel-intro">An S-Corporation is not a business structure you form from scratch — it's a tax election you make with the IRS on top of an existing LLC or corporation. The big advantage is tax savings: as an S-Corp, you pay yourself a reasonable salary and only pay self-employment taxes on that salary — not on the rest of your profits.</p>
       <div class="stat-row">
         <div class="stat-pill"><div class="val">$0</div><div class="key">IRS Election Fee</div></div>
         <div class="stat-pill"><div class="val">Medium</div><div class="key">Complexity</div></div>
@@ -230,152 +266,120 @@
       </div>
       <div class="detail-grid">
         <div class="detail-card"><h4>Pros</h4><ul><li class="pro">Significant self-employment tax savings</li><li class="pro">Profits pass through to personal return</li><li class="pro">Personal liability protection</li><li class="pro">Can save $5,000–$20,000+ per year in taxes</li></ul></div>
-        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Must pay yourself a "reasonable salary"</li><li class="con">More complex bookkeeping and payroll</li><li class="con">Limited to 100 shareholders, US citizens only</li><li class="con">Not worth it until earning $40,000+ in profit</li><li class="con">Requires more IRS compliance</li></ul></div>
-        <div class="detail-card"><h4>How It's Taxed</h4><p>You pay yourself a salary (subject to payroll taxes), then take additional profits as distributions — which are NOT subject to self-employment tax. This split is where the savings come from.</p></div>
+        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Must pay yourself a "reasonable salary"</li><li class="con">More complex bookkeeping and payroll</li><li class="con">Limited to 100 shareholders, US citizens only</li><li class="con">Not worth it until earning $40,000+ in profit</li></ul></div>
+        <div class="detail-card"><h4>How It's Taxed</h4><p>You pay yourself a salary subject to payroll taxes, then take additional profits as distributions — which are NOT subject to self-employment tax. This split is where the savings come from.</p></div>
         <div class="detail-card"><h4>Complexity Level</h4><p>Medium to High. You'll need to run payroll, file additional tax forms, and work with an accountant. The tax savings are real, but so is the added paperwork.</p></div>
       </div>
       <div class="best-for"><h4>Best For</h4><ul><li>Established businesses making $40,000+ in net profit per year</li><li>LLC owners looking to reduce self-employment taxes</li><li>Business owners ready to work with an accountant</li><li>Service-based businesses with high profit margins</li></ul></div>
-      <div class="examples"><h4>Real World Examples</h4><div class="example-chips"><span class="chip">Established consulting firm</span><span class="chip">Medical practice</span><span class="chip">Law firm</span><span class="chip">Marketing agency</span><span class="chip">Accounting firm</span><span class="chip">IT services company</span></div></div>
+      <div class="examples"><h4>Real World Examples</h4><div class="example-chips"><span class="chip">Consulting firm</span><span class="chip">Medical practice</span><span class="chip">Law firm</span><span class="chip">Marketing agency</span><span class="chip">Accounting firm</span><span class="chip">IT services company</span></div></div>
       <div class="action-row">
         <div class="tax-btn-wrap">
           <button class="tax-btn" onclick="toggleTaxDrop(event,'scorp-tax-drop')">Tax Guide &#9660;</button>
-          <div class="tax-state-drop" id="scorp-tax-drop">
-            <div class="tax-drop-header">Select Your State</div>
-            <a href="tax-michigan.html#scorp" target="_blank">Michigan</a>
-            <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
-          </div>
+          <div class="tax-state-drop" id="scorp-tax-drop"><div class="tax-drop-header">Select Your State</div><a href="tax-michigan.html#scorp" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div>
         </div>
         <a class="start-btn" href="index.html#pick">Start Forming My S-Corp →</a>
       </div>
     </div>
 
-    <!-- C-CORP PANEL -->
+    <!-- C-CORP -->
     <div class="biz-panel" id="panel-ccorp">
-      <div class="panel-header">
-        <div class="panel-icon">🏦</div>
-        <div class="panel-title"><p>Business Structure</p><h2>C-Corp</h2></div>
-      </div>
-      <p class="panel-intro">A C-Corporation is the most complex business structure — and the one used by most large companies and startups seeking venture capital. A C-Corp is its own legal entity that pays its own taxes, separate from the owners. While it comes with more rules and costs, it's the preferred structure for businesses planning to raise outside investment, go public, or issue stock to employees.</p>
+      <div class="panel-header"><div class="panel-icon">🏦</div><div class="panel-title"><p>Business Structure</p><h2>C-Corp</h2></div></div>
+      <p class="panel-intro">A C-Corporation is the most complex business structure — and the one used by most large companies and startups seeking venture capital. A C-Corp is its own legal entity that pays its own taxes, separate from the owners.</p>
       <div class="stat-row">
         <div class="stat-pill"><div class="val">$100–$800</div><div class="key">Avg. Filing Fee</div></div>
         <div class="stat-pill"><div class="val">High</div><div class="key">Complexity</div></div>
         <div class="stat-pill"><div class="val">21% Flat</div><div class="key">Corporate Tax Rate</div></div>
       </div>
       <div class="detail-grid">
-        <div class="detail-card"><h4>Pros</h4><ul><li class="pro">Best structure for raising venture capital</li><li class="pro">Can issue multiple classes of stock</li><li class="pro">Unlimited shareholders</li><li class="pro">Foreign investors can own shares</li><li class="pro">Can go public (IPO)</li><li class="pro">Strong liability protection</li></ul></div>
-        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Double taxation on profits and dividends</li><li class="con">Most expensive and complex to maintain</li><li class="con">Requires board meetings and formal records</li><li class="con">Heavy compliance requirements</li><li class="con">Not recommended for most small businesses</li></ul></div>
-        <div class="detail-card"><h4>How It's Taxed</h4><p>The corporation pays a flat 21% federal corporate income tax on profits. When profits are distributed to shareholders as dividends, shareholders pay personal income tax on them again — this is called double taxation.</p></div>
+        <div class="detail-card"><h4>Pros</h4><ul><li class="pro">Best structure for raising venture capital</li><li class="pro">Can issue multiple classes of stock</li><li class="pro">Unlimited shareholders</li><li class="pro">Foreign investors can own shares</li><li class="pro">Can go public (IPO)</li></ul></div>
+        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Double taxation on profits and dividends</li><li class="con">Most expensive and complex to maintain</li><li class="con">Requires board meetings and formal records</li><li class="con">Not recommended for most small businesses</li></ul></div>
+        <div class="detail-card"><h4>How It's Taxed</h4><p>The corporation pays a flat 21% federal corporate income tax on profits. When profits are distributed to shareholders as dividends, shareholders pay personal income tax again — called double taxation.</p></div>
         <div class="detail-card"><h4>Complexity Level</h4><p>High. You'll need a corporate attorney, an accountant, formal bylaws, a board of directors, regular meetings with minutes, and ongoing compliance.</p></div>
       </div>
-      <div class="best-for"><h4>Best For</h4><ul><li>Tech startups planning to raise venture capital</li><li>Businesses planning to go public one day</li><li>Companies wanting to offer stock options to employees</li><li>Businesses with many investors or complex ownership structures</li></ul></div>
+      <div class="best-for"><h4>Best For</h4><ul><li>Tech startups planning to raise venture capital</li><li>Businesses planning to go public one day</li><li>Companies wanting to offer stock options to employees</li><li>Businesses with many investors or complex ownership</li></ul></div>
       <div class="examples"><h4>Real World Examples</h4><div class="example-chips"><span class="chip">Tech startups</span><span class="chip">Apple, Google, Amazon</span><span class="chip">VC-backed companies</span><span class="chip">Publicly traded companies</span></div></div>
       <div class="action-row">
         <div class="tax-btn-wrap">
           <button class="tax-btn" onclick="toggleTaxDrop(event,'ccorp-tax-drop')">Tax Guide &#9660;</button>
-          <div class="tax-state-drop" id="ccorp-tax-drop">
-            <div class="tax-drop-header">Select Your State</div>
-            <a href="tax-michigan.html#ccorp" target="_blank">Michigan</a>
-            <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
-          </div>
+          <div class="tax-state-drop" id="ccorp-tax-drop"><div class="tax-drop-header">Select Your State</div><a href="tax-michigan.html#ccorp" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div>
         </div>
         <a class="start-btn" href="index.html#pick">Start Forming My C-Corp →</a>
       </div>
     </div>
 
-    <!-- SOLE PROPRIETORSHIP PANEL -->
+    <!-- SOLE PROP -->
     <div class="biz-panel" id="panel-sole">
-      <div class="panel-header">
-        <div class="panel-icon">👤</div>
-        <div class="panel-title"><p>Business Structure</p><h2>Sole Proprietorship</h2></div>
-      </div>
-      <p class="panel-intro">A Sole Proprietorship is the simplest business structure that exists. There is no filing, no registration, and no separation between you and your business. The moment you start selling something or offering a service, you are automatically a sole proprietor. While it's the easiest way to get started, it offers zero liability protection.</p>
+      <div class="panel-header"><div class="panel-icon">👤</div><div class="panel-title"><p>Business Structure</p><h2>Sole Proprietorship</h2></div></div>
+      <p class="panel-intro">A Sole Proprietorship is the simplest business structure that exists. There is no filing, no registration, and no separation between you and your business. The moment you start selling something or offering a service, you are automatically a sole proprietor.</p>
       <div class="stat-row">
         <div class="stat-pill"><div class="val">$0</div><div class="key">Formation Cost</div></div>
         <div class="stat-pill"><div class="val">Lowest</div><div class="key">Complexity</div></div>
         <div class="stat-pill"><div class="val">Personal</div><div class="key">Tax Treatment</div></div>
       </div>
       <div class="detail-grid">
-        <div class="detail-card"><h4>Pros</h4><ul><li class="pro">No registration required — start immediately</li><li class="pro">Simplest taxes — just Schedule C on personal return</li><li class="pro">No ongoing state filing fees</li><li class="pro">Complete control — no partners or board</li><li class="pro">Good for testing a business idea cheaply</li></ul></div>
-        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Zero personal liability protection</li><li class="con">Personal assets can be seized for business debts</li><li class="con">Harder to get business loans</li><li class="con">Less credibility with clients and vendors</li><li class="con">All profits subject to self-employment tax</li></ul></div>
+        <div class="detail-card"><h4>Pros</h4><ul><li class="pro">No registration required — start immediately</li><li class="pro">Simplest taxes — just Schedule C on personal return</li><li class="pro">No ongoing state filing fees</li><li class="pro">Good for testing a business idea cheaply</li></ul></div>
+        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Zero personal liability protection</li><li class="con">Personal assets can be seized for business debts</li><li class="con">Harder to get business loans</li><li class="con">All profits subject to self-employment tax</li></ul></div>
         <div class="detail-card"><h4>How It's Taxed</h4><p>All business income is reported on your personal tax return using Schedule C. You pay income tax and self-employment tax (15.3%) on all net profits.</p></div>
-        <div class="detail-card"><h4>Complexity Level</h4><p>Very Low. No formation required. Taxes are simple. However, as soon as your business starts making real money or taking on risk, you should strongly consider upgrading to an LLC.</p></div>
+        <div class="detail-card"><h4>Complexity Level</h4><p>Very Low. No formation required. As soon as your business starts making real money or taking on risk, strongly consider upgrading to an LLC.</p></div>
       </div>
-      <div class="best-for"><h4>Best For</h4><ul><li>Testing a business idea before committing to formal registration</li><li>Very low-risk, low-income side hustles</li><li>Hobbies that generate a small amount of income</li><li>Temporary or short-term projects</li></ul></div>
+      <div class="best-for"><h4>Best For</h4><ul><li>Testing a business idea before formal registration</li><li>Very low-risk, low-income side hustles</li><li>Hobbies that generate a small amount of income</li><li>Temporary or short-term projects</li></ul></div>
       <div class="examples"><h4>Real World Examples</h4><div class="example-chips"><span class="chip">Freelance writer</span><span class="chip">Babysitter</span><span class="chip">Lawn mowing side hustle</span><span class="chip">Handmade crafts seller</span><span class="chip">Tutor</span></div></div>
       <div class="action-row">
         <div class="tax-btn-wrap">
           <button class="tax-btn" onclick="toggleTaxDrop(event,'sole-tax-drop')">Tax Guide &#9660;</button>
-          <div class="tax-state-drop" id="sole-tax-drop">
-            <div class="tax-drop-header">Select Your State</div>
-            <a href="tax-michigan.html#sole" target="_blank">Michigan</a>
-            <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
-          </div>
+          <div class="tax-state-drop" id="sole-tax-drop"><div class="tax-drop-header">Select Your State</div><a href="tax-michigan.html#sole" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div>
         </div>
         <a class="start-btn" href="index.html#pick">Start as Sole Proprietor →</a>
       </div>
     </div>
 
-    <!-- PARTNERSHIP PANEL -->
+    <!-- PARTNERSHIP -->
     <div class="biz-panel" id="panel-partnership">
-      <div class="panel-header">
-        <div class="panel-icon">🤝</div>
-        <div class="panel-title"><p>Business Structure</p><h2>Partnership</h2></div>
-      </div>
-      <p class="panel-intro">A Partnership is a business owned by two or more people. Like a sole proprietorship, a general partnership requires no formal registration — it exists the moment two people go into business together. There are two main types: a General Partnership where all partners share liability and management, and a Limited Partnership where some partners invest money but have limited involvement and liability.</p>
+      <div class="panel-header"><div class="panel-icon">🤝</div><div class="panel-title"><p>Business Structure</p><h2>Partnership</h2></div></div>
+      <p class="panel-intro">A Partnership is a business owned by two or more people. Like a sole proprietorship, a general partnership requires no formal registration — it exists the moment two people go into business together.</p>
       <div class="stat-row">
         <div class="stat-pill"><div class="val">$0–$200</div><div class="key">Avg. Formation Cost</div></div>
         <div class="stat-pill"><div class="val">Low–Med</div><div class="key">Complexity</div></div>
         <div class="stat-pill"><div class="val">Pass-Through</div><div class="key">Tax Treatment</div></div>
       </div>
       <div class="detail-grid">
-        <div class="detail-card"><h4>Pros</h4><ul><li class="pro">Easy to form — no registration needed for general partnerships</li><li class="pro">Profits pass through to partners' personal returns</li><li class="pro">Shared workload and resources</li><li class="pro">Complementary skills between partners</li></ul></div>
-        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Each general partner is personally liable for ALL business debts</li><li class="con">One partner's mistake can affect everyone</li><li class="con">Disagreements between partners can destroy the business</li><li class="con">No liability protection in a general partnership</li></ul></div>
-        <div class="detail-card"><h4>How It's Taxed</h4><p>Partnerships file an informational return (Form 1065) but don't pay tax at the business level. Profits pass through to each partner's personal return based on their ownership percentage.</p></div>
-        <div class="detail-card"><h4>Complexity Level</h4><p>Low to Medium. Most business attorneys strongly recommend forming a multi-member LLC instead — you get the same pass-through taxation with much better liability protection.</p></div>
+        <div class="detail-card"><h4>Pros</h4><ul><li class="pro">Easy to form — no registration for general partnerships</li><li class="pro">Profits pass through to partners' personal returns</li><li class="pro">Shared workload and resources</li></ul></div>
+        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Each partner is personally liable for ALL business debts</li><li class="con">One partner's mistake can affect everyone</li><li class="con">Disagreements can destroy the business</li></ul></div>
+        <div class="detail-card"><h4>How It's Taxed</h4><p>Partnerships file an informational return (Form 1065) but pay no entity-level tax. Profits pass through to each partner's personal return based on ownership percentage.</p></div>
+        <div class="detail-card"><h4>Complexity Level</h4><p>Low to Medium. Most attorneys strongly recommend a multi-member LLC instead — same pass-through taxes with much better liability protection.</p></div>
       </div>
-      <div class="best-for"><h4>Best For</h4><ul><li>Two or more people starting a low-risk business together</li><li>Professional practices like law firms or medical groups (as LLP)</li><li>Short-term business ventures between known partners</li></ul></div>
+      <div class="best-for"><h4>Best For</h4><ul><li>Two or more people starting a low-risk business together</li><li>Professional practices like law firms (as LLP)</li><li>Short-term business ventures between known partners</li></ul></div>
       <div class="examples"><h4>Real World Examples</h4><div class="example-chips"><span class="chip">Law firm (LLP)</span><span class="chip">Accounting firm (LLP)</span><span class="chip">Two friends starting a restaurant</span><span class="chip">Real estate investment group</span></div></div>
       <div class="action-row">
         <div class="tax-btn-wrap">
           <button class="tax-btn" onclick="toggleTaxDrop(event,'partner-tax-drop')">Tax Guide &#9660;</button>
-          <div class="tax-state-drop" id="partner-tax-drop">
-            <div class="tax-drop-header">Select Your State</div>
-            <a href="tax-michigan.html#partnership" target="_blank">Michigan</a>
-            <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
-          </div>
+          <div class="tax-state-drop" id="partner-tax-drop"><div class="tax-drop-header">Select Your State</div><a href="tax-michigan.html#partnership" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div>
         </div>
         <a class="start-btn" href="index.html#pick">Start Forming My Partnership →</a>
       </div>
     </div>
 
-    <!-- NONPROFIT PANEL -->
+    <!-- NONPROFIT -->
     <div class="biz-panel" id="panel-nonprofit">
-      <div class="panel-header">
-        <div class="panel-icon">❤️</div>
-        <div class="panel-title"><p>Business Structure</p><h2>Nonprofit</h2></div>
-      </div>
-      <p class="panel-intro">A Nonprofit organization is formed to serve a public, charitable, educational, religious, or scientific purpose — not to generate profit for its owners. Nonprofits can apply for 501(c)(3) tax-exempt status with the IRS. While nonprofits can generate revenue and pay employees, any surplus must be reinvested into the mission — not distributed to founders.</p>
+      <div class="panel-header"><div class="panel-icon">❤️</div><div class="panel-title"><p>Business Structure</p><h2>Nonprofit</h2></div></div>
+      <p class="panel-intro">A Nonprofit organization is formed to serve a public, charitable, educational, religious, or scientific purpose — not to generate profit for its owners. Nonprofits can apply for 501(c)(3) tax-exempt status with the IRS.</p>
       <div class="stat-row">
         <div class="stat-pill"><div class="val">$275–$600</div><div class="key">IRS Application Fee</div></div>
         <div class="stat-pill"><div class="val">High</div><div class="key">Complexity</div></div>
         <div class="stat-pill"><div class="val">Tax Exempt</div><div class="key">Federal Tax Status</div></div>
       </div>
       <div class="detail-grid">
-        <div class="detail-card"><h4>Pros</h4><ul><li class="pro">Federal and state tax exemption</li><li class="pro">Donors can deduct contributions</li><li class="pro">Eligible for grants and government funding</li><li class="pro">Strong public trust and credibility</li><li class="pro">Personal liability protection</li></ul></div>
-        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Complex and lengthy IRS application process</li><li class="con">Cannot distribute profits to founders or members</li><li class="con">Heavy ongoing compliance and reporting</li><li class="con">Board of directors required</li><li class="con">Public financial disclosure required</li></ul></div>
-        <div class="detail-card"><h4>How It's Taxed</h4><p>Once approved for 501(c)(3) status, the organization pays no federal income tax on income related to its mission. Employees still pay regular income and payroll taxes on their wages.</p></div>
-        <div class="detail-card"><h4>Complexity Level</h4><p>High. Forming a nonprofit involves incorporating at the state level, drafting bylaws, forming a board of directors, and applying to the IRS for tax-exempt status — a process that can take 3–12 months.</p></div>
+        <div class="detail-card"><h4>Pros</h4><ul><li class="pro">Federal and state tax exemption</li><li class="pro">Donors can deduct contributions</li><li class="pro">Eligible for grants and government funding</li><li class="pro">Strong public trust and credibility</li></ul></div>
+        <div class="detail-card"><h4>Cons</h4><ul><li class="con">Complex and lengthy IRS application process</li><li class="con">Cannot distribute profits to founders</li><li class="con">Heavy ongoing compliance and reporting</li><li class="con">Board of directors required</li></ul></div>
+        <div class="detail-card"><h4>How It's Taxed</h4><p>Once approved for 501(c)(3) status, the organization pays no federal income tax on mission-related income. Employees still pay regular income and payroll taxes on their wages.</p></div>
+        <div class="detail-card"><h4>Complexity Level</h4><p>High. Involves incorporating at the state level, drafting bylaws, forming a board, and applying to the IRS — a process that can take 3–12 months.</p></div>
       </div>
-      <div class="best-for"><h4>Best For</h4><ul><li>Charitable organizations serving a community need</li><li>Educational programs and schools</li><li>Religious organizations</li><li>Arts and cultural organizations</li><li>Anyone whose primary goal is mission — not profit</li></ul></div>
-      <div class="examples"><h4>Real World Examples</h4><div class="example-chips"><span class="chip">Food bank</span><span class="chip">Animal shelter</span><span class="chip">Community arts center</span><span class="chip">Youth sports league</span><span class="chip">Religious organization</span><span class="chip">Scholarship fund</span></div></div>
+      <div class="best-for"><h4>Best For</h4><ul><li>Charitable organizations serving a community need</li><li>Educational programs and schools</li><li>Religious organizations</li><li>Anyone whose primary goal is mission — not profit</li></ul></div>
+      <div class="examples"><h4>Real World Examples</h4><div class="example-chips"><span class="chip">Food bank</span><span class="chip">Animal shelter</span><span class="chip">Community arts center</span><span class="chip">Youth sports league</span><span class="chip">Scholarship fund</span></div></div>
       <div class="action-row">
         <div class="tax-btn-wrap">
           <button class="tax-btn" onclick="toggleTaxDrop(event,'nonprofit-tax-drop')">Tax Guide &#9660;</button>
-          <div class="tax-state-drop" id="nonprofit-tax-drop">
-            <div class="tax-drop-header">Select Your State</div>
-            <a href="tax-michigan.html#nonprofit" target="_blank">Michigan</a>
-            <a class="soon">Alabama — coming soon</a><a class="soon">Alaska — coming soon</a><a class="soon">Arizona — coming soon</a><a class="soon">Arkansas — coming soon</a><a class="soon">California — coming soon</a><a class="soon">Colorado — coming soon</a><a class="soon">Connecticut — coming soon</a><a class="soon">Delaware — coming soon</a><a class="soon">Florida — coming soon</a><a class="soon">Georgia — coming soon</a><a class="soon">Hawaii — coming soon</a><a class="soon">Idaho — coming soon</a><a class="soon">Illinois — coming soon</a><a class="soon">Indiana — coming soon</a><a class="soon">Iowa — coming soon</a><a class="soon">Kansas — coming soon</a><a class="soon">Kentucky — coming soon</a><a class="soon">Louisiana — coming soon</a><a class="soon">Maine — coming soon</a><a class="soon">Maryland — coming soon</a><a class="soon">Massachusetts — coming soon</a><a class="soon">Minnesota — coming soon</a><a class="soon">Mississippi — coming soon</a><a class="soon">Missouri — coming soon</a><a class="soon">Montana — coming soon</a><a class="soon">Nebraska — coming soon</a><a class="soon">Nevada — coming soon</a><a class="soon">New Hampshire — coming soon</a><a class="soon">New Jersey — coming soon</a><a class="soon">New Mexico — coming soon</a><a class="soon">New York — coming soon</a><a class="soon">North Carolina — coming soon</a><a class="soon">North Dakota — coming soon</a><a class="soon">Ohio — coming soon</a><a class="soon">Oklahoma — coming soon</a><a class="soon">Oregon — coming soon</a><a class="soon">Pennsylvania — coming soon</a><a class="soon">Rhode Island — coming soon</a><a class="soon">South Carolina — coming soon</a><a class="soon">South Dakota — coming soon</a><a class="soon">Tennessee — coming soon</a><a class="soon">Texas — coming soon</a><a class="soon">Utah — coming soon</a><a class="soon">Vermont — coming soon</a><a class="soon">Virginia — coming soon</a><a class="soon">Washington — coming soon</a><a class="soon">West Virginia — coming soon</a><a class="soon">Wisconsin — coming soon</a><a class="soon">Wyoming — coming soon</a>
-          </div>
+          <div class="tax-state-drop" id="nonprofit-tax-drop"><div class="tax-drop-header">Select Your State</div><a href="tax-michigan.html#nonprofit" target="_blank">Michigan</a><a class="soon">All other states — coming soon</a></div>
         </div>
         <a class="start-btn" href="index.html#pick">Start Forming My Nonprofit →</a>
       </div>
@@ -390,72 +394,16 @@
         <div class="q-progress">
           <div class="q-dot" id="dot-0"></div><div class="q-dot" id="dot-1"></div><div class="q-dot" id="dot-2"></div><div class="q-dot" id="dot-3"></div><div class="q-dot" id="dot-4"></div><div class="q-dot" id="dot-5"></div>
         </div>
-        <div class="q-step active" id="q0">
-          <div class="q-num">Question 1 of 6</div>
-          <div class="q-text">Are you starting this business alone or with other people?</div>
-          <div class="q-options">
-            <button class="q-opt" onclick="answer(0,'solo')">Just me — I'm going solo</button>
-            <button class="q-opt" onclick="answer(0,'partners')">With one or more partners</button>
-            <button class="q-opt" onclick="answer(0,'investors')">With outside investors or a team</button>
-          </div>
-        </div>
-        <div class="q-step" id="q1">
-          <div class="q-num">Question 2 of 6</div>
-          <div class="q-text">How important is protecting your personal assets from business risks?</div>
-          <div class="q-options">
-            <button class="q-opt" onclick="answer(1,'critical')">Very important — I want full protection</button>
-            <button class="q-opt" onclick="answer(1,'somewhat')">Somewhat important</button>
-            <button class="q-opt" onclick="answer(1,'notnow')">Not a concern right now — it's a small side hustle</button>
-          </div>
-          <div class="q-nav"><button class="q-back" onclick="goBack(1)">← Back</button></div>
-        </div>
-        <div class="q-step" id="q2">
-          <div class="q-num">Question 3 of 6</div>
-          <div class="q-text">What is the main goal of this business?</div>
-          <div class="q-options">
-            <button class="q-opt" onclick="answer(2,'profit')">Make money — this is a for-profit business</button>
-            <button class="q-opt" onclick="answer(2,'mission')">Serve a cause — this is mission-driven, not profit-driven</button>
-            <button class="q-opt" onclick="answer(2,'unsure')">I'm not totally sure yet</button>
-          </div>
-          <div class="q-nav"><button class="q-back" onclick="goBack(2)">← Back</button></div>
-        </div>
-        <div class="q-step" id="q3">
-          <div class="q-num">Question 4 of 6</div>
-          <div class="q-text">Do you plan to raise money from outside investors or venture capital?</div>
-          <div class="q-options">
-            <button class="q-opt" onclick="answer(3,'yes')">Yes — I plan to seek investors or VC funding</button>
-            <button class="q-opt" onclick="answer(3,'maybe')">Maybe someday, but not right now</button>
-            <button class="q-opt" onclick="answer(3,'no')">No — I'll fund this myself or through loans</button>
-          </div>
-          <div class="q-nav"><button class="q-back" onclick="goBack(3)">← Back</button></div>
-        </div>
-        <div class="q-step" id="q4">
-          <div class="q-num">Question 5 of 6</div>
-          <div class="q-text">How much is this business currently making (or expected to make) in net profit per year?</div>
-          <div class="q-options">
-            <button class="q-opt" onclick="answer(4,'low')">Under $20,000 — just getting started</button>
-            <button class="q-opt" onclick="answer(4,'mid')">$20,000 to $60,000</button>
-            <button class="q-opt" onclick="answer(4,'high')">Over $60,000</button>
-          </div>
-          <div class="q-nav"><button class="q-back" onclick="goBack(4)">← Back</button></div>
-        </div>
-        <div class="q-step" id="q5">
-          <div class="q-num">Question 6 of 6</div>
-          <div class="q-text">How do you feel about paperwork, compliance, and working with accountants?</div>
-          <div class="q-options">
-            <button class="q-opt" onclick="answer(5,'simple')">Keep it simple — I want minimal paperwork</button>
-            <button class="q-opt" onclick="answer(5,'some')">I can handle some paperwork if it saves money</button>
-            <button class="q-opt" onclick="answer(5,'complex')">I'm fine with complexity if it means maximum benefits</button>
-          </div>
-          <div class="q-nav"><button class="q-back" onclick="goBack(5)">← Back</button></div>
-        </div>
+        <div class="q-step active" id="q0"><div class="q-num">Question 1 of 6</div><div class="q-text">Are you starting this business alone or with other people?</div><div class="q-options"><button class="q-opt" onclick="answer(0,'solo')">Just me — I'm going solo</button><button class="q-opt" onclick="answer(0,'partners')">With one or more partners</button><button class="q-opt" onclick="answer(0,'investors')">With outside investors or a team</button></div></div>
+        <div class="q-step" id="q1"><div class="q-num">Question 2 of 6</div><div class="q-text">How important is protecting your personal assets from business risks?</div><div class="q-options"><button class="q-opt" onclick="answer(1,'critical')">Very important — I want full protection</button><button class="q-opt" onclick="answer(1,'somewhat')">Somewhat important</button><button class="q-opt" onclick="answer(1,'notnow')">Not a concern right now — it's a small side hustle</button></div><div class="q-nav"><button class="q-back" onclick="goBack(1)">← Back</button></div></div>
+        <div class="q-step" id="q2"><div class="q-num">Question 3 of 6</div><div class="q-text">What is the main goal of this business?</div><div class="q-options"><button class="q-opt" onclick="answer(2,'profit')">Make money — this is a for-profit business</button><button class="q-opt" onclick="answer(2,'mission')">Serve a cause — mission-driven, not profit-driven</button><button class="q-opt" onclick="answer(2,'unsure')">I'm not totally sure yet</button></div><div class="q-nav"><button class="q-back" onclick="goBack(2)">← Back</button></div></div>
+        <div class="q-step" id="q3"><div class="q-num">Question 4 of 6</div><div class="q-text">Do you plan to raise money from outside investors or venture capital?</div><div class="q-options"><button class="q-opt" onclick="answer(3,'yes')">Yes — I plan to seek investors or VC funding</button><button class="q-opt" onclick="answer(3,'maybe')">Maybe someday, but not right now</button><button class="q-opt" onclick="answer(3,'no')">No — I'll fund this myself or through loans</button></div><div class="q-nav"><button class="q-back" onclick="goBack(3)">← Back</button></div></div>
+        <div class="q-step" id="q4"><div class="q-num">Question 5 of 6</div><div class="q-text">How much is this business expected to make in net profit per year?</div><div class="q-options"><button class="q-opt" onclick="answer(4,'low')">Under $20,000 — just getting started</button><button class="q-opt" onclick="answer(4,'mid')">$20,000 to $60,000</button><button class="q-opt" onclick="answer(4,'high')">Over $60,000</button></div><div class="q-nav"><button class="q-back" onclick="goBack(4)">← Back</button></div></div>
+        <div class="q-step" id="q5"><div class="q-num">Question 6 of 6</div><div class="q-text">How do you feel about paperwork, compliance, and working with accountants?</div><div class="q-options"><button class="q-opt" onclick="answer(5,'simple')">Keep it simple — I want minimal paperwork</button><button class="q-opt" onclick="answer(5,'some')">I can handle some paperwork if it saves money</button><button class="q-opt" onclick="answer(5,'complex')">I'm fine with complexity for maximum benefits</button></div><div class="q-nav"><button class="q-back" onclick="goBack(5)">← Back</button></div></div>
         <div class="quiz-result" id="quizResult">
           <div class="result-tag">Your Recommendation</div>
           <div class="result-box"><h3 id="resultTitle"></h3><p id="resultText"></p></div>
-          <div class="result-actions">
-            <a class="result-primary" id="resultLink" href="#">Start Forming Mine →</a>
-            <button class="result-secondary" onclick="resetQuiz()">Retake Quiz</button>
-          </div>
+          <div class="result-actions"><a class="result-primary" id="resultLink" href="#">Start Forming Mine →</a><button class="result-secondary" onclick="resetQuiz()">Retake Quiz</button></div>
         </div>
       </div>
     </div>
@@ -469,6 +417,46 @@
   <script>
     var answers = {};
 
+    // ── UNIVERSAL NAV ──
+    (function() {
+      var hoverDelay = 150;
+      var closeTimer = {};
+      var items = document.querySelectorAll('.ltb-item');
+      items.forEach(function(item) {
+        var id = item.id || Math.random();
+        item.addEventListener('mouseenter', function() {
+          clearTimeout(closeTimer[id]);
+          items.forEach(function(i) { if (i !== item) i.classList.remove('open'); });
+          item.classList.add('open');
+        });
+        item.addEventListener('mouseleave', function() {
+          closeTimer[id] = setTimeout(function() { item.classList.remove('open'); }, hoverDelay);
+        });
+        var btn = item.querySelector('.ltb-item-btn');
+        if (btn && btn.tagName === 'BUTTON') {
+          btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            var isOpen = item.classList.contains('open');
+            items.forEach(function(i) { i.classList.remove('open'); });
+            if (!isOpen) item.classList.add('open');
+          });
+        }
+      });
+      document.addEventListener('click', function() {
+        items.forEach(function(i) { i.classList.remove('open'); });
+        document.querySelectorAll('.ltb-drop-item').forEach(function(i) { i.classList.remove('open-sub'); });
+        document.querySelectorAll('.tax-state-drop').forEach(function(d) { d.classList.remove('open'); });
+      });
+      window.toggleSub = function(e, id) {
+        e.stopPropagation();
+        var btn = e.currentTarget;
+        var isOpen = btn.classList.contains('open-sub');
+        document.querySelectorAll('.ltb-drop-item').forEach(function(i) { i.classList.remove('open-sub'); });
+        if (!isOpen) btn.classList.add('open-sub');
+      };
+    })();
+
+    // ── TAX DROPDOWNS ──
     function toggleTaxDrop(e, id) {
       e.stopPropagation();
       var drop = document.getElementById(id);
@@ -477,10 +465,7 @@
       if (!isOpen) drop.classList.add('open');
     }
 
-    document.addEventListener('click', function() {
-      document.querySelectorAll('.tax-state-drop').forEach(function(d) { d.classList.remove('open'); });
-    });
-
+    // ── PANEL TABS ──
     function showPanel(id, btn) {
       document.querySelectorAll('.biz-panel').forEach(function(p) { p.classList.remove('active'); });
       document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
@@ -488,6 +473,7 @@
       btn.classList.add('active');
     }
 
+    // ── QUIZ ──
     function answer(q, val) {
       answers[q] = val;
       document.querySelectorAll('#q' + q + ' .q-opt').forEach(function(o) { o.classList.remove('selected'); });
@@ -495,21 +481,16 @@
       document.getElementById('dot-' + q).classList.add('done');
       setTimeout(function() { nextQ(q); }, 300);
     }
-
     function nextQ(current) {
       var next = current + 1;
-      if (next < 6) {
-        document.getElementById('q' + current).classList.remove('active');
-        document.getElementById('q' + next).classList.add('active');
-      } else { showResult(); }
+      if (next < 6) { document.getElementById('q' + current).classList.remove('active'); document.getElementById('q' + next).classList.add('active'); }
+      else { showResult(); }
     }
-
     function goBack(current) {
       document.getElementById('q' + current).classList.remove('active');
       document.getElementById('q' + (current - 1)).classList.add('active');
       document.getElementById('dot-' + (current - 1)).classList.remove('done');
     }
-
     function showResult() {
       document.querySelectorAll('.q-step').forEach(function(s) { s.classList.remove('active'); });
       var result = getRecommendation();
@@ -519,17 +500,15 @@
       document.getElementById('resultLink').textContent = result.cta;
       document.getElementById('quizResult').classList.add('show');
     }
-
     function getRecommendation() {
       var a = answers;
-      if (a[2] === 'mission') return { title: 'Nonprofit (501c3)', text: 'Based on your answers, your primary goal is mission-driven — not profit. A Nonprofit organization gives you tax-exempt status, the ability to accept donations, and access to grants.', link: 'index.html#pick', cta: 'Learn About Nonprofits →' };
-      if (a[3] === 'yes') return { title: 'C-Corporation', text: 'You plan to raise outside investment. Venture capitalists and institutional investors almost exclusively invest in C-Corporations because of the ability to issue preferred stock and have unlimited shareholders.', link: 'index.html#pick', cta: 'Learn About C-Corps →' };
-      if (a[1] === 'notnow' && a[4] === 'low') return { title: 'Sole Proprietorship', text: 'For a low-risk, low-income side hustle where liability protection isn\'t a priority, a Sole Proprietorship is the simplest way to get started. No registration needed. Just start.', link: 'index.html#pick', cta: 'Learn About Sole Proprietorships →' };
-      if (a[0] === 'partners' && a[1] !== 'critical') return { title: 'Partnership or Multi-Member LLC', text: 'You\'re starting with partners and liability protection isn\'t your top priority. We strongly recommend a Multi-Member LLC — you get the same pass-through taxes with actual liability protection.', link: 'index.html#pick', cta: 'Learn About LLCs →' };
-      if (a[4] === 'high' && a[5] !== 'simple') return { title: 'LLC with S-Corp Tax Election', text: 'You\'re making solid profits and you\'re open to some complexity. The smartest move is to form an LLC and then elect S-Corp tax treatment with the IRS — saving thousands in self-employment taxes each year.', link: 'index.html#pick', cta: 'Learn About S-Corps →' };
-      return { title: 'LLC (Limited Liability Company)', text: 'Based on your answers, an LLC is your best fit. It gives you personal liability protection, flexible tax options, and simplicity — all at once. It\'s the most versatile business structure for the vast majority of small business owners.', link: 'index.html#pick', cta: 'Start Forming My LLC →' };
+      if (a[2] === 'mission') return { title: 'Nonprofit (501c3)', text: 'Your primary goal is mission-driven. A Nonprofit gives you tax-exempt status, the ability to accept donations, and access to grants.', link: 'index.html#pick', cta: 'Learn About Nonprofits →' };
+      if (a[3] === 'yes') return { title: 'C-Corporation', text: 'You plan to raise outside investment. Venture capitalists almost exclusively invest in C-Corporations because of the ability to issue preferred stock.', link: 'index.html#pick', cta: 'Learn About C-Corps →' };
+      if (a[1] === 'notnow' && a[4] === 'low') return { title: 'Sole Proprietorship', text: 'For a low-risk, low-income side hustle, a Sole Proprietorship is the simplest way to get started. When income grows, upgrade to an LLC.', link: 'index.html#pick', cta: 'Learn About Sole Proprietorships →' };
+      if (a[0] === 'partners' && a[1] !== 'critical') return { title: 'Partnership or Multi-Member LLC', text: 'You\'re starting with partners. We strongly recommend a Multi-Member LLC — same pass-through taxes with actual liability protection.', link: 'index.html#pick', cta: 'Learn About LLCs →' };
+      if (a[4] === 'high' && a[5] !== 'simple') return { title: 'LLC with S-Corp Tax Election', text: 'You\'re making solid profits and open to some complexity. Form an LLC and elect S-Corp status — saving thousands in self-employment taxes each year.', link: 'index.html#pick', cta: 'Learn About S-Corps →' };
+      return { title: 'LLC (Limited Liability Company)', text: 'An LLC is your best fit. It gives you personal liability protection, flexible tax options, and simplicity — all at once. The most versatile structure for the vast majority of small business owners.', link: 'index.html#pick', cta: 'Start Forming My LLC →' };
     }
-
     function resetQuiz() {
       answers = {};
       document.querySelectorAll('.q-step').forEach(function(s) { s.classList.remove('active'); });
