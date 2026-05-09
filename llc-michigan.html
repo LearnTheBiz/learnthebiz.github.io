@@ -183,12 +183,14 @@
         <button class="ltb-item-btn">Start Forming <span class="ltb-arrow">▼</span></button>
         <div class="ltb-drop">
           <div class="ltb-drop-label">Choose Your Structure</div>
+          
           <button class="ltb-drop-item" onclick="toggleSub(event,'sub-form-llc')">Form an LLC <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-form-llc"><div class="ltb-sub-header">Select Your State</div><a href="llc-michigan.html">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
-          <span class="ltb-drop-item soon">Form an S-Corp — coming soon</span>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-form-scorp')">Form an S-Corp <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-form-scorp"><div class="ltb-sub-header">Select Your State</div><a href="scorp-michigan.html">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
           <span class="ltb-drop-item soon">Form a C-Corp — coming soon</span>
-          <span class="ltb-drop-item soon">Sole Proprietorship — coming soon</span>
+          <button class="ltb-drop-item" onclick="toggleSub(event,'sub-form-sole')">Sole Proprietorship <span class="ltb-sub-arrow">›</span><div class="ltb-sub" id="sub-form-sole"><div class="ltb-sub-header">Select Your State</div><a href="sole-michigan.html">Michigan</a><a class="soon">All other states — coming soon</a></div></button>
           <span class="ltb-drop-item soon">Partnership — coming soon</span>
           <span class="ltb-drop-item soon">Nonprofit — coming soon</span>
+        
         </div>
       </div>
 
